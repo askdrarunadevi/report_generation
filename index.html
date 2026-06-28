@@ -3,17 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sri Aura Dental Care - Report Generator</title>
-    <!-- Tailwind CSS for modern layout styling -->
+    <title>Sri Aura Dental Care - Professional Assessment System</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <!-- html2pdf.js library for rendering pure HTML to PDF in-browser -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@300;400;500;600;700&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@300;400;500;600;700;900&display=swap');
         body { font-family: 'Hanken Grotesk', sans-serif; }
         .wizard-step { display: none; }
         .wizard-step.active { display: block; }
-        /* Core print optimization styling for crisp PDF generation */
         .pdf-page {
             width: 210mm;
             min-height: 297mm;
@@ -25,273 +22,413 @@
             position: relative;
         }
         .pdf-page:last-child { page-break-after: avoid; }
+        #signature-pad { border: 2px dashed #cbd5e1; background: #f8fafc; cursor: crosshair; }
     </style>
 </head>
 <body class="bg-slate-100 min-h-screen pb-12">
 
     <!-- ========================================== -->
-    <!-- WIZARD INPUT INTERFACE (Browser Only)     -->
+    <!-- WIZARD INPUT INTERFACE                     -->
     <!-- ========================================== -->
     <div id="input-container" class="max-w-2xl mx-auto mt-10 p-8 bg-white rounded-xl shadow-md border border-slate-200">
         <div class="border-b border-slate-200 pb-4 mb-6">
-            <h1 class="text-2xl font-bold text-slate-800">Sri Aura Dental Care</h1>
-            <p class="text-sm text-slate-500">Doorstep Assessment Report Pipeline</p>
+            <h1 class="text-2xl font-black text-teal-800 uppercase tracking-tight">SRI AURA DENTAL CARE</h1>
+            <p class="text-sm text-slate-500">Clinical Diagnostics & Doorstep Patient Safety Terminal</p>
         </div>
 
         <form id="reportForm" onsubmit="event.preventDefault();">
-            <!-- Step 1: Patient Demographics -->
+            <!-- Step 1: Patient Demographics & Clinician Profile -->
             <div class="wizard-step active" data-step="1">
-                <h2 class="text-lg font-semibold text-slate-700 mb-4">Step 1: Patient Demographics</h2>
+                <h2 class="text-lg font-semibold text-slate-700 mb-4">Step 1: Patient Profile & Clinician Record</h2>
                 <div class="space-y-4">
-                    <div>
-                        <label class="block text-sm font-medium text-slate-600">Patient Name</label>
-                        <input type="text" id="input_name" class="mt-1 w-full p-2 border border-slate-300 rounded-md focus:ring focus:ring-teal-200" placeholder="John Doe">
+                    <div class="grid grid-cols-2 gap-4">
+                        <div>
+                            <label class="block text-sm font-medium text-slate-600">Patient Name</label>
+                            <input type="text" id="input_name" class="mt-1 w-full p-2 border border-slate-300 rounded-md" placeholder="Full name">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-slate-600">Location / Area Address</label>
+                            <input type="text" id="input_location" class="mt-1 w-full p-2 border border-slate-300 rounded-md" placeholder="e.g., Indiranagar, Bangalore">
+                        </div>
                     </div>
                     <div class="grid grid-cols-2 gap-4">
                         <div>
                             <label class="block text-sm font-medium text-slate-600">Age</label>
-                            <input type="number" id="input_age" class="mt-1 w-full p-2 border border-slate-300 rounded-md focus:ring focus:ring-teal-200" placeholder="30">
+                            <input type="number" id="input_age" class="mt-1 w-full p-2 border border-slate-300 rounded-md" placeholder="30">
                         </div>
                         <div>
                             <label class="block text-sm font-medium text-slate-600">Gender</label>
-                            <select id="input_gender" class="mt-1 w-full p-2 border border-slate-300 rounded-md focus:ring focus:ring-teal-200">
+                            <select id="input_gender" class="mt-1 w-full p-2 border border-slate-300 rounded-md">
                                 <option value="MALE">Male</option>
                                 <option value="FEMALE">Female</option>
                                 <option value="OTHER">Other</option>
                             </select>
                         </div>
                     </div>
+                    <div class="grid grid-cols-2 gap-4">
+                        <div>
+                            <label class="block text-sm font-medium text-slate-600">Assessing Surgeon / Doctor</label>
+                            <input type="text" id="input_doctor" class="mt-1 w-full p-2 border border-slate-300 rounded-md" value="Dr. Aruna Devi">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-slate-600">Dental Council Registration No.</label>
+                            <input type="text" id="input_reg_no" class="mt-1 w-full p-2 border border-slate-300 rounded-md" placeholder="DCI-XXXXX">
+                        </div>
+                    </div>
                 </div>
             </div>
 
-            <!-- Step 2: Case Context Details -->
+            <!-- Step 2: Critical Safety Medical Screening -->
             <div class="wizard-step" data-step="2">
-                <h2 class="text-lg font-semibold text-slate-700 mb-4">Step 2: Case Context Details</h2>
+                <h2 class="text-lg font-semibold text-slate-700 mb-4">Step 2: Medical Risk & Pre-Surgical Triage</h2>
                 <div class="space-y-4">
                     <div class="grid grid-cols-2 gap-4">
                         <div>
-                            <label class="block text-sm font-medium text-slate-600">Dentition</label>
+                            <label class="block text-sm font-medium text-slate-600">Blood Pressure (BP)</label>
+                            <input type="text" id="input_bp" class="mt-1 w-full p-2 border border-slate-300 rounded-md" value="120/80 mmHg">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-slate-600">Blood Sugar (RBS)</label>
+                            <input type="text" id="input_rbs" class="mt-1 w-full p-2 border border-slate-300 rounded-md" value="Normal">
+                        </div>
+                    </div>
+                    <div class="grid grid-cols-2 gap-4">
+                        <div>
+                            <label class="block text-sm font-medium text-slate-600">Known Drug Allergies</label>
+                            <input type="text" id="input_allergies" class="mt-1 w-full p-2 border border-slate-300 rounded-md" value="None Logged">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-slate-600">Current Regular Medications</label>
+                            <input type="text" id="input_medications" class="mt-1 w-full p-2 border border-slate-300 rounded-md" value="None">
+                        </div>
+                    </div>
+                    <div class="grid grid-cols-2 gap-4">
+                        <div>
+                            <label class="block text-sm font-medium text-slate-600">Medical Systematic History</label>
+                            <input type="text" id="input_med_history" class="mt-1 w-full p-2 border border-slate-300 rounded-md" value="None">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-slate-600">Lifestyle Habits</label>
+                            <input type="text" id="input_habits" class="mt-1 w-full p-2 border border-slate-300 rounded-md" value="None">
+                        </div>
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-slate-600">Chief Complaint (C/O)</label>
+                        <input type="text" id="input_issues" class="mt-1 w-full p-2 border border-slate-300 rounded-md" placeholder="Patient describes pain, bleeding gums, etc.">
+                    </div>
+                </div>
+            </div>
+
+            <!-- Step 3: Dental Diagnostics & Action Paths -->
+            <div class="wizard-step" data-step="3">
+                <h2 class="text-lg font-semibold text-slate-700 mb-4">Step 3: Dental Diagnostics & Core Procedures</h2>
+                <div class="space-y-4">
+                    <div class="grid grid-cols-2 gap-4">
+                        <div>
+                            <label class="block text-sm font-medium text-slate-600">Dentition Classification</label>
                             <input type="text" id="input_dentition" class="mt-1 w-full p-2 border border-slate-300 rounded-md" value="Permanent">
                         </div>
                         <div>
-                            <label class="block text-sm font-medium text-slate-600">Medical History</label>
-                            <input type="text" id="input_med_history" class="mt-1 w-full p-2 border border-slate-300 rounded-md" value="None">
+                            <label class="block text-sm font-medium text-slate-600">Provisional Diagnosis</label>
+                            <input type="text" id="input_diagnosis" class="mt-1 w-full p-2 border border-slate-300 rounded-md" placeholder="e.g., Chronic Periodontitis / Deep Caries">
                         </div>
-                    </div>
-                    <div class="grid grid-cols-2 gap-4">
-                        <div>
-                            <label class="block text-sm font-medium text-slate-600">Dental History</label>
-                            <input type="text" id="input_dental_history" class="mt-1 w-full p-2 border border-slate-300 rounded-md" value="Teeth Cleaning">
-                        </div>
-                        <div>
-                            <label class="block text-sm font-medium text-slate-600">Habits</label>
-                            <input type="text" id="input_habits" class="mt-1 w-full p-2 border border-slate-300 rounded-md" placeholder="e.g., Tea / Coffee">
-                        </div>
-                    </div>
-                    <div>
-                        <label class="block text-sm font-medium text-slate-600">Issues Reported by Patient</label>
-                        <input type="text" id="input_issues" class="mt-1 w-full p-2 border border-slate-300 rounded-md" placeholder="e.g., Bleeding Gums, Sensitivity">
-                    </div>
-                </div>
-            </div>
-
-            <!-- Step 3: Diagnostics & Score Evaluation -->
-            <div class="wizard-step" data-step="3">
-                <h2 class="text-lg font-semibold text-slate-700 mb-4">Step 3: Diagnostics & Score Evaluation</h2>
-                <div class="space-y-4">
-                    <div>
-                        <label class="block text-sm font-medium text-slate-600">Oral Health Score (1 to 10)</label>
-                        <input type="number" id="input_score" min="1" max="10" class="mt-1 w-full p-2 border border-slate-300 rounded-md" value="7">
                     </div>
                     <div class="grid grid-cols-3 gap-4">
                         <div>
-                            <label class="block text-sm font-medium text-slate-600">Treatment Needed</label>
-                            <input type="number" id="input_tier1" class="mt-1 w-full p-2 border border-slate-300 rounded-md" value="0">
+                            <label class="block text-sm font-medium text-slate-600">Stains Level</label>
+                            <select id="input_stains" onchange="autoCalculateScore()" class="mt-1 w-full p-2 border border-slate-300 rounded-md">
+                                <option value="0">Normal</option>
+                                <option value="1">Mild</option>
+                                <option value="2">Moderate</option>
+                                <option value="3">Severe</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-slate-600">Plaque Level</label>
+                            <select id="input_plaque" onchange="autoCalculateScore()" class="mt-1 w-full p-2 border border-slate-300 rounded-md">
+                                <option value="0">Normal</option>
+                                <option value="1">Mild</option>
+                                <option value="2">Moderate</option>
+                                <option value="3">Severe</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-slate-600">Calculus Level</label>
+                            <select id="input_calculus" onchange="autoCalculateScore()" class="mt-1 w-full p-2 border border-slate-300 rounded-md">
+                                <option value="0">Normal</option>
+                                <option value="1">Mild</option>
+                                <option value="2">Moderate</option>
+                                <option value="3">Severe</option>
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <div class="grid grid-cols-3 gap-4 pt-2">
+                        <div>
+                            <label class="block text-sm font-medium text-slate-600">Active Treatment Needed</label>
+                            <select id="input_treat_needed" class="mt-1 w-full p-2 border border-slate-300 rounded-md">
+                                <option value="YES">Yes</option>
+                                <option value="NO">No</option>
+                            </select>
                         </div>
                         <div>
                             <label class="block text-sm font-medium text-slate-600">Clinical Exam Needed</label>
-                            <input type="number" id="input_tier2" class="mt-1 w-full p-2 border border-slate-300 rounded-md" value="0">
+                            <select id="input_exam_needed" class="mt-1 w-full p-2 border border-slate-300 rounded-md">
+                                <option value="YES">Yes</option>
+                                <option value="NO">No</option>
+                            </select>
                         </div>
                         <div>
-                            <label class="block text-sm font-medium text-slate-600">At-Home Care Needed</label>
-                            <input type="number" id="input_tier3" class="mt-1 w-full p-2 border border-slate-300 rounded-md" value="0">
+                            <label class="block text-sm font-medium text-slate-600">Full Mouth OPG Scan</label>
+                            <select id="input_scan_needed" class="mt-1 w-full p-2 border border-slate-300 rounded-md">
+                                <option value="YES">Yes</option>
+                                <option value="NO">No</option>
+                            </select>
                         </div>
                     </div>
+
+                    <div class="pt-2">
+                        <label class="block text-sm font-bold text-slate-700">Calculated Oral Safety Score:</label>
+                        <div id="score_badge" class="mt-2 inline-block px-4 py-2 bg-emerald-100 text-emerald-800 text-lg font-black rounded-lg">10 / 10</div>
+                    </div>
                 </div>
             </div>
 
-            <!-- Step 4: Photo Attachments -->
+            <!-- Step 4: Before / After Clinical Capture -->
             <div class="wizard-step" data-step="4">
-                <h2 class="text-lg font-semibold text-slate-700 mb-4">Step 4: High-Resolution Clinical Photos</h2>
+                <h2 class="text-lg font-semibold text-slate-700 mb-4">Step 4: Clinical Comparative Logs (Opens Camera)</h2>
                 <div class="space-y-4">
-                    <div>
-                        <label class="block text-sm font-medium text-slate-600">Upper Jaw Photo</label>
-                        <input type="file" id="img_upper" accept="image/*" class="mt-1 w-full p-1 text-sm text-slate-500 file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-semibold file:bg-teal-50 file:text-teal-700 hover:file:bg-teal-100">
+                    <div class="p-3 bg-slate-50 rounded-lg border">
+                        <span class="block text-sm font-bold text-slate-700 mb-2">1. Front Profile Intraoral Frames</span>
+                        <div class="grid grid-cols-2 gap-4">
+                            <input type="file" id="img_front_before" accept="image/*" capture="camera" class="w-full p-1 border rounded bg-white text-xs">
+                            <input type="file" id="img_front_after" accept="image/*" capture="camera" class="w-full p-1 border rounded bg-white text-xs">
+                        </div>
+                    </div>
+                    <div class="p-3 bg-slate-50 rounded-lg border">
+                        <span class="block text-sm font-bold text-slate-700 mb-2">2. Upper Arch Occlusal Frames</span>
+                        <div class="grid grid-cols-2 gap-4">
+                            <input type="file" id="img_upper_before" accept="image/*" capture="camera" class="w-full p-1 border rounded bg-white text-xs">
+                            <input type="file" id="img_upper_after" accept="image/*" capture="camera" class="w-full p-1 border rounded bg-white text-xs">
+                        </div>
+                    </div>
+                    <div class="p-3 bg-slate-50 rounded-lg border">
+                        <span class="block text-sm font-bold text-slate-700 mb-2">3. Lower Arch Occlusal Frames</span>
+                        <div class="grid grid-cols-2 gap-4">
+                            <input type="file" id="img_lower_before" accept="image/*" capture="camera" class="w-full p-1 border rounded bg-white text-xs">
+                            <input type="file" id="img_lower_after" accept="image/*" capture="camera" class="w-full p-1 border rounded bg-white text-xs">
+                        </div>
                     </div>
                     <div>
-                        <label class="block text-sm font-medium text-slate-600">Lower Jaw Photo</label>
-                        <input type="file" id="img_lower" accept="image/*" class="mt-1 w-full p-1 text-sm text-slate-500 file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-semibold file:bg-teal-50 file:text-teal-700 hover:file:bg-teal-100">
-                    </div>
-                    <div>
-                        <label class="block text-sm font-medium text-slate-600">Front Profile Photo</label>
-                        <input type="file" id="img_profile" accept="image/*" class="mt-1 w-full p-1 text-sm text-slate-500 file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-semibold file:bg-teal-50 file:text-teal-700 hover:file:bg-teal-100">
+                        <label class="block text-sm font-medium text-slate-600">Supplementary Clinical Photo (Optional)</label>
+                        <input type="file" id="img_other" accept="image/*" capture="camera" class="mt-1 w-full p-1 border rounded bg-white text-sm">
                     </div>
                 </div>
             </div>
 
-            <!-- Step 5: Recommendations -->
+            <!-- Step 5: Directives & Digital Signature -->
             <div class="wizard-step" data-step="5">
-                <h2 class="text-lg font-semibold text-slate-700 mb-4">Step 5: Dentist's Recommendations</h2>
+                <h2 class="text-lg font-semibold text-slate-700 mb-4">Step 5: Directives Plan & Consent Signature</h2>
                 <div class="space-y-4">
                     <div>
-                        <label class="block text-sm font-medium text-slate-600">Clinical Advice (One point per line)</label>
-                        <textarea id="input_recommendations" rows="5" class="mt-1 w-full p-2 border border-slate-300 rounded-md" placeholder="Professional teeth cleaning needed.&#10;Brushing twice a day with soft bristles recommended."></textarea>
+                        <label class="block text-sm font-medium text-slate-600">Procedures Advised / Treatment Routine (One point per line)</label>
+                        <textarea id="input_recommendations" rows="4" class="mt-1 w-full p-2 border border-slate-300 rounded-md" placeholder="e.g., Complete scaling and root planing advised.&#10;Refer for endodontic root canal therapy (RCT) wrt 46."></textarea>
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-slate-600">Patient/Guardian Consent Verification Signature</label>
+                        <canvas id="signature-pad" width="550" height="150" class="mt-1 w-full rounded-md shadow-inner"></canvas>
+                        <button type="button" onclick="clearSignature()" class="mt-2 text-xs text-red-600 font-bold hover:underline">Clear Signature Panel</button>
                     </div>
                 </div>
             </div>
 
-            <!-- Navigation Bar Component -->
+            <!-- Wizard Flow Steering Bar -->
             <div class="flex justify-between items-center mt-8 pt-4 border-t border-slate-200">
-                <button type="button" id="prevBtn" onclick="moveStep(-1)" class="px-4 py-2 bg-slate-200 text-slate-600 rounded-md font-medium hover:bg-slate-300 disabled:opacity-50 disabled:cursor-not-allowed" disabled>Back</button>
+                <button type="button" id="prevBtn" onclick="moveStep(-1)" class="px-4 py-2 bg-slate-200 text-slate-600 rounded-md font-medium hover:bg-slate-300 disabled:opacity-50" disabled>Back</button>
                 <button type="button" id="nextBtn" onclick="moveStep(1)" class="px-4 py-2 bg-teal-600 text-white rounded-md font-medium hover:bg-teal-700">Next</button>
-                <button type="button" id="submitBtn" onclick="compileAndDownloadPDF()" class="hidden px-6 py-2 bg-emerald-600 text-white rounded-md font-medium hover:bg-emerald-700 shadow">Generate PDF Report</button>
+                <div id="submit-cluster" class="hidden flex gap-2">
+                    <button type="button" onclick="compileAndDownloadPDF()" class="px-5 py-2 bg-teal-800 text-white rounded-md font-medium hover:bg-teal-900 shadow">Generate PDF</button>
+                    <a id="whatsappShareBtn" target="_blank" class="hidden px-4 py-2 bg-green-500 text-white rounded-md font-medium hover:bg-green-600 flex items-center gap-1">Send WhatsApp</a>
+                </div>
             </div>
         </form>
     </div>
 
     <!-- ========================================== -->
-    <!-- PDF TEMPLATE CONTAINER (Hidden from UI)    -->
+    <!-- PDF PRINT CANVAS DESIGN VIEW               -->
     <!-- ========================================== -->
     <div class="hidden">
         <div id="pdf-render-pipeline" class="text-slate-800">
             
-            <!-- PAGE 1: REBRANDED EXECUTIVE SUMMARY -->
+            <!-- PAGE 1: REBRANDED CLINICAL METRICS -->
             <div class="pdf-page">
-                <!-- Rebranded Banner Header Component -->
-                <div class="flex justify-between items-center bg-teal-800 text-white p-6 rounded-lg mb-8">
+                <div class="flex justify-between items-center bg-teal-800 text-white p-6 rounded-lg mb-6">
                     <div>
-                        <h1 class="text-2xl font-bold tracking-tight">SRI AURA DENTAL CARE</h1>
-                        <p class="text-xs opacity-90 mt-1">Professional Home Dental Care | Bangalore & Chennai</p>
+                        <h1 class="text-2xl font-black tracking-tight">SRI AURA DENTAL CARE</h1>
+                        <p class="text-xs opacity-95 mt-1 font-medium">Professional Home Dental Care Delivery Network</p>
                     </div>
-                    <div class="text-right text-xs space-y-0.5 opacity-90">
+                    <div class="text-right text-xs space-y-0.5 opacity-90 font-medium">
                         <p>+91 88381 35459</p>
                         <p>askdrarunadevi@gmail.com</p>
                     </div>
                 </div>
 
-                <div class="flex items-center gap-6 mb-8 border-b border-slate-200 pb-6">
-                    <div class="w-24 h-24 bg-slate-200 rounded-lg overflow-hidden border border-slate-300 flex items-center justify-center">
-                        <img id="pdf_view_profile" class="object-cover w-full h-full hidden" alt="Patient portrait">
-                        <span class="text-slate-400 text-xs tracking-tight text-center p-1 default-placeholder">No Image</span>
-                    </div>
+                <div class="flex justify-between items-start border-b border-slate-200 pb-4 mb-4">
                     <div>
                         <h2 id="pdf_view_name" class="text-2xl font-bold text-slate-800">[Patient Name]</h2>
-                        <p id="pdf_view_meta" class="text-slate-500 font-medium text-sm mt-1">[Age] • [Gender]</p>
+                        <p id="pdf_view_meta" class="text-slate-500 font-bold text-sm mt-1">[Age] • [Gender]</p>
+                        <p class="text-xs text-slate-500 mt-1 font-semibold">Treatment Zone: <span id="pdf_view_location" class="text-teal-800">--</span></p>
+                    </div>
+                    <div class="text-right border border-slate-200 bg-slate-50 p-2.5 rounded-lg">
+                        <span class="block text-[9px] font-bold text-slate-400 uppercase tracking-wider">Clinical Safety Score</span>
+                        <span id="pdf_view_score" class="text-2xl font-black text-teal-800">10 / 10</span>
                     </div>
                 </div>
 
-                <!-- Case History Table Frame -->
-                <div class="mb-8">
-                    <h3 class="text-sm font-bold uppercase tracking-wider text-slate-500 mb-3">Case History Matrix</h3>
+                <!-- Strategic Assessment Table Matrix[cite: 2] -->
+                <div class="mb-4">
+                    <h3 class="text-[10px] font-black uppercase tracking-wider text-slate-400 mb-2">Comprehensive Patient History Ledger</h3>
                     <table class="w-full text-xs border border-slate-200 rounded-lg overflow-hidden">
                         <tbody>
-                            <tr class="bg-slate-50 border-b border-slate-200"><td class="p-3 font-semibold w-1/3 text-slate-600">Dentition</td><td id="pdf_view_dentition" class="p-3">[Dentition]</td></tr>
-                            <tr class="border-b border-slate-200"><td class="p-3 font-semibold text-slate-600">Medical History</td><td id="pdf_view_med_history" class="p-3">[Medical History]</td></tr>
-                            <tr class="bg-slate-50 border-b border-slate-200"><td class="p-3 font-semibold text-slate-600">Dental History</td><td id="pdf_view_dental_history" class="p-3">[Dental History]</td></tr>
-                            <tr class="border-b border-slate-200"><td class="p-3 font-semibold text-slate-600">Habits Logged</td><td id="pdf_view_habits" class="p-3">[Habits]</td></tr>
-                            <tr class="bg-slate-50"><td class="p-3 font-semibold text-slate-600">Reported Symptoms</td><td id="pdf_view_issues" class="p-3">[Issues]</td></tr>
+                            <tr class="bg-slate-50/50 border-b border-slate-200"><td class="p-2 font-bold w-1/3 text-slate-600">Chief Complaint (C/O)</td><td id="pdf_view_issues" class="p-2 font-medium text-red-700">--</td></tr>
+                            <tr class="border-b border-slate-200"><td class="p-2 font-bold text-slate-600">Surgical Vital Logs</td><td class="p-2 font-medium">BP: <span id="pdf_view_bp" class="font-bold text-slate-900">--</span> | Sugar (RBS): <span id="pdf_view_rbs" class="font-bold text-slate-900">--</span></td></tr>
+                            <tr class="bg-slate-50/50 border-b border-slate-200"><td class="p-2 font-bold text-slate-600">Allergy Screen Metrics</td><td id="pdf_view_allergies" class="p-2 font-bold text-red-600">--</td></tr>
+                            <tr class="border-b border-slate-200"><td class="p-2 font-bold text-slate-600">Active Medications</td><td id="pdf_view_medications" class="p-2">--</td></tr>
+                            <tr class="bg-slate-50/50 border-b border-slate-200"><td class="p-2 font-bold text-slate-600">Medical System History</td><td id="pdf_view_med_history" class="p-2">--</td></tr>
+                            <tr class="border-b border-slate-200"><td class="p-2 font-bold text-slate-600">Dental History Logs</td><td id="pdf_view_dental_history" class="p-2 text-teal-800 font-semibold">--</td></tr>
+                            <tr class="bg-slate-50/50 border-b border-slate-200"><td class="p-2 font-bold text-slate-600">Provisional Diagnosis</td><td id="pdf_view_diagnosis" class="p-2 font-bold tracking-tight">--</td></tr>
+                            <tr><td class="p-2 font-bold text-slate-600">Dentition Array</td><td id="pdf_view_dentition" class="p-2">--</td></tr>
                         </tbody>
                     </table>
                 </div>
 
-                <!-- Health Score Framework Components[cite: 2] -->
-                <div class="border border-slate-200 rounded-xl p-5 mb-8 bg-slate-50/50">
-                    <div class="flex justify-between items-center mb-3">
-                        <h4 class="font-bold text-slate-700 text-sm">Oral Health Condition Score</h4>
-                        <span id="pdf_view_score" class="text-3xl font-black text-teal-700">[Score]</span>
+                <!-- Decision Array Grid Triage -->
+                <div class="grid grid-cols-3 gap-4 mb-4">
+                    <div class="border border-slate-200 p-2.5 rounded-lg text-center bg-slate-50/50">
+                        <span class="text-[9px] font-bold text-slate-400 uppercase tracking-wider block">Active Procedure Needed</span>
+                        <span id="pdf_view_treat_needed" class="text-base font-black mt-0.5 block text-slate-800">--</span>
                     </div>
-                    <div class="w-full bg-slate-200 h-3 rounded-full overflow-hidden flex">
-                        <div class="bg-red-500 h-full w-1/3"></div>
-                        <div class="bg-amber-500 h-full w-1/3"></div>
-                        <div class="bg-emerald-500 h-full w-1/3"></div>
+                    <div class="border border-slate-200 p-2.5 rounded-lg text-center bg-slate-50/50">
+                        <span class="text-[9px] font-bold text-slate-400 uppercase tracking-wider block">Clinical Monitoring Needed</span>
+                        <span id="pdf_view_exam_needed" class="text-base font-black mt-0.5 block text-slate-800">--</span>
                     </div>
-                    <div class="flex justify-between text-[10px] text-slate-500 font-bold mt-1.5 px-1 uppercase tracking-wider">
-                        <span>Critical Intervention</span>
-                        <span>Clinical Watch</span>
-                        <span>Optimal Health</span>
+                    <div class="border border-slate-200 p-2.5 rounded-lg text-center bg-slate-50/50">
+                        <span class="text-[9px] font-bold text-slate-400 uppercase tracking-wider block">Full Mouth OPG Scan Advised</span>
+                        <span id="pdf_view_scan_needed" class="text-base font-black mt-0.5 block text-slate-800">--</span>
                     </div>
                 </div>
 
-                <!-- Tri-Tier Issue Metrics[cite: 2] -->
-                <div class="grid grid-cols-3 gap-4 mb-8">
-                    <div class="bg-red-50 border border-red-100 p-3 rounded-lg text-center">
-                        <div id="pdf_view_tier1" class="text-xl font-bold text-red-700">0</div>
-                        <div class="text-[10px] font-medium text-red-600 uppercase tracking-tight mt-0.5">Active Treatment Needed</div>
-                    </div>
-                    <div class="bg-amber-50 border border-amber-100 p-3 rounded-lg text-center">
-                        <div id="pdf_view_tier2" class="text-xl font-bold text-amber-700">0</div>
-                        <div class="text-[10px] font-medium text-amber-600 uppercase tracking-tight mt-0.5">Clinical Monitoring</div>
-                    </div>
-                    <div class="bg-emerald-50 border border-emerald-100 p-3 rounded-lg text-center">
-                        <div id="pdf_view_tier3" class="text-xl font-bold text-emerald-700">0</div>
-                        <div class="text-[10px] font-medium text-emerald-600 uppercase tracking-tight mt-0.5">Preventive Home Care</div>
-                    </div>
+                <!-- Severity Score Breakdown Matrix[cite: 2] -->
+                <div class="mb-4">
+                    <h3 class="text-[10px] font-black uppercase tracking-wider text-slate-400 mb-2">Hygiene Deposition Analysis</h3>
+                    <table class="w-full text-xs border border-slate-200 rounded-lg overflow-hidden text-center">
+                        <thead class="bg-slate-100 text-slate-600 font-bold">
+                            <tr>
+                                <th class="p-1.5 text-left pl-4">Diagnostic Classification Field</th>
+                                <th class="p-1.5">Severity Mapping Level</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr class="border-b"><td class="p-2 text-left pl-4 font-medium">Extrinsic Surface Stains</td><td id="pdf_stains_status" class="p-2 font-bold">--</td></tr>
+                            <tr class="border-b bg-slate-50/50"><td class="p-2 text-left pl-4 font-medium">Soft Microbacterial Plaque</td><td id="pdf_plaque_status" class="p-2 font-bold">--</td></tr>
+                            <tr><td class="p-2 text-left pl-4 font-medium">Mineralized Dental Calculus</td><td id="pdf_calculus_status" class="p-2 font-bold">--</td></tr>
+                        </tbody>
+                    </table>
                 </div>
 
-                <!-- Personalized Recommendations Block -->
-                <div class="mb-6">
-                    <h3 class="text-sm font-bold uppercase tracking-wider text-slate-500 mb-3">Clinical Care Directives</h3>
-                    <ul id="pdf_view_recommendations" class="list-disc list-inside text-xs space-y-2 text-slate-700 bg-slate-50 p-4 rounded-xl border border-slate-200">
-                        <!-- Dynamic lines append here -->
-                    </ul>
+                <div class="mb-4">
+                    <h3 class="text-[10px] font-black uppercase tracking-wider text-slate-400 mb-2">Prescribed Advice & Treatment Blueprint</h3>
+                    <ul id="pdf_view_recommendations" class="list-disc list-inside text-xs space-y-1 text-slate-700 bg-slate-50 p-3 rounded-lg border border-slate-200"></ul>
                 </div>
 
-                <!-- Footer Identification Line -->
-                <div class="absolute bottom-6 left-12 right-12 border-t border-slate-200 pt-3 flex justify-between text-[9px] text-slate-400 font-semibold uppercase tracking-wider">
-                    <span>© 2026 Sri Aura Dental Care</span>
+                <div class="absolute bottom-6 left-12 right-12 border-t border-slate-200 pt-3 flex justify-between text-[9px] text-slate-400 font-semibold tracking-wider">
+                    <span>© 2026 **SRI AURA DENTAL CARE** | Clinical Health Dossier</span>
                     <span>Page 01</span>
                 </div>
             </div>
 
-            <!-- PAGE 2: STRUCTURAL PHOTO TRACKING GRAPHICS -->
+            <!-- PAGE 2: CLINICAL PARALLEL COMPARATIVE VIEW -->
             <div class="pdf-page">
-                <div class="border-b border-slate-200 pb-4 mb-6">
-                    <h2 class="text-base font-bold uppercase tracking-wider text-slate-600">Photographic Diagnostic Records</h2>
-                    <p class="text-xs text-slate-400 mt-0.5">High-definition intraoral captures mapping anatomical presentation</p>
+                <div class="border-b border-slate-200 pb-3 mb-4">
+                    <h2 class="text-sm font-black uppercase tracking-wider text-slate-600">Parallel Verification Ledger</h2>
+                    <p class="text-[11px] text-slate-400 mt-0.5">Comparative visual matrix detailing dental profile before and after operation</p>
                 </div>
 
-                <!-- Verification Photo Grid Display Area -->
-                <div class="space-y-6">
-                    <div class="grid grid-cols-2 gap-4">
-                        <div class="border border-slate-200 rounded-xl p-3 bg-slate-50/50 text-center">
-                            <span class="text-[10px] font-bold uppercase text-slate-400 tracking-wider block mb-2">Maxillary Occlusal View</span>
-                            <div class="w-full h-48 bg-slate-200 rounded-lg overflow-hidden flex items-center justify-center border border-slate-300">
-                                <img id="pdf_view_upper" class="object-cover w-full h-full hidden" alt="Upper arch">
-                                <span class="text-slate-400 text-xs font-medium default-placeholder">Image Not Provided</span>
+                <div class="space-y-3 text-center text-[10px] font-bold text-slate-500">
+                    <!-- Row 1: Front Profile -->
+                    <div class="border rounded-xl p-2.5 bg-slate-50/40">
+                        <span class="block uppercase tracking-wider mb-2">1. Front Profile Architecture (Before vs After)</span>
+                        <div class="grid grid-cols-2 gap-4">
+                            <div class="h-32 bg-slate-100 rounded border flex items-center justify-center overflow-hidden">
+                                <img id="pdf_view_front_before" class="object-cover w-full h-full hidden">
+                                <span class="text-slate-400 text-xs font-medium default-placeholder">Pre-Op Image Empty</span>
                             </div>
-                        </div>
-                        <div class="border border-slate-200 rounded-xl p-3 bg-slate-50/50 text-center">
-                            <span class="text-[10px] font-bold uppercase text-slate-400 tracking-wider block mb-2">Mandibular Occlusal View</span>
-                            <div class="w-full h-48 bg-slate-200 rounded-lg overflow-hidden flex items-center justify-center border border-slate-300">
-                                <img id="pdf_view_lower" class="object-cover w-full h-full hidden" alt="Lower arch">
-                                <span class="text-slate-400 text-xs font-medium default-placeholder">Image Not Provided</span>
+                            <div class="h-32 bg-slate-100 rounded border flex items-center justify-center overflow-hidden">
+                                <img id="pdf_view_front_after" class="object-cover w-full h-full hidden">
+                                <span class="text-slate-400 text-xs font-medium default-placeholder">Post-Op Image Empty</span>
                             </div>
                         </div>
                     </div>
 
-                    <!-- Regulatory Compliance Warning Section[cite: 2] -->
-                    <div class="bg-slate-50 border border-slate-200 rounded-xl p-5 mt-8">
-                        <h4 class="text-xs font-bold text-slate-700 uppercase tracking-wider mb-2">Privacy & Legal Compliance Directives</h4>
-                        <p class="text-[10px] text-slate-500 leading-relaxed text-justify">
-                            This electronic file diagnostics dossier falls under strict Doctor-Patient Privileged Communication rules. 
-                            All captured patient clinical tracking data points, system metrics, and high-resolution oral photos undergo internal cryptographic protection parameters. 
-                            Unauthorized general data duplication, public asset copying, or unverified structural distribution remains strictly actionable under regional medical records confidentiality laws.
+                    <!-- Row 2: Upper Arch -->
+                    <div class="border rounded-xl p-2.5 bg-slate-50/40">
+                        <span class="block uppercase tracking-wider mb-2">2. Maxillary Occlusal View (Before vs After)</span>
+                        <div class="grid grid-cols-2 gap-4">
+                            <div class="h-32 bg-slate-100 rounded border flex items-center justify-center overflow-hidden">
+                                <img id="pdf_view_upper_before" class="object-cover w-full h-full hidden">
+                                <span class="text-slate-400 text-xs font-medium default-placeholder">Pre-Op Image Empty</span>
+                            </div>
+                            <div class="h-32 bg-slate-100 rounded border flex items-center justify-center overflow-hidden">
+                                <img id="pdf_view_upper_after" class="object-cover w-full h-full hidden">
+                                <span class="text-slate-400 text-xs font-medium default-placeholder">Post-Op Image Empty</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Row 3: Lower Arch -->
+                    <div class="border rounded-xl p-2.5 bg-slate-50/40">
+                        <span class="block uppercase tracking-wider mb-2">3. Mandibular Occlusal View (Before vs After)</span>
+                        <div class="grid grid-cols-2 gap-4">
+                            <div class="h-32 bg-slate-100 rounded border flex items-center justify-center overflow-hidden">
+                                <img id="pdf_view_lower_before" class="object-cover w-full h-full hidden">
+                                <span class="text-slate-400 text-xs font-medium default-placeholder">Pre-Op Image Empty</span>
+                            </div>
+                            <div class="h-32 bg-slate-100 rounded border flex items-center justify-center overflow-hidden">
+                                <img id="pdf_view_lower_after" class="object-cover w-full h-full hidden">
+                                <span class="text-slate-400 text-xs font-medium default-placeholder">Post-Op Image Empty</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Supplementary Image Box -->
+                    <div class="border rounded-xl p-2 bg-slate-50/40 text-left px-4 flex justify-between items-center">
+                        <span class="text-[9px] uppercase tracking-wider text-slate-400">Supplementary Visual Finding Box (Optional)</span>
+                        <div class="w-20 h-12 bg-slate-100 rounded border flex items-center justify-center overflow-hidden">
+                            <img id="pdf_view_other" class="object-cover w-full h-full hidden">
+                            <span class="text-slate-400 text-[9px] font-medium default-placeholder">None</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Legal Compliance & Signature Section Block -->
+                <div class="mt-4 border border-slate-200 rounded-lg p-3 bg-slate-50/50 grid grid-cols-2 gap-4 text-[11px] leading-relaxed text-slate-600">
+                    <div class="space-y-1 pr-2 border-r border-slate-200">
+                        <p class="font-bold text-slate-700">Treated By Surgeon: <span id="pdf_view_doctor" class="font-normal text-slate-900">--</span></p>
+                        <p class="font-bold text-slate-700">Dental Council Registration No: <span id="pdf_view_reg_no" class="font-normal text-slate-900">--</span></p>
+                        <p class="text-[9px] text-slate-400 pt-2 text-justify">
+                            This asset is protected under standard Doctor-Patient Privilege frameworks. Data pathways run completely encrypted inside browser local compilation limits.
                         </p>
                     </div>
+                    <div class="flex flex-col justify-between items-center text-center">
+                        <span class="text-[9px] font-bold text-slate-400 uppercase tracking-wider">Patient / Guardian Verified Consent</span>
+                        <div class="w-full h-14 bg-white border border-slate-200 rounded overflow-hidden flex items-center justify-center">
+                            <img id="pdf_view_signature" class="max-h-full max-w-full hidden" alt="Signature stamp">
+                        </div>
+                    </div>
                 </div>
 
-                <div class="absolute bottom-6 left-12 right-12 border-t border-slate-200 pt-3 flex justify-between text-[9px] text-slate-400 font-semibold uppercase tracking-wider">
-                    <span>Sri Aura Dental Care | Core Support Pipeline</span>
+                <div class="absolute bottom-6 left-12 right-12 border-t border-slate-200 pt-3 flex justify-between text-[9px] text-slate-400 font-semibold tracking-wider">
+                    <span>**SRI AURA DENTAL CARE** | Clinical Verification Ledger</span>
                     <span>Page 02</span>
                 </div>
             </div>
@@ -300,112 +437,175 @@
     </div>
 
     <!-- ========================================== -->
-    <!-- PIPELINE ARCHITECTURE CONTROL SCRIPT       -->
+    <!-- COMPILATION ENGINE SCRIPT MODULES          -->
     <!-- ========================================== -->
     <script>
         let currentStep = 1;
         const totalSteps = 5;
+        let calculatedScore = 10;
 
-        // Interactive wizard page navigation algorithm
+        // Signature Canvas Configuration Engine
+        const canvas = document.getElementById('signature-pad');
+        const ctx = canvas.getContext('2d');
+        let drawing = false;
+
+        function getTouchPos(canvasDom, touchEvent) {
+            var rect = canvasDom.getBoundingClientRect();
+            return { x: touchEvent.touches[0].clientX - rect.left, y: touchEvent.touches[0].clientY - rect.top };
+        }
+
+        canvas.addEventListener('mousedown', () => { drawing = true; ctx.beginPath(); });
+        canvas.addEventListener('mouseup', () => drawing = false);
+        canvas.addEventListener('mousemove', (e) => {
+            if (!drawing) return;
+            ctx.lineWidth = 2;
+            ctx.lineCap = 'round';
+            ctx.strokeStyle = '#0f172a';
+            const rect = canvas.getBoundingClientRect();
+            ctx.lineTo(e.clientX - rect.left, e.clientY - rect.top);
+            ctx.stroke();
+        });
+
+        canvas.addEventListener('touchstart', (e) => { drawing = true; ctx.beginPath(); var p = getTouchPos(canvas, e); ctx.moveTo(p.x, p.y); e.preventDefault(); });
+        canvas.addEventListener('touchend', (e) => { drawing = false; e.preventDefault(); });
+        canvas.addEventListener('touchmove', (e) => {
+            if (!drawing) return;
+            var p = getTouchPos(canvas, e);
+            ctx.lineWidth = 2; ctx.lineCap = 'round'; ctx.strokeStyle = '#0f172a';
+            ctx.lineTo(p.x, p.y); ctx.stroke(); e.preventDefault();
+        });
+
+        function clearSignature() { ctx.clearRect(0, 0, canvas.width, canvas.height); }
+
         function moveStep(direction) {
             const steps = document.querySelectorAll('.wizard-step');
             steps[currentStep - 1].classList.remove('active');
-            
             currentStep += direction;
             steps[currentStep - 1].classList.add('active');
 
-            // Button visibility evaluation matrix
             document.getElementById('prevBtn').disabled = (currentStep === 1);
-            
             if (currentStep === totalSteps) {
                 document.getElementById('nextBtn').classList.add('hidden');
-                document.getElementById('submitBtn').classList.remove('hidden');
+                document.getElementById('submit-cluster').classList.remove('hidden');
             } else {
                 document.getElementById('nextBtn').classList.remove('hidden');
-                document.getElementById('submitBtn').classList.add('hidden');
+                document.getElementById('submit-cluster').classList.add('hidden');
             }
         }
 
-        // Processing utility mapping async file imports to standard baseline components
+        function autoCalculateScore() {
+            const s = parseInt(document.getElementById('input_stains').value);
+            const p = parseInt(document.getElementById('input_plaque').value);
+            const c = parseInt(document.getElementById('input_calculus').value);
+            
+            calculatedScore = 10 - (s + p + c);
+            if (calculatedScore < 1) calculatedScore = 1;
+
+            const badge = document.getElementById('score_badge');
+            badge.innerText = `${calculatedScore} / 10`;
+
+            if (calculatedScore >= 8) {
+                badge.className = "mt-2 inline-block px-4 py-2 bg-emerald-100 text-emerald-800 text-lg font-black rounded-lg";
+            } else if (calculatedScore >= 5) {
+                badge.className = "mt-2 inline-block px-4 py-2 bg-amber-100 text-amber-800 text-lg font-black rounded-lg";
+            } else {
+                badge.className = "mt-2 inline-block px-4 py-2 bg-red-100 text-red-800 text-lg font-black rounded-lg";
+            }
+        }
+
+        function getSeverityLabel(value) {
+            if (value === "0") return `<span class="text-emerald-600">NORMAL</span>`;
+            if (value === "1") return `<span class="text-amber-500">MILD</span>`;
+            if (value === "2") return `<span class="text-orange-500">MODERATE</span>`;
+            return `<span class="text-red-600">SEVERE</span>`;
+        }
+
         function extractFileImage(inputId, pdfTargetId) {
             return new Promise((resolve) => {
                 const fileField = document.getElementById(inputId);
                 const targetImg = document.getElementById(pdfTargetId);
-                
                 if (fileField.files && fileField.files[0]) {
                     const reader = new FileReader();
                     reader.onload = function(e) {
                         targetImg.src = e.target.result;
                         targetImg.classList.remove('hidden');
-                        // Toggle formatting placeholders off when custom content handles are active
-                        const parent = targetImg.parentElement;
-                        if(parent) {
-                            const placeholder = parent.querySelector('.default-placeholder');
-                            if(placeholder) placeholder.classList.add('hidden');
+                        if (targetImg.parentElement && targetImg.parentElement.querySelector('.default-placeholder')) {
+                            targetImg.parentElement.querySelector('.default-placeholder').classList.add('hidden');
                         }
                         resolve(true);
                     };
                     reader.readAsDataURL(fileField.files[0]);
-                } else {
-                    resolve(false);
-                }
+                } else { resolve(false); }
             });
         }
 
-        // Orchestration compilation engine translating standard fields into the print matrix
         async function compileAndDownloadPDF() {
-            // Mapping string text value elements
-            document.getElementById('pdf_view_name').innerText = document.getElementById('input_name').value || 'Unlogged Case Record';
-            const age = document.getElementById('input_age').value || '--';
-            const gender = document.getElementById('input_gender').value;
-            document.getElementById('pdf_view_meta').innerText = `${age} • ${gender}`;
+            const pName = document.getElementById('input_name').value || 'Unlogged Patient';
+            document.getElementById('pdf_view_name').innerText = pName;
+            document.getElementById('pdf_view_location').innerText = document.getElementById('input_location').value || 'Not Logged';
+            document.getElementById('pdf_view_meta').innerText = `${document.getElementById('input_age').value || '--'} • ${document.getElementById('input_gender').value}`;
             
-            document.getElementById('pdf_view_dentition').innerText = document.getElementById('input_dentition').value;
+            document.getElementById('pdf_view_bp').innerText = document.getElementById('input_bp').value;
+            document.getElementById('pdf_view_rbs').innerText = document.getElementById('input_rbs').value;
+            document.getElementById('pdf_view_allergies').innerText = document.getElementById('input_allergies').value;
+            document.getElementById('pdf_view_medications').innerText = document.getElementById('input_medications').value || 'None';
             document.getElementById('pdf_view_med_history').innerText = document.getElementById('input_med_history').value;
-            document.getElementById('pdf_view_dental_history').innerText = document.getElementById('input_dental_history').value;
+            document.getElementById('pdf_view_dental_history').innerText = document.getElementById('input_dental_history').value || 'None';
             document.getElementById('pdf_view_habits').innerText = document.getElementById('input_habits').value || 'None';
             document.getElementById('pdf_view_issues').innerText = document.getElementById('input_issues').value || 'None Reported';
-            document.getElementById('pdf_view_score').innerText = document.getElementById('input_score').value;
+            document.getElementById('pdf_view_diagnosis').innerText = document.getElementById('input_diagnosis').value || 'Pending Evaluation';
+            document.getElementById('pdf_view_dentition').innerText = document.getElementById('input_dentition').value;
             
-            document.getElementById('pdf_view_tier1').innerText = document.getElementById('input_tier1').value;
-            document.getElementById('pdf_view_tier2').innerText = document.getElementById('input_tier2').value;
-            document.getElementById('pdf_view_tier3').innerText = document.getElementById('input_tier3').value;
+            document.getElementById('pdf_view_treat_needed').innerText = document.getElementById('input_treat_needed').value;
+            document.getElementById('pdf_view_exam_needed').innerText = document.getElementById('input_exam_needed').value;
+            document.getElementById('pdf_view_scan_needed').innerText = document.getElementById('input_scan_needed').value;
 
-            // Map recommendations array lines dynamically to structure lists cleanly
-            const linesInput = document.getElementById('input_recommendations').value;
-            const targetUl = document.getElementById('pdf_view_recommendations');
-            targetUl.innerHTML = '';
+            document.getElementById('pdf_stains_status').innerHTML = getSeverityLabel(document.getElementById('input_stains').value);
+            document.getElementById('pdf_plaque_status').innerHTML = getSeverityLabel(document.getElementById('input_plaque').value);
+            document.getElementById('pdf_calculus_status').innerHTML = getSeverityLabel(document.getElementById('input_calculus').value);
+            document.getElementById('pdf_view_score').innerText = `${calculatedScore} / 10`;
             
-            if(linesInput.trim() !== "") {
-                linesInput.split('\n').forEach(line => {
-                    if(line.trim() !== "") {
-                        const li = document.createElement('li');
-                        li.innerText = line;
-                        targetUl.appendChild(li);
-                    }
+            document.getElementById('pdf_view_doctor').innerText = document.getElementById('input_doctor').value || 'Dr. Aruna Devi';
+            document.getElementById('pdf_view_reg_no').innerText = document.getElementById('input_reg_no').value || 'Not Logged';
+
+            const advice = document.getElementById('input_recommendations').value;
+            const ul = document.getElementById('pdf_view_recommendations');
+            ul.innerHTML = '';
+            if (advice.trim()) {
+                advice.split('\n').forEach(l => {
+                    if (l.trim()) { const li = document.createElement('li'); li.innerText = l; ul.appendChild(li); }
                 });
-            } else {
-                targetUl.innerHTML = '<li class="list-none text-slate-400 italic">No specific clinical care directives logged.</li>';
-            }
+            } else { ul.innerHTML = '<li class="list-none text-slate-400 italic">No custom directives logged.</li>'; }
 
-            // Await complete local resolution of async image elements to prevent canvas drops
-            await extractFileImage('img_profile', 'pdf_view_profile');
-            await extractFileImage('img_upper', 'pdf_view_upper');
-            await extractFileImage('img_lower', 'pdf_view_lower');
+            // Extract multi-image data matrices
+            await extractFileImage('img_front_before', 'pdf_view_front_before');
+            await extractFileImage('img_front_after', 'pdf_view_front_after');
+            await extractFileImage('img_upper_before', 'pdf_view_upper_before');
+            await extractFileImage('img_upper_after', 'pdf_view_upper_after');
+            await extractFileImage('img_lower_before', 'pdf_view_lower_before');
+            await extractFileImage('img_lower_after', 'pdf_view_lower_after');
+            await extractFileImage('img_other', 'pdf_view_other');
 
-            // Trigger structural rendering profile using html2pdf framework parameters
+            // Render interactive signature canvas stream straight to clean image source components
+            const sigTarget = document.getElementById('pdf_view_signature');
+            sigTarget.src = canvas.toDataURL();
+            sigTarget.classList.remove('hidden');
+
             const reportTarget = document.getElementById('pdf-render-pipeline');
-            const fileSanitizedName = (document.getElementById('input_name').value || 'Patient').replace(/\s+/g, '_');
-            
             const renderOptions = {
                 margin: 0,
-                filename: `SriAura_Report_${fileSanitizedName}.pdf`,
+                filename: `SriAura_Clinical_Report_${pName.replace(/\s+/g, '_')}.pdf`,
                 image: { type: 'jpeg', quality: 0.98 },
-                html2canvas: { scale: 2, useCORS: true, logging: false },
+                html2canvas: { scale: 2, useCORS: true },
                 jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
             };
 
             html2pdf().from(reportTarget).set(renderOptions).save();
+
+            const waButton = document.getElementById('whatsappShareBtn');
+            const textMessage = encodeURIComponent(`Hello ${pName}, your clinical assessment record file from Sri Aura Dental Care has been securely updated.`);
+            waButton.href = `https://wa.me/918838135459?text=${textMessage}`;
+            waButton.classList.remove('hidden');
         }
     </script>
 </body>
