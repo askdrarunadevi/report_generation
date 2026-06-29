@@ -57,8 +57,8 @@
             <span class="bg-teal-600 text-[10px] font-bold px-2 py-0.5 rounded-full uppercase tracking-tight">Health Passport Terminal</span>
         </div>
         <div class="flex items-center gap-4">
-            <button onclick="toggleColorThemeMode()" class="p-2 bg-teal-700 hover:bg-teal-600 rounded-lg text-sm transition font-bold shadow-inner">🌓 Theme Toggle</button>
-            <button onclick="openPatientDatabaseViewer()" class="p-2 bg-sky-700 hover:bg-sky-600 rounded-lg text-sm transition font-bold shadow-inner">📁 Patient Database Ledger</button>
+            <button type="button" onclick="toggleColorThemeMode()" class="p-2 bg-teal-700 hover:bg-teal-600 rounded-lg text-sm transition font-bold shadow-inner">🌓 Theme Toggle</button>
+            <button type="button" onclick="openPatientDatabaseViewer()" class="p-2 bg-sky-700 hover:bg-sky-600 rounded-lg text-sm transition font-bold shadow-inner">📁 Patient Database Ledger</button>
         </div>
     </nav>
 
@@ -66,7 +66,7 @@
         <div class="w-full max-w-2xl bg-white h-full shadow-2xl p-6 overflow-y-auto flex flex-col">
             <div class="flex justify-between items-center border-b pb-4 mb-4">
                 <h2 class="text-xl font-black text-slate-800">Sri Aura Patient Registry</h2>
-                <button onclick="closePatientDatabaseViewer()" class="text-slate-400 hover:text-slate-600 text-xl font-bold">✕</button>
+                <button type="button" onclick="closePatientDatabaseViewer()" class="text-slate-400 hover:text-slate-600 text-xl font-bold">✕</button>
             </div>
             <div class="mb-4">
                 <input type="text" id="db_search_input" oninput="executeDatabaseRegistrySearch()" class="w-full p-2 border border-slate-300 rounded-lg text-sm" placeholder="Search by Name, File ID, or Mobile number...">
@@ -79,11 +79,11 @@
         <div class="lg:col-span-3 space-y-3 bg-white p-4 rounded-xl border border-slate-200 h-fit shadow-sm">
             <span class="text-xs font-black uppercase text-slate-400 tracking-wider block mb-2">Passport Roadmap Tracker</span>
             <div class="space-y-1.5 text-xs font-bold" id="flow-indicator-nodes">
-                <div class="p-2.5 rounded-lg border bg-teal-50 border-teal-200 text-teal-800 flex items-center gap-2" id="node-step-1"><span>01</span> Demographics & Info</div>
+                <div class="p-2.5 rounded-lg border bg-teal-50 border-teal-200 text-teal-800 flex items-center gap-2" id="node-step-1"><span>01</span> Demographics &amp; Info</div>
                 <div class="p-2.5 rounded-lg border bg-slate-50 border-slate-200 text-slate-500 flex items-center gap-2" id="node-step-2"><span>02</span> Medical Screening</div>
                 <div class="p-2.5 rounded-lg border bg-slate-50 border-slate-200 text-slate-500 flex items-center gap-2" id="node-step-3"><span>03</span> Dental Mapping</div>
                 <div class="p-2.5 rounded-lg border bg-slate-50 border-slate-200 text-slate-500 flex items-center gap-2" id="node-step-4"><span>04</span> Image Portfolio</div>
-                <div class="p-2.5 rounded-lg border bg-slate-50 border-slate-200 text-slate-500 flex items-center gap-2" id="node-step-5"><span>05</span> Invoicing & Consents</div>
+                <div class="p-2.5 rounded-lg border bg-slate-50 border-slate-200 text-slate-500 flex items-center gap-2" id="node-step-5"><span>05</span> Invoicing &amp; Consents</div>
             </div>
         </div>
 
@@ -91,7 +91,7 @@
             <form id="healthPassportForm" onsubmit="event.preventDefault();">
                 
                 <div class="wizard-step active" data-step="1">
-                    <h3 class="text-lg font-bold text-slate-800 border-b pb-3 mb-6 flex items-center gap-2 text-teal-700">📋 Step 1: Patient Demographics & Context</h3>
+                    <h3 class="text-lg font-bold text-slate-800 border-b pb-3 mb-6 flex items-center gap-2 text-teal-700">📋 Step 1: Patient Demographics &amp; Context</h3>
                     <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
                         <div>
                             <label class="block text-xs font-bold text-slate-500 uppercase">Patient File No.</label>
@@ -173,7 +173,7 @@
                 </div>
 
                 <div class="wizard-step" data-step="2">
-                    <h3 class="text-lg font-bold text-slate-800 border-b pb-3 mb-6 flex items-center gap-2 text-teal-700">🩺 Step 2: Systemic Pre-Surgical Triage & Medical Records</h3>
+                    <h3 class="text-lg font-bold text-slate-800 border-b pb-3 mb-6 flex items-center gap-2 text-teal-700">🩺 Step 2: Systemic Pre-Surgical Triage &amp; Medical Records</h3>
                     <div class="grid grid-cols-1 md:grid-cols-5 gap-3 mb-6 bg-slate-50 p-4 rounded-xl border">
                         <div>
                             <label class="block text-[10px] font-black uppercase text-slate-500">BP (mmHg)</label>
@@ -276,7 +276,7 @@
                 </div>
 
                 <div class="wizard-step" data-step="3">
-                    <h3 class="text-lg font-bold text-slate-800 border-b pb-3 mb-6 flex items-center gap-2 text-teal-700">🦷 Step 3: Interactive Dental Charting & Clinical Diagnostics</h3>
+                    <h3 class="text-lg font-bold text-slate-800 border-b pb-3 mb-6 flex items-center gap-2 text-teal-700">🦷 Step 3: Interactive Dental Charting &amp; Clinical Diagnostics</h3>
                     
                     <div class="bg-slate-50 p-4 rounded-xl border border-slate-200 mb-6 text-xs font-bold text-center">
                         <span class="block uppercase tracking-wider text-slate-500 mb-3 font-black">Pathology Mapping Tool (Select condition then tap target tooth)</span>
@@ -310,7 +310,7 @@
                         </div>
                     </div>
 
-                    <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
+                    <div class="grid grid-cols-3 gap-4 mb-4">
                         <div>
                             <label class="block text-xs font-bold text-slate-500 uppercase">Plaque Index Severity</label>
                             <select id="idx_plaque" onchange="triggerDynamicEvaluationCalculations()" class="mt-1 w-full p-2 border border-slate-300 rounded-md font-bold">
@@ -340,7 +340,7 @@
                         </div>
                     </div>
 
-                    <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
+                    <div class="grid grid-cols-3 gap-4 mb-4">
                         <div>
                             <label class="block text-xs font-bold text-slate-500 uppercase">Gingival Support Tissue Status</label>
                             <select id="idx_gingival" onchange="triggerDynamicEvaluationCalculations()" class="mt-1 w-full p-2 border border-slate-300 rounded-md font-bold">
@@ -511,7 +511,7 @@
 
                 <div class="flex justify-between items-center mt-10 pt-4 border-t border-slate-200">
                     <button type="button" id="wizard_back_btn" onclick="executeWizardNavigation(-1)" class="px-5 py-2.5 bg-slate-200 text-slate-600 rounded-lg font-bold hover:bg-slate-300">Back</button>
-                    <button type="button" id="wizard_next_btn" onclick="executeWizardNavigation(1)" class="px-5 py-2.5 bg-teal-700 text-white rounded-lg font-bold hover:bg-teal-800 transition">Next Step</button>
+                    <button type="button" id="wizard_next_btn" onclick="executeWizardNavigation(1)" class="px-5 py-2.5 bg-teal-600 text-white rounded-lg font-bold hover:bg-teal-700 transition">Next Step</button>
                     <div id="wizard_submit_cluster" class="hidden flex gap-2">
                         <button type="button" onclick="commitFormDataToBrowserDatabase()" class="px-5 py-2.5 bg-sky-700 text-white font-bold rounded-lg hover:bg-sky-800 shadow">Save Local Changes</button>
                         <button type="button" onclick="orchestrateClinicalHealthPassportPDF()" class="px-6 py-2.5 bg-emerald-600 text-white font-black rounded-lg hover:bg-emerald-700 shadow-md transform hover:scale-[1.02] transition">Compile PDF Document</button>
@@ -663,10 +663,10 @@
                 </div>
 
                 <div class="border border-slate-200 rounded-xl p-6 bg-slate-50/30 mb-6 text-center">
-                    <span class="text-[10px] font-black text-slate-400 block mb-3 uppercase tracking-wider">Maxillary Dentition Mapping Layout (Upper Arch)</span>
+                    <span class="text-[10px] font-black text-slate-400 block mb-3 uppercase tracking-wider">Maxillary Arch (Upper Dentition)</span>
                     <div class="tooth-grid mb-6" id="pdf-upper-odontogram-target"></div>
                     <div class="tooth-grid" id="pdf-lower-odontogram-target"></div>
-                    <span class="text-[10px] font-black text-slate-400 block mt-3 uppercase tracking-wider">Mandibular Dentition Mapping Layout (Lower Arch)</span>
+                    <span class="text-[10px] font-black text-slate-400 block mt-3 uppercase tracking-wider">Mandibular Arch (Lower Dentition)</span>
                 </div>
 
                 <div class="border border-slate-200 bg-white p-3 rounded-xl mb-6 text-[9px] font-black text-center shadow-sm">
@@ -1139,18 +1139,18 @@
             const discount = parseFloat(document.getElementById('bill_discount').value) || 0;
             const advance = parseFloat(document.getElementById('bill_advance').value) || 0;
 
-            netDueBill = (proceduresAggregatedTotal + conFee) - (discount + advance);
-            if(netDueBill < 0) netDueBill = 0;
+            let netDuePayable = (proceduresAggregatedTotal + conFee) - (discount + advance);
+            if(netDuePayable < 0) netDuePayable = 0;
 
-            document.getElementById('bill_net_due_badge').innerText = `₹${netDueBill}`;
-            return { totalProc: proceduresAggregatedTotal, netDue: netDueBill };
+            document.getElementById('bill_net_due_badge').innerText = `₹${netDuePayable}`;
+            return { totalProc: proceduresAggregatedTotal, netDue: netDuePayable };
         }
 
         function commitFormDataToBrowserDatabase() {
             const payload = compileFullUnifiedPatientPayload();
             const uniqueStorageKey = `SADC_RECORD_${payload.fileNo}_V_${payload.visitNo}`;
             localStorage.setItem(uniqueStorageKey, JSON.stringify(payload));
-            alert(`🎉 Case Record successfully written to secure local storage! ID: ${payload.fileNo}`);
+            alert(`🎉 Case Record written to local storage buffer! ID: ${payload.fileNo}`);
             executeDatabaseRegistrySearch();
         }
 
@@ -1237,9 +1237,6 @@
                 document.getElementById('bill_advance').value = data.billing.advance;
                 document.getElementById('bill_pay_mode').value = data.billing.payMode;
                 document.getElementById('bill_pay_status').value = data.billing.payStatus;
-                
-                document.getElementById('input_doctor').value = data.doctor;
-                document.getElementById('input_reg_no').value = data.regNo;
 
                 Object.keys(data.odontogram).forEach(k => {
                     structuralToothPathologyCache[k] = data.odontogram[k];
@@ -1268,6 +1265,60 @@
                 closePatientDatabaseViewer();
                 alert(`📂 Record for ${data.name} initialized successfully!`);
             } catch(e) {}
+        }
+
+        function purgeArchivedPatientState(key) {
+            if(confirm("Are you sure you want to permanently delete this case passport file?")) {
+                localStorage.removeItem(key);
+                executeDatabaseRegistrySearch();
+            }
+        }
+
+        function getSeverityLabel(value) {
+            if (value === "0") return `<span class="text-emerald-600">NORMAL</span>`;
+            if (value === "1") return `<span class="text-amber-500">MILD</span>`;
+            if (value === "2") return `<span class="text-orange-500">MODERATE</span>`;
+            return `<span class="text-red-600">SEVERE</span>`;
+        }
+
+        function mapLocalImageInputToRenderPipelineTarget(inputId, pdfTargetId) {
+            return new Promise((resolve) => {
+                const fileField = document.getElementById(inputId);
+                const targetImg = document.getElementById(pdfTargetId);
+                if (fileField && fileField.files && fileField.files[0]) {
+                    const reader = new FileReader();
+                    reader.onload = function(e) {
+                        targetImg.src = e.target.result;
+                        targetImg.classList.remove('hidden');
+                        if (targetImg.parentElement && targetImg.parentElement.querySelector('.default-pdf-placeholder')) {
+                            targetImg.parentElement.querySelector('.default-pdf-placeholder').classList.add('hidden');
+                        }
+                        resolve(true);
+                    };
+                    reader.readAsDataURL(fileField.files[0]);
+                } else { resolve(false); }
+            });
+        }
+
+        function compilePersonalizedEducationAdviceBlocks(payload) {
+            const target = document.getElementById('pdf_personalized_advice_target');
+            target.innerHTML = '';
+            const advices = [];
+
+            if (payload.habits.includes('Smoking') || payload.habits.includes('Tobacco')) {
+                advices.push(`<div><span class="font-black text-red-700 block uppercase tracking-tight">Status Warning: Tobacco Complications</span><p class="mt-0.5">Smoking/Tobacco compromises micro-vascular support paths. Regular cleanings are essential to prevent aggressive, uninhibited bone loss patterns.</p></div>`);
+            }
+            if (payload.medicalConditions.includes('Diabetes')) {
+                advices.push(`<div><span class="font-black text-amber-700 block uppercase tracking-tight">Status Warning: Diabetological Hygiene Control</span><p class="mt-0.5">Fluctuating systemic sugar levels increase oral bio-film activity. Professional cleanings are strictly recommended every 6 months to maintain health boundaries.</p></div>`);
+            }
+            if (payload.medicalConditions.includes('Pregnancy')) {
+                advices.push(`<div><span class="font-black text-pink-700 block uppercase tracking-tight">Status Warning: Pregnancy Gingivitis Care</span><p class="mt-0.5">Gestational hormonal shifts cause deep marginal gingival inflammation. Warm saline mouth rinses 3-4 times daily are highly advised.</p></div>`);
+            }
+            if (advices.length < 2) {
+                advices.push(`<div><span class="font-black text-teal-800 block uppercase tracking-tight">Enamel Hard Tissue Optimization</span><p class="mt-0.5">Use topically active flourosilicic paste options, prevent aggressive abrasion friction paths, and clear intraoral sugar matrices immediately after meals.</p></div>`);
+                advices.push(`<div><span class="font-black text-teal-800 block uppercase tracking-tight">Proximal Plaque Disruption</span><p class="mt-0.5">Standard toothbrushes cannot clean hidden interdental areas. Incorporating daily flossing protocols is highly recommended to stop interproximal cavities.</p></div>`);
+            }
+            target.innerHTML = advices.join('');
         }
 
         function compileFullUnifiedPatientPayload() {
@@ -1440,17 +1491,17 @@
             document.getElementById('pdf_val_doctor_name').innerText = payload.doctor;
             document.getElementById('pdf_val_reg_no').innerText = payload.regNo || 'KDC-56832-A';
 
-            await extractFileImage('cam_front_before', 'pdf_img_front_before');
-            await extractFileImage('cam_front_after', 'pdf_img_front_after');
-            await extractFileImage('cam_upper_before', 'pdf_img_upper_before');
-            await extractFileImage('cam_upper_after', 'pdf_img_upper_after');
-            await extractFileImage('cam_lower_before', 'pdf_img_lower_before');
+            await mapLocalImageInputToRenderPipelineTarget('cam_front_before', 'pdf_img_front_before');
+            await mapLocalImageInputToRenderPipelineTarget('cam_front_after', 'pdf_img_front_after');
+            await mapLocalImageInputToRenderPipelineTarget('cam_upper_before', 'pdf_img_upper_before');
+            await mapLocalImageInputToRenderPipelineTarget('cam_upper_after', 'pdf_img_upper_after');
+            await mapLocalImageInputToRenderPipelineTarget('cam_lower_before', 'pdf_img_lower_before');
             await extractFileImage('cam_lower_after', 'pdf_img_lower_after');
-            await extractFileImage('cam_extra_1', 'pdf_img_extra_1');
-            await extractFileImage('cam_extra_2', 'pdf_img_extra_2');
-            await extractFileImage('cam_extra_3', 'pdf_img_extra_3');
-            await extractFileImage('cam_xray_iopa', 'pdf_img_iopa');
-            await extractFileImage('cam_xray_cbct', 'pdf_img_cbct');
+            await mapLocalImageInputToRenderPipelineTarget('cam_extra_1', 'pdf_img_extra_1');
+            await mapLocalImageInputToRenderPipelineTarget('cam_extra_2', 'pdf_img_extra_2');
+            await mapLocalImageInputToRenderPipelineTarget('cam_extra_3', 'pdf_img_extra_3');
+            await mapLocalImageInputToRenderPipelineTarget('cam_xray_iopa', 'pdf_img_iopa');
+            await mapLocalImageInputToRenderPipelineTarget('cam_xray_cbct', 'pdf_img_cbct');
 
             compilePersonalizedEducationAdviceBlocks(payload);
 
