@@ -19,7 +19,6 @@
         .wizard-step { display: none; }
         .wizard-step.active { display: block; }
 
-        /* Crisp layout properties for print engine canvas rendering matches standard A4 sheets */
         .pdf-page-layout {
             width: 210mm;
             min-height: 297mm;
@@ -33,7 +32,6 @@
         }
         .pdf-page-layout:last-child { page-break-after: avoid; }
 
-        /* Color code values for mapping hard tissue lesions across structural grids */
         .cond-caries { background-color: #ef4444 !important; color: #ffffff !important; }
         .cond-missing { background-color: #64748b !important; color: #ffffff !important; }
         .cond-mobility { background-color: #f59e0b !important; color: #ffffff !important; }
@@ -52,11 +50,15 @@
             font-size: 72px; font-weight: 900; color: rgba(15, 118, 110, 0.04);
             pointer-events: none; white-space: nowrap; user-select: none; z-index: 0;
         }
-        canvas.sig-pad { border: 1px dashed #cbd5e1; background: #f8fafc; cursor: crosshair; }
+        .tooth-grid { display: grid; grid-template-columns: repeat(16, 1fr); gap: 2px; text-align: center; }
+        .tooth-box { border: 1px solid #cbd5e1; border-radius: 4px; padding: 4px 2px; font-size: 9px; font-weight: bold; cursor: pointer; background: #f8fafc; transition: all 0.2s; }
+        .tooth-box.selected-caries { background: #fee2e2; border-color: #ef4444; color: #b91c1c; }
+        .tooth-box.selected-calculus { background: #fef3c7; border-color: #f59e0b; color: #b45309; }
     </style>
 </head>
 <body class="bg-slate-50 text-slate-800 min-h-screen antialiased">
 
+    <!-- NAVIGATION CORE COMPONENT BAR -->
     <nav class="bg-teal-800 text-white shadow-lg sticky top-0 z-40 px-6 py-3 flex justify-between items-center print:hidden">
         <div class="flex items-center gap-3">
             <span class="text-xl font-black tracking-wider uppercase">SRI AURA DENTAL CARE</span>
@@ -68,6 +70,7 @@
         </div>
     </nav>
 
+    <!-- DATABASE ARCHIVAL DRAWER OVERLAY -->
     <div id="db-drawer-overlay" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 hidden flex justify-end transition-opacity">
         <div class="w-full max-w-2xl bg-white h-full shadow-2xl p-6 overflow-y-auto flex flex-col">
             <div class="flex justify-between items-center border-b pb-4 mb-4">
@@ -77,13 +80,12 @@
             <div class="mb-4">
                 <input type="text" id="db_search_input" oninput="executeDatabaseRegistrySearch()" class="w-full p-2 border border-slate-300 rounded-lg text-sm" placeholder="Search by Name, File ID, or Mobile number...">
             </div>
-            <div id="db_records_target" class="space-y-3 flex-1 overflow-y-auto pr-1">
-                </div>
+            <div id="db_records_target" class="space-y-3 flex-1 overflow-y-auto pr-1"></div>
         </div>
     </div>
 
+    <!-- MAIN SYSTEM CONTROLLER GRID PLATFORM -->
     <main class="max-w-6xl mx-auto px-4 py-8 grid grid-cols-1 lg:grid-cols-12 gap-8 print:hidden">
-        
         <div class="lg:col-span-3 space-y-3 bg-white p-4 rounded-xl border border-slate-200 h-fit shadow-sm">
             <span class="text-xs font-black uppercase text-slate-400 tracking-wider block mb-2">Passport Roadmap Tracker</span>
             <div class="space-y-1.5 text-xs font-bold" id="flow-indicator-nodes">
@@ -98,6 +100,7 @@
         <div class="lg:col-span-9 bg-white border border-slate-200 rounded-xl p-8 shadow-sm">
             <form id="healthPassportForm" onsubmit="event.preventDefault();">
                 
+                <!-- STEP 1: DEMOGRAPHICS PANEL -->
                 <div class="wizard-step active" data-step="1">
                     <h3 class="text-lg font-bold text-slate-800 border-b pb-3 mb-6 flex items-center gap-2 text-teal-700">📋 Step 1: Patient Demographics & Context</h3>
                     <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
@@ -149,7 +152,7 @@
                         </div>
                         <div>
                             <label class="block text-xs font-bold text-slate-500 uppercase">WhatsApp Number</label>
-                            <input type="tel" id="form_whatsapp" class="mt-1 w-full p-2 border border-slate-300 rounded-md" placeholder="WhatsApp routing index">
+                            <input type="tel" id="form_whatsapp" class="mt-1 w-full p-2 border border-slate-300 rounded-md" placeholder="WhatsApp tracking number">
                         </div>
                         <div>
                             <label class="block text-xs font-bold text-slate-500 uppercase">Email Address</label>
@@ -180,6 +183,7 @@
                     </div>
                 </div>
 
+                <!-- STEP 2: HEALTH SCREENING & VITALS CASE SHEET -->
                 <div class="wizard-step" data-step="2">
                     <h3 class="text-lg font-bold text-slate-800 border-b pb-3 mb-6 flex items-center gap-2 text-teal-700">🩺 Step 2: Systemic Pre-Surgical Triage & Medical Records</h3>
                     <div class="grid grid-cols-1 md:grid-cols-5 gap-3 mb-6 bg-slate-50 p-4 rounded-xl border">
@@ -283,6 +287,7 @@
                     </div>
                 </div>
 
+                <!-- STEP 3: INTERACTIVE ODONTOGRAM & CLINICAL DIAGNOSTICS -->
                 <div class="wizard-step" data-step="3">
                     <h3 class="text-lg font-bold text-slate-800 border-b pb-3 mb-6 flex items-center gap-2 text-teal-700">🦷 Step 3: Interactive Dental Charting & Clinical Diagnostics</h3>
                     
@@ -309,12 +314,10 @@
                         <div class="min-w-[600px] space-y-4">
                             <div>
                                 <span class="text-[10px] font-black text-slate-400 block mb-1 uppercase tracking-wider text-center">Maxillary Arch (Upper Dentition)</span>
-                                <div class="tooth-grid" id="upper-arch-input-grid">
-                                    </div>
+                                <div class="tooth-grid" id="upper-arch-input-grid"></div>
                             </div>
                             <div>
-                                <div class="tooth-grid" id="lower-arch-input-grid">
-                                    </div>
+                                <div class="tooth-grid" id="lower-arch-input-grid"></div>
                                 <span class="text-[10px] font-black text-slate-400 block mt-1 uppercase tracking-wider text-center">Mandibular Arch (Lower Dentition)</span>
                             </div>
                         </div>
@@ -388,10 +391,9 @@
                     </div>
                 </div>
 
+                <!-- STEP 4: PORTFOLIO CAMERA CAPTURE -->
                 <div class="wizard-step" data-step="4">
                     <h3 class="text-lg font-bold text-slate-800 border-b pb-3 mb-6 flex items-center gap-2 text-teal-700">📷 Step 4: High-Resolution Clinical Photo Portfolio & Radiography</h3>
-                    <p class="text-xs text-slate-400 mb-4 italic">Note: File upload selectors prompt for either Gallery Folders or Live Camera Capture based on local device hardware profiles.</p>
-                    
                     <div class="space-y-4">
                         <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 bg-slate-50 p-4 border rounded-xl">
                             <div>
@@ -462,6 +464,7 @@
                     </div>
                 </div>
 
+                <!-- STEP 5: OPERATIONS BILLING & INFORMED CONSENT VALIDATION -->
                 <div class="wizard-step" data-step="5">
                     <h3 class="text-lg font-bold text-slate-800 border-b pb-3 mb-6 flex items-center gap-2 text-teal-700">💰 Step 5: Unlimited Plan Mapping & Informed Disclosures</h3>
                     
@@ -470,8 +473,7 @@
                             <label class="text-xs font-black uppercase text-slate-500 tracking-wider">Dynamic Treatment Timeline Rows</label>
                             <button type="button" onclick="appendNewDynamicBillingRow()" class="px-3 py-1 bg-teal-700 text-white text-xs font-bold rounded-md shadow-sm hover:bg-teal-800">+ Add Treatment Item</button>
                         </div>
-                        <div class="space-y-2" id="billing-dynamic-target-rows">
-                            </div>
+                        <div class="space-y-2" id="billing-dynamic-target-rows"></div>
                     </div>
 
                     <div class="grid grid-cols-1 sm:grid-cols-4 gap-4 bg-slate-50 p-4 border rounded-xl mb-6 font-bold text-xs">
@@ -520,21 +522,9 @@
                             </select>
                         </div>
                     </div>
-
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 border-t pt-4">
-                        <div>
-                            <label class="block text-xs font-bold text-slate-500 uppercase mb-2">Doctor Verification Stamp (Draw signature below)</label>
-                            <canvas id="canvas-sig-doctor" width="400" height="120" class="sig-pad w-full rounded"></canvas>
-                            <button type="button" onclick="clearTargetCanvasTrace('canvas-sig-doctor')" class="text-red-500 text-[10px] font-bold mt-1 uppercase tracking-tight hover:underline">Clear Canvas</button>
-                        </div>
-                        <div>
-                            <label class="block text-xs font-bold text-slate-500 uppercase mb-2">Patient / Guardian Verification Stamp (Draw signature below)</label>
-                            <canvas id="canvas-sig-patient" width="400" height="120" class="sig-pad w-full rounded"></canvas>
-                            <button type="button" onclick="clearTargetCanvasTrace('canvas-sig-patient')" class="text-red-500 text-[10px] font-bold mt-1 uppercase tracking-tight hover:underline">Clear Canvas</button>
-                        </div>
-                    </div>
                 </div>
 
+                <!-- RUNTIME INTERFACE WIZARD NAVIGATION BAR CONTROLS -->
                 <div class="flex justify-between items-center mt-10 pt-4 border-t border-slate-200">
                     <button type="button" id="wizard_back_btn" onclick="executeWizardNavigation(-1)" class="px-5 py-2.5 bg-slate-200 text-slate-600 rounded-lg font-bold hover:bg-slate-300 disabled:opacity-50 transition" disabled>Back</button>
                     <button type="button" id="wizard_next_btn" onclick="executeWizardNavigation(1)" class="px-5 py-2.5 bg-teal-700 text-white rounded-lg font-bold hover:bg-teal-800 transition">Next Step</button>
@@ -547,9 +537,13 @@
         </div>
     </main>
 
+    <!-- ========================================== -->
+    <!-- HIDDEN VECTOR GRAPHICS COMPILING CANVAS     -->
+    <!-- ========================================== -->
     <div class="hidden">
         <div id="passport-document-canvas" class="bg-white text-slate-900 leading-relaxed text-sm">
             
+            <!-- PAGE 1: EXECUTIVE DIAGNOSTIC OVERVIEW -->
             <div class="pdf-page-layout">
                 <div class="watermark-text">SRI AURA DENTAL CARE</div>
                 
@@ -561,7 +555,7 @@
                     </div>
                     <div class="text-right text-xs space-y-0.5 text-slate-600 font-bold">
                         <p>📞 +91 88381 35459</p>
-                        <p>✉️ askdrarunadevi@gmail.com</p>
+                        <p>askdrarunadevi@gmail.com</p>
                         <p class="text-[10px] text-teal-700 uppercase tracking-tight font-black mt-2">Dental Health Passport Log</p>
                     </div>
                 </div>
@@ -615,8 +609,7 @@
 
                 <div class="border border-teal-100 rounded-xl p-4 bg-teal-50/20 mb-6 relative overflow-hidden">
                     <h3 class="text-xs font-black uppercase text-teal-800 tracking-wider mb-2 flex items-center gap-1.5">📝 Executive Passport Summary Findings</h3>
-                    <p id="pdf_ai_summary" class="text-xs text-slate-700 text-justify leading-relaxed font-medium">
-                        </p>
+                    <p id="pdf_ai_summary" class="text-xs text-slate-700 text-justify leading-relaxed font-medium"></p>
                 </div>
 
                 <div class="mb-6">
@@ -681,6 +674,7 @@
                 </div>
             </div>
 
+            <!-- PAGE 2: CLINICAL ODONTOGRAM CHART MAPPING -->
             <div class="pdf-page-layout">
                 <div class="watermark-text">SRI AURA DENTAL CARE</div>
                 
@@ -690,11 +684,10 @@
                 </div>
 
                 <div class="border border-slate-200 rounded-xl p-6 bg-slate-50/30 mb-6 text-center">
-                    <span class="text-[10px] font-black text-slate-400 block mb-3 uppercase tracking-wider">Maxillary Dentition Mapping Layout (Upper Arch)</span>
+                    <span class="text-[10px] font-black text-slate-400 block mb-3 uppercase tracking-wider">Maxillary Arch (Upper Dentition)</span>
                     <div class="tooth-grid mb-6" id="pdf-upper-odontogram-target"></div>
-                    
                     <div class="tooth-grid" id="pdf-lower-odontogram-target"></div>
-                    <span class="text-[10px] font-black text-slate-400 block mt-3 uppercase tracking-wider">Mandibular Dentition Mapping Layout (Lower Arch)</span>
+                    <span class="text-[10px] font-black text-slate-400 block mt-3 uppercase tracking-wider">Mandibular Arch (Lower Dentition)</span>
                 </div>
 
                 <div class="border border-slate-200 bg-white p-3 rounded-xl mb-6 text-[9px] font-black text-center shadow-sm">
@@ -752,7 +745,7 @@
                     <table class="w-full text-xs border border-slate-200 rounded-lg overflow-hidden text-center">
                         <thead class="bg-slate-100 text-slate-600 font-bold">
                             <tr>
-                                <th class="p-2 text-left pl-4">Diagnostic Classification Matrix Field</th>
+                                <th class="p-2 text-left pl-4">Diagnostic Classification Field</th>
                                 <th class="p-2">Severity Mapping Level Status</th>
                             </tr>
                         </thead>
@@ -771,6 +764,7 @@
                 </div>
             </div>
 
+            <!-- PAGE 3: HIGH-RESOLUTION COMPARATIVE IMAGES -->
             <div class="pdf-page-layout">
                 <div class="watermark-text">SRI AURA DENTAL CARE</div>
                 
@@ -784,48 +778,48 @@
                         <span class="text-[9px] font-black uppercase text-slate-500 tracking-wider block mb-1.5">1A. Front Aspect Alignment (Before Treatment)</span>
                         <div class="h-36 bg-slate-100 rounded-lg flex items-center justify-center overflow-hidden border border-slate-200">
                             <img id="pdf_img_front_before" class="object-cover w-full h-full hidden">
-                            <span class="text-slate-400 text-xs font-semibold default-pdf-placeholder">Pre-Op Image Omitted</span>
+                            <span class="text-slate-400 text-xs font-semibold default-pdf-placeholder">Pre-Op Image Empty</span>
                         </div>
                     </div>
                     <div class="border rounded-xl p-2.5 bg-slate-50/50">
                         <span class="text-[9px] font-black uppercase text-slate-500 tracking-wider block mb-1.5">1B. Front Aspect Alignment (After Treatment)</span>
                         <div class="h-36 bg-slate-100 rounded-lg flex items-center justify-center overflow-hidden border border-slate-200">
                             <img id="pdf_img_front_after" class="object-cover w-full h-full hidden">
-                            <span class="text-slate-400 text-xs font-semibold default-pdf-placeholder">Post-Op Image Omitted</span>
+                            <span class="text-slate-400 text-xs font-semibold default-pdf-placeholder">Post-Op Image Empty</span>
                         </div>
                     </div>
                 </div>
 
                 <div class="grid grid-cols-2 gap-4 text-center mb-4">
                     <div class="border rounded-xl p-2.5 bg-slate-50/50">
-                        <span class="text-[9px] font-black uppercase text-slate-500 tracking-wider block mb-1.5">2A. Maxillary Occlusal View (Before Treatment)</span>
+                        <span class="text-[9px] font-black uppercase text-slate-500 tracking-wider block mb-1.5">2A. Maxillary Upper Occlusal View (Before Treatment)</span>
                         <div class="h-36 bg-slate-100 rounded-lg flex items-center justify-center overflow-hidden border border-slate-200">
                             <img id="pdf_img_upper_before" class="object-cover w-full h-full hidden">
-                            <span class="text-slate-400 text-xs font-semibold default-pdf-placeholder">Pre-Op Image Omitted</span>
+                            <span class="text-slate-400 text-xs font-semibold default-pdf-placeholder">Pre-Op Image Empty</span>
                         </div>
                     </div>
                     <div class="border rounded-xl p-2.5 bg-slate-50/50">
-                        <span class="text-[9px] font-black uppercase text-slate-500 tracking-wider block mb-1.5">2B. Maxillary Occlusal View (After Treatment)</span>
+                        <span class="text-[9px] font-black uppercase text-slate-500 tracking-wider block mb-1.5">2B. Maxillary Upper Occlusal View (After Treatment)</span>
                         <div class="h-36 bg-slate-100 rounded-lg flex items-center justify-center overflow-hidden border border-slate-200">
                             <img id="pdf_img_upper_after" class="object-cover w-full h-full hidden">
-                            <span class="text-slate-400 text-xs font-semibold default-pdf-placeholder">Post-Op Image Omitted</span>
+                            <span class="text-slate-400 text-xs font-semibold default-pdf-placeholder">Post-Op Image Empty</span>
                         </div>
                     </div>
                 </div>
 
                 <div class="grid grid-cols-2 gap-4 text-center mb-4">
                     <div class="border rounded-xl p-2.5 bg-slate-50/50">
-                        <span class="text-[9px] font-black uppercase text-slate-500 tracking-wider block mb-1.5">3A. Mandibular Occlusal View (Before Treatment)</span>
+                        <span class="text-[9px] font-black uppercase text-slate-500 tracking-wider block mb-1.5">3A. Mandibular Lower Occlusal View (Before Treatment)</span>
                         <div class="h-36 bg-slate-100 rounded-lg flex items-center justify-center overflow-hidden border border-slate-200">
                             <img id="pdf_img_lower_before" class="object-cover w-full h-full hidden">
-                            <span class="text-slate-400 text-xs font-semibold default-pdf-placeholder">Pre-Op Image Omitted</span>
+                            <span class="text-slate-400 text-xs font-semibold default-pdf-placeholder">Pre-Op Image Empty</span>
                         </div>
                     </div>
                     <div class="border rounded-xl p-2.5 bg-slate-50/50">
-                        <span class="text-[9px] font-black uppercase text-slate-500 tracking-wider block mb-1.5">3B. Mandibular Occlusal View (After Treatment)</span>
+                        <span class="text-[9px] font-black uppercase text-slate-500 tracking-wider block mb-1.5">3B. Mandibular Lower Occlusal View (After Treatment)</span>
                         <div class="h-36 bg-slate-100 rounded-lg flex items-center justify-center overflow-hidden border border-slate-200">
                             <img id="pdf_img_lower_after" class="object-cover w-full h-full hidden">
-                            <span class="text-slate-400 text-xs font-semibold default-pdf-placeholder">Post-Op Image Omitted</span>
+                            <span class="text-slate-400 text-xs font-semibold default-pdf-placeholder">Post-Op Image Empty</span>
                         </div>
                     </div>
                 </div>
@@ -877,6 +871,7 @@
                 </div>
             </div>
 
+            <!-- PAGE 4: DETAILED PROCEDURAL INVOICING -->
             <div class="pdf-page-layout">
                 <div class="watermark-text">SRI AURA DENTAL CARE</div>
                 
@@ -894,8 +889,7 @@
                                 <th class="p-3 text-right pr-4">Cost Metric</th>
                             </tr>
                         </thead>
-                        <tbody id="pdf_billing_table_body_target">
-                            </tbody>
+                        <tbody id="pdf_billing_table_body_target"></tbody>
                     </table>
                 </div>
 
@@ -917,28 +911,18 @@
                 <div class="border-2 border-teal-800 rounded-xl p-4 bg-teal-50/10 mb-6">
                     <h4 class="text-xs font-black uppercase tracking-wide text-teal-800 mb-2">🔒 Informed Acceptance, Disclosures & Clinical Stamp</h4>
                     <p class="text-[11px] text-slate-600 leading-relaxed text-justify">
-                        By executing this Dental Health Passport ledger file, Sri Aura Dental Care confirms that the treating specialist has completely explained all hard tissue pathology charts, vital screenings, diagnostic OPG parameters, and matching dynamic treatment pathways to the patient or legal guardian. The patient or guardian fully understands the clinical observations, alternative therapy routes, and doorstep care conditions, providing complete voluntary verbal and clinical consent. All high-definition photographs and radiography sets recorded inside this file were obtained with explicit consent strictly for healthcare mapping, confidential internal review trackers, and patient reference portfolios. If any further care updates or review interventions are needed, please contact our emergency service lines immediately.
+                        By executing this Dental Health Passport ledger file, Sri Aura Dental Care confirms that the treating specialist has thoroughly explained all hard tissue pathology charts, vital screenings, diagnostic OPG parameters, and matching dynamic treatment pathways to the patient or legal guardian. The patient or guardian fully understands the clinical observations, alternative therapy routes, and doorstep care conditions, providing complete voluntary verbal and clinical consent. All high-definition photographs and radiography sets recorded inside this file were obtained with explicit consent strictly for healthcare mapping, confidential internal review trackers, and patient reference portfolios. If any further care updates or review interventions are needed, please contact our emergency service lines immediately.
                     </p>
                 </div>
 
                 <div class="grid grid-cols-2 gap-8 border border-slate-200 rounded-xl p-4 bg-slate-50/40 text-xs mt-10">
-                    <div class="flex flex-col justify-between h-28">
-                        <div class="w-full h-16 bg-white border border-dashed rounded overflow-hidden flex items-center justify-center">
-                            <img id="pdf_sig_doctor_img" class="max-h-full max-w-full hidden" alt="Surgeon Signature">
-                        </div>
-                        <div>
-                            <p class="font-black text-slate-800" id="pdf_val_doctor_name">Dr. Aruna Devi</p>
-                            <p class="text-[10px] font-bold text-slate-400 uppercase tracking-tight">Assessing Surgeon Signature Stamp | Reg No: <span id="pdf_val_reg_no">--</span></p>
-                        </div>
+                    <div class="flex flex-col justify-end h-20">
+                        <p class="font-black text-slate-800" id="pdf_val_doctor_name">Dr. Aruna Devi</p>
+                        <p class="text-[10px] font-bold text-slate-400 uppercase tracking-tight">Assessing Surgeon Signature Stamp | Reg No: <span id="pdf_val_reg_no">--</span></p>
                     </div>
-                    <div class="flex flex-col justify-between h-28 text-right items-end">
-                        <div class="w-full h-16 bg-white border border-dashed rounded overflow-hidden flex items-center justify-center">
-                            <img id="pdf_sig_patient_img" class="max-h-full max-w-full hidden" alt="Patient Signature">
-                        </div>
-                        <div>
-                            <p class="font-black text-slate-800" id="pdf_val_patient_name_stamp">--</p>
-                            <p class="text-[10px] font-bold text-slate-400 uppercase tracking-tight">Patient / Authorized Guardian Consent Stamp</p>
-                        </div>
+                    <div class="flex flex-col justify-end h-20 text-right">
+                        <p class="font-black text-slate-800" id="pdf_val_patient_name_stamp">--</p>
+                        <p class="text-[10px] font-bold text-slate-400 uppercase tracking-tight">Patient / Authorized Guardian Verbal Consent Verified</p>
                     </div>
                 </div>
 
@@ -948,6 +932,7 @@
                 </div>
             </div>
 
+            <!-- PAGE 5: PASSPORT RECALLS & ILLUSTRATED CLINICAL ADVICE -->
             <div class="pdf-page-layout">
                 <div class="watermark-text">SRI AURA DENTAL CARE</div>
                 
@@ -977,8 +962,7 @@
 
                 <div class="mb-6">
                     <h3 class="text-xs font-black uppercase text-slate-400 tracking-wider mb-2">Personalized Preventive Education Protocols</h3>
-                    <div id="pdf_personalized_advice_target" class="grid grid-cols-2 gap-3 text-[11px] leading-relaxed text-slate-700">
-                        </div>
+                    <div id="pdf_personalized_advice_target" class="grid grid-cols-2 gap-3 text-[11px] leading-relaxed text-slate-700"></div>
                 </div>
 
                 <div class="mb-6">
@@ -1002,7 +986,7 @@
                 </div>
 
                 <div class="bg-red-50 border border-red-200 text-red-900 rounded-xl p-3 mb-6 text-xs text-justify">
-                    ⚠️ **Emergency Triage Red-Alert Signal Warning Signs:** If you suddenly experience localized pathosis indicators such as rapid, uninhibited swelling tracking past the lower jaw borders or eye rings, acute breathing restriction thresholds, severe night pains unresponsive to analgesics, or continuous post-extraction site bleeding, bypass standard reviews and secure immediate clinical hospital emergency interventions.
+                    ⚠️ **Emergency Triage Red-Alert Signal Warning Signs:** If you experience localized indicators such as rapid, uninhibited swelling tracking past the lower jaw borders, acute breathing restriction thresholds, severe night pains unresponsive to analgesics, or continuous bleeding, bypass standard reviews and secure immediate clinical hospital emergency interventions.
                 </div>
 
                 <div class="border border-slate-200 rounded-xl p-4 bg-white flex justify-between items-center text-center">
@@ -1033,24 +1017,20 @@
         </div>
     </div>
 
+    <!-- ========================================== -->
+    <!-- PRIMARY OPERATIONS CORE CONTROL CODE       -->
+    <!-- ========================================== -->
     <script>
         let currentFormWizardStep = 1;
         const totalConfiguredFormSteps = 5;
         
-        // Memory cache buffers capturing runtime hard tissue mapping arrays
         const structuralToothPathologyCache = {};
         for(let i=11; i<=28; i++) { structuralToothPathologyCache[i] = 'normal'; }
         for(let i=31; i<=48; i++) { structuralToothPathologyCache[i] = 'normal'; }
 
-        // Signature Canvas Trace Tracking System Arrays
-        let activeCanvasDrawnScope = null;
-        let isDrawingCanvasStroke = false;
-
         window.addEventListener('DOMContentLoaded', () => {
             initializeInteractiveOdontogramLayoutGrids();
             appendNewDynamicBillingRow();
-            setupVectorSignatureCanvasTrackingEngine('canvas-sig-doctor');
-            setupVectorSignatureCanvasTrackingEngine('canvas-sig-patient');
             executeDatabaseRegistrySearch();
         });
 
@@ -1067,7 +1047,6 @@
             document.getElementById('db-drawer-overlay').classList.add('hidden');
         }
 
-        // Programmatic initialization building upper and lower jaw charting matrices cleanly
         function initializeInteractiveOdontogramLayoutGrids() {
             const uTarget = document.getElementById('upper-arch-input-grid');
             const lTarget = document.getElementById('lower-arch-input-grid');
@@ -1075,16 +1054,11 @@
             uTarget.innerHTML = '';
             lTarget.innerHTML = '';
 
-            // FDI Dentition Universal Positions Sequence Array
             const uPositions = ['18','17','16','15','14','13','12','11','21','22','23','24','25','26','27','28'];
             const lPositions = ['48','47','46','45','44','43','42','41','31','32','33','34','35','36','37','38'];
 
-            uPositions.forEach(pos => {
-                uTarget.appendChild(createNewToothInputNode(pos));
-            });
-            lPositions.forEach(pos => {
-                lTarget.appendChild(createNewToothInputNode(pos));
-            });
+            uPositions.forEach(pos => uTarget.appendChild(createNewToothInputNode(pos)));
+            lPositions.forEach(pos => lTarget.appendChild(createNewToothInputNode(pos)));
         }
 
         function createNewToothInputNode(num) {
@@ -1098,31 +1072,22 @@
 
         function executeToothPathologyStamp(element, num) {
             const activeTool = document.querySelector('input[name="tool_selector"]:checked').value;
-            
-            // Clear baseline styling profile
             element.className = 'tooth-box';
             structuralToothPathologyCache[num] = activeTool;
-
-            if (activeTool !== 'normal') {
-                element.classList.add(`cond-${activeTool}`);
-            }
+            if (activeTool !== 'normal') element.classList.add(`cond-${activeTool}`);
             triggerDynamicEvaluationCalculations();
         }
 
         function executeWizardNavigation(direction) {
             const steps = document.querySelectorAll('.wizard-step');
             steps[currentFormWizardStep - 1].classList.remove('active');
-            
-            // Clear baseline sideways navigation highlight configurations
             document.getElementById(`node-step-${currentFormWizardStep}`).className = 'p-2.5 rounded-lg border bg-slate-50 border-slate-200 text-slate-500 flex items-center gap-2';
 
             currentFormWizardStep += direction;
             steps[currentFormWizardStep - 1].classList.add('active');
-            
             document.getElementById(`node-step-${currentFormWizardStep}`).className = 'p-2.5 rounded-lg border bg-teal-50 border-teal-200 text-teal-800 flex items-center gap-2';
 
             document.getElementById('wizard_back_btn').disabled = (currentFormWizardStep === 1);
-            
             if (currentFormWizardStep === totalConfiguredFormSteps) {
                 document.getElementById('wizard_next_btn').classList.add('hidden');
                 document.getElementById('wizard_submit_cluster').classList.remove('hidden');
@@ -1156,17 +1121,13 @@
             }
         }
 
-        // Deductive computational logic evaluating conditions scoring metrics on the fly
         function triggerDynamicEvaluationCalculations() {
             let baselineScore = 10;
-            
             const plaque = parseInt(document.getElementById('idx_plaque').value);
             const calculus = parseInt(document.getElementById('idx_calculus').value);
             const stains = parseInt(document.getElementById('idx_stains').value);
-
             baselineScore -= (plaque + calculus + stains);
 
-            // Factor in structural carious lesion counts into score metrics
             let cariesCount = 0;
             Object.keys(structuralToothPathologyCache).forEach(k => {
                 if(structuralToothPathologyCache[k] === 'caries') cariesCount++;
@@ -1175,11 +1136,9 @@
             if(baselineScore < 1) baselineScore = 1;
 
             document.getElementById('calc_score_val').innerText = `${baselineScore} / 10`;
-            
             const ratingBadge = document.getElementById('calc_score_rating_badge');
             const riskBadge = document.getElementById('calc_risk_badge');
 
-            // Apply semantic branding states based on numerical thresholds
             if (baselineScore >= 8) {
                 ratingBadge.innerText = 'Excellent Health';
                 ratingBadge.className = 'mt-1 inline-block text-xs font-black px-2 py-0.5 rounded uppercase tracking-wide bg-emerald-100 text-emerald-800';
@@ -1201,10 +1160,7 @@
 
         function executeFinancialBalancingCalculations() {
             let proceduresAggregatedTotal = 0;
-            const costFields = document.querySelectorAll('.proc-cost-input');
-            costFields.forEach(field => {
-                proceduresAggregatedTotal += parseFloat(field.value) || 0;
-            });
+            document.querySelectorAll('.proc-cost-input').forEach(f => proceduresAggregatedTotal += parseFloat(f.value) || 0);
 
             const conFee = parseFloat(document.getElementById('bill_con_fee').value) || 0;
             const discount = parseFloat(document.getElementById('bill_discount').value) || 0;
@@ -1217,134 +1173,11 @@
             return { totalProc: proceduresAggregatedTotal, netDue: netDuePayable };
         }
 
-        // Vector capture signature mechanics operating without server overhead profiles
-        function setupVectorSignatureCanvasTrackingEngine(canvasId) {
-            const can = document.getElementById(canvasId);
-            const context = can.getContext('2d');
-            
-            function getCanvasTouchCoordinates(canvasDom, touchEvent) {
-                const boundaryRect = canvasDom.getBoundingClientRect();
-                return {
-                    x: touchEvent.touches[0].clientX - boundaryRect.left,
-                    y: touchEvent.touches[0].clientY - boundaryRect.top
-                };
-            }
-
-            can.addEventListener('mousedown', () => { isDrawingCanvasStroke = true; context.beginPath(); });
-            can.addEventListener('mouseup', () => isDrawingCanvasStroke = false);
-            can.addEventListener('mousemove', (e) => {
-                if (!isDrawingCanvasStroke) return;
-                context.lineWidth = 2;
-                context.lineCap = 'round';
-                context.strokeStyle = '#0f172a';
-                const boundaryRect = can.getBoundingClientRect();
-                context.lineTo(e.clientX - boundaryRect.left, e.clientY - boundaryRect.top);
-                context.stroke();
-            });
-
-            can.addEventListener('touchstart', (e) => { isDrawingCanvasStroke = true; context.beginPath(); const pos = getCanvasTouchCoordinates(can, e); context.moveTo(pos.x, pos.y); e.preventDefault(); });
-            can.addEventListener('touchend', (e) => { isDrawingCanvasStroke = false; e.preventDefault(); });
-            can.addEventListener('touchmove', (e) => {
-                if (!isDrawingCanvasStroke) return;
-                const pos = getCanvasTouchCoordinates(can, e);
-                context.lineWidth = 2; context.lineCap = 'round'; context.strokeStyle = '#0f172a';
-                context.lineTo(pos.x, pos.y); context.stroke(); e.preventDefault();
-            });
-        }
-
-        function clearTargetCanvasTrace(canvasId) {
-            const can = document.getElementById(canvasId);
-            const context = can.getContext('2d');
-            context.clearRect(0, 0, can.width, can.height);
-        }
-
-        // Persistent relational sync saving inputs directly to browser localStorage arrays
-        function compileFullUnifiedPatientPayload() {
-            const checkedMedicalConditions = [];
-            document.querySelectorAll('.med-cond-cb:checked').forEach(cb => checkedMedicalConditions.push(cb.value));
-
-            const checkedHabits = [];
-            document.querySelectorAll('.habit-cb:checked').forEach(cb => checkedHabits.push(cb.value));
-
-            const compiledProceduresArray = [];
-            document.querySelectorAll('#billing-dynamic-target-rows > div').forEach(row => {
-                const desc = row.querySelector('.proc-desc-input').value;
-                const tooth = row.querySelector('.proc-tooth-input').value;
-                const cost = parseFloat(row.querySelector('.proc-cost-input').value) || 0;
-                if(desc || cost > 0) {
-                    compiledProceduresArray.push({ desc, tooth, cost });
-                }
-            });
-
-            const currentTimestamp = new Date();
-
-            return {
-                fileNo: document.getElementById('form_file_no').value.trim().toUpperCase() || 'TEMP_ID',
-                visitNo: document.getElementById('form_visit_no').value.trim() || '01',
-                visitType: document.getElementById('form_visit_type').value,
-                name: document.getElementById('form_name').value.trim() || 'Unassigned Record',
-                dob: document.getElementById('form_dob').value,
-                age: document.getElementById('form_age').value,
-                gender: document.getElementById('form_gender').value,
-                mobile: document.getElementById('form_mobile').value.trim(),
-                whatsapp: document.getElementById('form_whatsapp').value.trim(),
-                email: document.getElementById('form_email').value.trim(),
-                address: document.getElementById('form_address').value.trim(),
-                city: document.getElementById('form_city').value.trim(),
-                state: document.getElementById('form_state').value.trim(),
-                pin: document.getElementById('form_pin').value.trim(),
-                referredBy: document.getElementById('form_referred').value.trim(),
-                
-                vitals: {
-                    bp: document.getElementById('vitals_bp').value,
-                    pulse: document.getElementById('vitals_pulse').value,
-                    temp: document.getElementById('vitals_temp').value,
-                    spo2: document.getElementById('vitals_spo2').value,
-                    rbs: document.getElementById('vitals_rbs').value
-                },
-                medicalConditions: checkedMedicalConditions,
-                allergies: document.getElementById('med_allergies').value,
-                medications: document.getElementById('med_current').value,
-                complaint: document.getElementById('dental_complaint').value,
-                painScale: document.getElementById('dental_pain_scale').value,
-                habits: checkedHabits,
-                pastTreatment: document.getElementById('dental_past').value,
-                mouthOpening: document.getElementById('exam_mouth_opening').value,
-                extraOral: document.getElementById('exam_extra_oral').value,
-                intraOral: document.getElementById('exam_intra_oral').value,
-                
-                odontogram: Object.assign({}, structuralToothPathologyCache),
-                indices: {
-                    plaque: document.getElementById('idx_plaque').value,
-                    calculus: document.getElementById('idx_calculus').value,
-                    stains: document.getElementById('idx_stains').value,
-                    gingival: document.getElementById('idx_gingival').value
-                },
-                provisionalDiagnosis: document.getElementById('diag_provisional').value,
-                finalDiagnosis: document.getElementById('diag_final').value,
-                opgRecommendation: document.getElementById('form_opg_recommendation').value,
-                priority: document.getElementById('form_treatment_priority').value,
-                
-                procedures: compiledProceduresArray,
-                billing: {
-                    consultationFee: parseFloat(document.getElementById('bill_con_fee').value) || 0,
-                    discount: parseFloat(document.getElementById('bill_discount').value) || 0,
-                    advance: parseFloat(document.getElementById('bill_advance').value) || 0,
-                    payMode: document.getElementById('bill_pay_mode').value,
-                    payStatus: document.getElementById('bill_pay_status').value
-                },
-                doctor: document.getElementById('input_doctor').value,
-                regNo: document.getElementById('input_reg_no').value,
-                dateString: currentTimestamp.toLocaleDateString('en-IN'),
-                timeString: currentTimestamp.toLocaleTimeString('en-IN', { hour: '2-digit', minute: '2-digit' })
-            };
-        }
-
         function commitFormDataToBrowserDatabase() {
             const payload = compileFullUnifiedPatientPayload();
             const uniqueStorageKey = `SADC_RECORD_${payload.fileNo}_V_${payload.visitNo}`;
             localStorage.setItem(uniqueStorageKey, JSON.stringify(payload));
-            alert(`🎉 Case Record successfully written to secure offline localStorage buffer! ID: ${payload.fileNo}`);
+            alert(`🎉 Case Record successfully written to secure local buffer! ID: ${payload.fileNo}`);
             executeDatabaseRegistrySearch();
         }
 
@@ -1352,7 +1185,6 @@
             const query = document.getElementById('db_search_input').value.toLowerCase();
             const targetContainer = document.getElementById('db_records_target');
             targetContainer.innerHTML = '';
-
             let matchesCount = 0;
 
             for (let i = 0; i < localStorage.length; i++) {
@@ -1360,11 +1192,7 @@
                 if (key.startsWith('SADC_RECORD_')) {
                     try {
                         const data = JSON.parse(localStorage.getItem(key));
-                        if (
-                            data.name.toLowerCase().includes(query) ||
-                            data.fileNo.toLowerCase().includes(query) ||
-                            data.mobile.includes(query)
-                        ) {
+                        if (data.name.toLowerCase().includes(query) || data.fileNo.toLowerCase().includes(query) || data.mobile.includes(query)) {
                             matchesCount++;
                             const card = document.createElement('div');
                             card.className = 'p-3 border rounded-xl bg-slate-50 text-xs flex justify-between items-center hover:bg-slate-100 transition';
@@ -1380,19 +1208,15 @@
                             `;
                             targetContainer.appendChild(card);
                         }
-                    } catch(e) { console.error("Error evaluating relational dataset node indices", e); }
+                    } catch(e) {}
                 }
             }
-
-            if(matchesCount === 0) {
-                targetContainer.innerHTML = '<p class="text-xs text-slate-400 italic text-center py-6">No matching records found inside local storage buffer.</p>';
-            }
+            if(matchesCount === 0) targetContainer.innerHTML = '<p class="text-xs text-slate-400 italic text-center py-6">No matching records found.</p>';
         }
 
         function loadArchivedPatientState(key) {
             try {
                 const data = JSON.parse(localStorage.getItem(key));
-                
                 document.getElementById('form_file_no').value = data.fileNo;
                 document.getElementById('form_visit_no').value = data.visitNo;
                 document.getElementById('form_visit_type').value = data.visitType;
@@ -1414,13 +1238,6 @@
                 document.getElementById('vitals_temp').value = data.vitals.temp;
                 document.getElementById('vitals_spo2').value = data.vitals.spo2;
                 document.getElementById('vitals_rbs').value = data.vitals.rbs;
-
-                document.querySelectorAll('.med-cond-cb').forEach(cb => {
-                    cb.checked = data.medicalConditions.includes(cb.value);
-                });
-                document.querySelectorAll('.habit-cb').forEach(cb => {
-                    cb.checked = data.habits.includes(cb.value);
-                });
 
                 document.getElementById('med_allergies').value = data.allergies;
                 document.getElementById('med_current').value = data.medications;
@@ -1447,21 +1264,13 @@
                 document.getElementById('bill_advance').value = data.billing.advance;
                 document.getElementById('bill_pay_mode').value = data.billing.payMode;
                 document.getElementById('bill_pay_status').value = data.billing.payStatus;
-                
-                document.getElementById('input_doctor').value = data.doctor;
-                document.getElementById('input_reg_no').value = data.regNo;
 
-                // Restore runtime dentition charting map states
                 Object.keys(data.odontogram).forEach(k => {
                     structuralToothPathologyCache[k] = data.odontogram[k];
-                    const element = document.getElementById(`input-tooth-${k}`);
-                    if(element) {
-                        element.className = 'tooth-box';
-                        if(data.odontogram[k] !== 'normal') element.classList.add(`cond-${data.odontogram[k]}`);
-                    }
+                    const el = document.getElementById(`input-tooth-${k}`);
+                    if(el) { el.className = 'tooth-box'; if(data.odontogram[k] !== 'normal') el.classList.add(`cond-${data.odontogram[k]}`); }
                 });
 
-                // Clear and recreate dynamic billing elements
                 const container = document.getElementById('billing-dynamic-target-rows');
                 container.innerHTML = '';
                 data.procedures.forEach(p => {
@@ -1481,14 +1290,13 @@
                 triggerDynamicEvaluationCalculations();
                 executeFinancialBalancingCalculations();
                 closePatientDatabaseViewer();
-                alert(`📂 Data file for ${data.name} loaded into active view!`);
+                alert(`📂 Record for ${data.name} initialized successfully!`);
             } catch(e) { alert("Failed to successfully parse the archived state node."); }
         }
 
         function purgeArchivedPatientState(key) {
             if(confirm("Are you sure you want to permanently delete this case passport file?")) {
-                localStorage.removeItem(key);
-                executeDatabaseRegistrySearch();
+                localStorage.removeItem(key); executeDatabaseRegistrySearch();
             }
         }
 
@@ -1496,7 +1304,7 @@
             return new Promise((resolve) => {
                 const fileField = document.getElementById(inputId);
                 const targetImg = document.getElementById(pdfTargetId);
-                if (fileField.files && fileField.files[0]) {
+                if (fileField && fileField.files && fileField.files[0]) {
                     const reader = new FileReader();
                     reader.onload = function(e) {
                         targetImg.src = e.target.result;
@@ -1511,43 +1319,102 @@
             });
         }
 
-        // Processing framework dynamically assembling educational segments inside the document
         function compilePersonalizedEducationAdviceBlocks(payload) {
             const target = document.getElementById('pdf_personalized_advice_target');
             target.innerHTML = '';
-
             const advices = [];
 
             if (payload.habits.includes('Smoking') || payload.habits.includes('Tobacco')) {
-                advices.push(`<div><span class="font-black text-red-700 block uppercase tracking-tight">🚭 Tobacco Cessation Blueprint</span><p class="mt-0.5">Smoking/Tobacco usage accelerates soft tissue oxygen depletion. Bypassing scaling steps multiplies aggressive periodontitis patterns leading to early clinical attachment structural loss.</p></div>`);
+                advices.push(`<div><span class="font-black text-red-700 block uppercase tracking-tight">Status Warning: Tobacco Complications</span><p class="mt-0.5">Smoking/Tobacco compromises micro-vascular support paths. Regular cleanings are essential to prevent aggressive, uninhibited bone loss patterns.</p></div>`);
             }
             if (payload.medicalConditions.includes('Diabetes')) {
-                advices.push(`<div><span class="font-black text-amber-700 block uppercase tracking-tight">🍭 Diabetological Oral Shield</span><p class="mt-0.5">Elevated glucose values multiply salivary glucose feeds, driving rapid microbial plaque organizing cycles. Regular deep scaling every 6 months protects periodontal bone boundaries.</p></div>`);
+                advices.push(`<div><span class="font-black text-amber-700 block uppercase tracking-tight">Status Warning: Diabetological Hygiene Control</span><p class="mt-0.5">Fluctuating systemic sugar levels increase oral bio-film activity. Professional cleanings are strictly recommended every 6 months to maintain health boundaries.</p></div>`);
             }
             if (payload.medicalConditions.includes('Pregnancy')) {
-                advices.push(`<div><span class="font-black text-pink-700 block uppercase tracking-tight">🤰 Pregnancy Gingivitis Protocol</span><p class="mt-0.5">Gestational hormonal surges trigger localized vascular responses across gum boundaries. Strict non-alcoholic saline rinses and soft-bristle scaling steps keep soft tissues stable.</p></div>`);
+                advices.push(`<div><span class="font-black text-pink-700 block uppercase tracking-tight">Status Warning: Pregnancy Gingivitis Care</span><p class="mt-0.5">Gestational hormonal shifts cause deep marginal gingival inflammation. Warm saline mouth rinses 3-4 times daily are highly advised.</p></div>`);
             }
-
-            // Fallback content layer ensuring document aesthetic symmetry bounds remain filled
             if (advices.length < 2) {
-                advices.push(`<div><span class="font-black text-teal-800 block uppercase tracking-tight">✨ Hard Tissue Enamel Optimization</span><p class="mt-0.5">Enamel minerals require chemical protection via consistent routines. Incorporate topically active fluoridated pastes, avoid mechanical structural toothbrush abrasion scripts, and maintain sound rinsing schedules.</p></div>`);
-                advices.push(`<div><span class="font-black text-teal-800 block uppercase tracking-tight">🦠 Interdental Plaque Disruption</span><p class="mt-0.5">Microbial bio-films organized inside proximal contact pathways remain untouched by regular toothbrushes. Consistent flossing routines once daily prevent interproximal carious lesions.</p></div>`);
+                advices.push(`<div><span class="font-black text-teal-800 block uppercase tracking-tight">Enamel Hard Tissue Optimization</span><p class="mt-0.5">Use topically active flourosilicic paste options, prevent aggressive abrasion friction paths, and clear intraoral sugar matrices immediately after meals.</p></div>`);
+                advices.push(`<div><span class="font-black text-teal-800 block uppercase tracking-tight">Proximal Plaque Disruption</span><p class="mt-0.5">Standard toothbrushes cannot clean hidden interdental areas. Incorporating daily flossing protocols is highly recommended to stop interproximal cavities.</p></div>`);
             }
-
             target.innerHTML = advices.join('');
         }
 
-        // Structural orchestration logic driving generation of printable vector outputs
-        async function orchestrateClinicalHealthPassportPDF() {
+        function compileFullUnifiedPatientPayload() {
+            const checkedMedicalConditions = [];
+            document.querySelectorAll('.med-cond-cb:checked').forEach(cb => checkedMedicalConditions.push(cb.value));
+
+            const checkedHabits = [];
+            document.querySelectorAll('.habit-cb:checked').forEach(cb => checkedHabits.push(cb.value));
+
+            const compiledProceduresArray = [];
+            document.querySelectorAll('#billing-dynamic-target-rows > div').forEach(row => {
+                const desc = row.querySelector('.proc-desc-input').value;
+                const tooth = row.querySelector('.proc-tooth-input').value;
+                const cost = parseFloat(row.querySelector('.proc-cost-input').value) || 0;
+                if(desc || cost > 0) compiledProceduresArray.push({ desc, tooth, cost });
+            });
+
+            const currentTimestamp = new Date();
+            return {
+                fileNo: document.getElementById('form_file_no').value.trim().toUpperCase() || 'TEMP_ID',
+                visitNo: document.getElementById('form_visit_no').value.trim() || '01',
+                visitType: document.getElementById('form_visit_type').value,
+                name: document.getElementById('form_name').value.trim() || 'Unassigned Record',
+                dob: document.getElementById('form_dob').value,
+                age: document.getElementById('form_age').value,
+                gender: document.getElementById('form_gender').value,
+                mobile: document.getElementById('form_mobile').value.trim(),
+                whatsapp: document.getElementById('form_whatsapp').value.trim(),
+                email: document.getElementById('form_email').value.trim(),
+                address: document.getElementById('form_address').value.trim(),
+                city: document.getElementById('form_city').value.trim(),
+                state: document.getElementById('form_state').value.trim(),
+                pin: document.getElementById('form_pin').value.trim(),
+                referredBy: document.getElementById('form_referred').value.trim(),
+                vitals: {
+                    bp: document.getElementById('vitals_bp').value, pulse: document.getElementById('vitals_pulse').value,
+                    temp: document.getElementById('vitals_temp').value, spo2: document.getElementById('vitals_spo2').value,
+                    rbs: document.getElementById('vitals_rbs').value
+                },
+                medicalConditions: checkedMedicalConditions,
+                allergies: document.getElementById('med_allergies').value,
+                medications: document.getElementById('med_current').value,
+                complaint: document.getElementById('dental_complaint').value,
+                painScale: document.getElementById('dental_pain_scale').value,
+                habits: checkedHabits,
+                pastTreatment: document.getElementById('dental_past').value,
+                mouthOpening: document.getElementById('exam_mouth_opening').value,
+                extraOral: document.getElementById('exam_extra_oral').value,
+                intraOral: document.getElementById('exam_intra_oral').value,
+                odontogram: Object.assign({}, structuralToothPathologyCache),
+                indices: {
+                    plaque: document.getElementById('idx_plaque').value, calculus: document.getElementById('idx_calculus').value,
+                    stains: document.getElementById('idx_stains').value, gingival: document.getElementById('idx_gingival').value
+                },
+                provisionalDiagnosis: document.getElementById('diag_provisional').value,
+                finalDiagnosis: document.getElementById('diag_final').value,
+                opgRecommendation: document.getElementById('form_opg_recommendation').value,
+                priority: document.getElementById('form_treatment_priority').value,
+                procedures: compiledProceduresArray,
+                billing: {
+                    consultationFee: parseFloat(document.getElementById('bill_con_fee').value) || 0,
+                    discount: parseFloat(document.getElementById('bill_discount').value) || 0,
+                    advance: parseFloat(document.getElementById('bill_advance').value) || 0,
+                    payMode: document.getElementById('bill_pay_mode').value, payStatus: document.getElementById('bill_pay_status').value
+                },
+                doctor: document.getElementById('input_doctor').value, regNo: document.getElementById('input_reg_no').value,
+                dateString: currentTimestamp.toLocaleDateString('en-IN'), timeString: currentTimestamp.toLocaleTimeString('en-IN', { hour: '2-digit', minute: '2-digit' })
+            };
+        }
+
+        async function compileAndDownloadPDF() {
             const dData = triggerDynamicEvaluationCalculations();
             const fData = executeFinancialBalancingCalculations();
             const payload = compileFullUnifiedPatientPayload();
 
-            // Document Identification Tags Sync
             document.getElementById('pdf_lbl_file_no').innerText = payload.fileNo;
             document.getElementById('pdf_lbl_visit_no').innerText = payload.visitNo;
-
-            // Semantic Demographic Mapping Data Sync
             document.getElementById('pdf_val_name').innerText = payload.name;
             document.getElementById('pdf_val_age').innerText = payload.age || '--';
             document.getElementById('pdf_val_gender').innerText = payload.gender;
@@ -1555,38 +1422,21 @@
             document.getElementById('pdf_val_date').innerText = payload.dateString;
             document.getElementById('pdf_val_time').innerText = payload.timeString;
             document.getElementById('pdf_val_mobile').innerText = payload.mobile || '--';
-            document.getElementById('pdf_val_city').innerText = payload.city || '--';
-            document.getElementById('pdf_view_location').innerText = payload.address || 'Not Logged';
+            document.getElementById('pdf_val_city').innerText = payload.address || '--';
 
-            // Pre Surgical Vital Indicators Sync
-            document.getElementById('pdf_val_bp').innerText = payload.vitals.bp;
-            document.getElementById('pdf_val_pulse').innerText = payload.vitals.pulse;
-            document.getElementById('pdf_val_temp').innerText = payload.vitals.temp;
-            document.getElementById('pdf_val_spo2').innerText = payload.vitals.spo2;
-            document.getElementById('pdf_val_rbs').innerText = payload.vitals.rbs;
-
-            document.getElementById('pdf_val_comorbidities').innerText = payload.medicalConditions.length > 0 ? payload.medicalConditions.join(', ') : 'None Disclosed';
-            document.getElementById('pdf_val_allergies').innerText = payload.allergies;
-            document.getElementById('pdf_val_medications').innerText = payload.medications;
-            document.getElementById('pdf_val_complaint').innerText = payload.complaint || 'General Oral Evaluation';
-            document.getElementById('pdf_val_pain').innerText = payload.painScale;
-            document.getElementById('pdf_val_habits').innerText = payload.habits.length > 0 ? payload.habits.join(', ') : 'None Logged';
-            document.getElementById('pdf_val_mouth_opening').innerText = payload.mouthOpening;
-            document.getElementById('pdf_val_extra_oral').innerText = payload.extraOral;
-            document.getElementById('pdf_val_intra_oral').innerText = payload.intraOral;
-
-            // Diagnostic Badges Synchronization
             document.getElementById('pdf_score_large').innerText = `${dData.score} / 10`;
             document.getElementById('pdf_view_score').innerText = `${dData.score} / 10`;
             document.getElementById('pdf_score_rating').innerText = document.getElementById('calc_score_rating_badge').innerText;
             document.getElementById('pdf_score_rating').className = document.getElementById('calc_score_rating_badge').className + " text-center block text-[9px] py-0.5 font-black uppercase mt-1 rounded tracking-wide";
-            
             document.getElementById('pdf_risk_large').innerText = dData.risk;
             document.getElementById('pdf_risk_large').className = `text-xl font-black my-3 uppercase tracking-tight ${dData.risk.includes('High') ? 'text-red-600' : dData.risk.includes('Moderate') ? 'text-amber-600' : 'text-emerald-700'}`;
-            
             document.getElementById('pdf_priority_large').innerText = payload.priority;
 
-            // Mapping Dynamic Triage Action Outputs
+            let narrative = `Patient ${payload.name} (${payload.age || '--'} Yrs/${payload.gender}) received a thorough examination on ${payload.dateString}. The diagnostic evaluation shows an oral score of ${dData.score}/10, indicating a ${dData.risk.toLowerCase()} profile. `;
+            if(payload.complaint) narrative += `The primary reported symptom is: ${payload.complaint}. `;
+            narrative += `The findings align with a provisional diagnosis of ${payload.provisionalDiagnosis.toLowerCase()}. Appropriate treatment steps are highly advised to stabilize the dental conditions.`;
+            document.getElementById('pdf_ai_summary').innerText = narrative;
+
             document.getElementById('pdf_view_treat_needed').innerText = payload.treatNeeded = document.getElementById('input_treat_needed').value;
             document.getElementById('pdf_view_exam_needed').innerText = payload.examNeeded = document.getElementById('input_exam_needed').value;
             document.getElementById('pdf_view_scan_needed').innerText = payload.scanNeeded = document.getElementById('input_scan_needed').value;
@@ -1596,77 +1446,55 @@
             document.getElementById('pdf_calculus_status').innerHTML = getSeverityLabel(payload.indices.calculus);
             document.getElementById('pdf_lbl_gingival').innerText = payload.indices.gingival.toUpperCase();
 
-            // Structural Dentition Target Grid Maps Compositions
-            const fdiUpperList = ['18','17','16','15','14','13','12','11','21','22','23','24','25','26','27','28'];
-            const fdiLowerList = ['48','47','46','45','44','43','42','41','31','32','33','34','35','36','37','38'];
-            
             const pdfUTarget = document.getElementById('pdf-upper-odontogram-target');
             const pdfLTarget = document.getElementById('pdf-lower-odontogram-target');
-            pdfUTarget.innerHTML = '';
-            pdfLTarget.innerHTML = '';
+            pdfUTarget.innerHTML = ''; pdfLTarget.innerHTML = '';
 
-            const summaryCaries = []; const summaryMissing = []; const summaryMobility = []; 
-            const summaryStumps = []; const summaryFractures = []; const summaryRestorations = [];
+            const fdiUpperList = ['18','17','16','15','14','13','12','11','21','22','23','24','25','26','27','28'];
+            const fdiLowerList = ['48','47','46','45','44','43','42','41','31','32','33','34','35','36','37','38'];
 
-            function renderPdfToothNode(num, container) {
-                const node = document.createElement('div');
-                node.className = 'border text-[9px] font-bold p-1 rounded bg-slate-50 border-slate-200 text-center';
-                node.innerText = num;
-                const state = payload.odontogram[num];
-                if(state !== 'normal') {
-                    node.classList.add(`cond-${state}`);
-                    if(state === 'caries') summaryCaries.push(num);
-                    if(state === 'missing') summaryMissing.push(num);
-                    if(state === 'mobility') summaryMobility.push(num);
-                    if(state === 'rootstump') summaryStumps.push(num);
-                    if(state === 'fracture') summaryFractures.push(num);
-                    if(['filling','crown','bridge','implant'].includes(state)) summaryRestorations.push(`${num}(${state.toUpperCase()})`);
+            const scCaries = []; const scMissing = []; const scMobility = []; const scStumps = []; const scFractures = []; const scRestorations = [];
+
+            function renderPdfNode(num, container) {
+                const n = document.createElement('div'); n.innerText = num;
+                n.className = 'border text-[9px] font-bold p-1 rounded bg-slate-50 border-slate-200 text-center';
+                const s = payload.odontogram[num];
+                if(s !== 'normal') {
+                    n.classList.add(`cond-${s}`);
+                    if(s === 'caries') scCaries.push(num);
+                    if(s === 'missing') scMissing.push(num);
+                    if(s === 'mobility') scMobility.push(num);
+                    if(s === 'rootstump') scStumps.push(num);
+                    if(s === 'fracture') scFractures.push(num);
+                    if(['filling','crown','bridge','implant'].includes(s)) scRestorations.push(`${num}(${s.toUpperCase()})`);
                 }
-                container.appendChild(node);
+                container.appendChild(n);
             }
+            fdiUpperList.forEach(num => renderPdfNode(num, pdfUTarget));
+            fdiLowerList.forEach(num => renderPdfNode(num, pdfLTarget));
 
-            fdiUpperList.forEach(num => renderPdfToothNode(num, pdfUTarget));
-            fdiLowerList.forEach(num => renderPdfToothNode(num, pdfLTarget));
+            document.getElementById('pdf_chart_caries').innerText = scCaries.length > 0 ? `Carious Lesions tracked wrt: ${scCaries.sort().join(', ')}` : 'No active carious decay zones logged.';
+            document.getElementById('pdf_chart_missing').innerText = scMissing.length > 0 ? `Missing Units tracked wrt: ${scMissing.sort().join(', ')}` : 'Standard adult units accounted for.';
+            document.getElementById('pdf_chart_mobility').innerText = scMobility.length > 0 ? `Pathological mobility tracked wrt: ${scMobility.sort().join(', ')}` : 'Structural teeth values remain firm.';
+            document.getElementById('pdf_chart_rootstumps').innerText = scStumps.length > 0 ? `Necrotic stumps logged wrt: ${scStumps.sort().join(', ')}` : 'No retained sub-gingival stumps found.';
+            document.getElementById('pdf_chart_fractures').innerText = scFractures.length > 0 ? `Enamel shear fracture tracked wrt: ${scFractures.sort().join(', ')}` : 'No physical fracture traces logged.';
+            document.getElementById('pdf_chart_restorations').innerText = scRestorations.length > 0 ? `Active structural restorations tracked wrt: ${scRestorations.sort().join(', ')}` : 'No artificial restorations found.';
 
-            // Populate specific structural findings arrays text nodes
-            document.getElementById('pdf_chart_caries').innerText = summaryCaries.length > 0 ? `Carious Lesions tracked wrt: ${summaryCaries.sort().join(', ')}` : 'No active carious decay zones logged.';
-            document.getElementById('pdf_chart_missing').innerText = summaryMissing.length > 0 ? `Missing Units tracked wrt: ${summaryMissing.sort().join(', ')}` : 'Standard adult units accounted for.';
-            document.getElementById('pdf_chart_mobility').innerText = summaryMobility.length > 0 ? `Pathological mobility tracked wrt: ${summaryMobility.sort().join(', ')}` : 'Structural teeth values remain firm.';
-            document.getElementById('pdf_chart_rootstumps').innerText = summaryStumps.length > 0 ? `Necrotic stumps logged wrt: ${summaryStumps.sort().join(', ')}` : 'No retained sub-gingival stumps found.';
-            document.getElementById('pdf_chart_fractures').innerText = summaryFractures.length > 0 ? `Enamel shear fracture tracked wrt: ${summaryFractures.sort().join(', ')}` : 'No physical fracture traces logged.';
-            document.getElementById('pdf_chart_restorations').innerText = summaryRestorations.length > 0 ? `Active structural restorations tracked wrt: ${summaryRestorations.sort().join(', ')}` : 'No artificial restorations found.';
-
-            // Structural Automated Patient Narrative Compiler Script
-            let narrativeBlockText = `Patient ${payload.name}, an adult individual measuring ${payload.age || '--'} years of age, presented for a clinical session under ${payload.visitType} context bounds. Upon thorough objective examination tracking diagnostic variables, a dynamic clinical safety condition score of ${dData.score} out of 10 was successfully determined, factoring an ongoing ${dData.risk.toLowerCase()} matrix. `;
-            
-            if(summaryCaries.length > 0) { narrativeBlockText += `Active enamel cavitation breakdown pathways were explicitly mapped wrt units ${summaryCaries.join(', ')}, requiring programmatic physical restoration steps. `; }
-            if(payload.indices.calculus !== "0" || payload.indices.plaque !== "0") { narrativeBlockText += `Varying accumulations of soft microbacterial bio-films and mineralized sub-gingival tartar concretion fields require complete mechanical prophylaxis to clear infection triggers. `; }
-            narrativeBlockText += `A localized provisional diagnosis definition points to ${payload.provisionalDiagnosis.toLowerCase()}. All strategic treatment intervention elements detailed across the passport roadmap have been designed to protect oral support safety limits.`;
-            
-            document.getElementById('pdf_ai_summary').innerText = narrativeBlockText;
-
-            // Map recommendations list block text lines
-            const ul = document.getElementById('pdf_view_recommendations');
-            ul.innerHTML = '';
+            const ul = document.getElementById('pdf_view_recommendations'); ul.innerHTML = '';
             if (payload.recommendations = document.getElementById('input_recommendations').value.trim()) {
                 payload.recommendations.split('\n').forEach(line => {
                     if(line.trim()) { const li = document.createElement('li'); li.innerText = line; ul.appendChild(li); }
                 });
-            } else { ul.innerHTML = '<li class="list-none text-slate-400 italic">No custom specific treatment instructions logged for this session.</li>'; }
+            } else { ul.innerHTML = '<li class="list-none text-slate-400 italic">No treatment recommendations logged.</li>'; }
 
-            // Dynamic Billing Compilation Logic
-            const pdfBillBody = document.getElementById('pdf_billing_table_body_target');
-            pdfBillBody.innerHTML = '';
-            
+            const pdfBillBody = document.getElementById('pdf_billing_table_body_target'); pdfBillBody.innerHTML = '';
             if(payload.procedures.length > 0) {
                 document.getElementById('pdf_billing_container').classList.remove('hidden');
                 payload.procedures.forEach(p => {
-                    const row = document.createElement('tr');
-                    row.className = 'border-b';
-                    row.innerHTML = `<td class="p-2.5 pl-4 font-bold text-slate-800">• ${p.desc}</td><td class="p-2.5 text-slate-500 font-semibold">${p.tooth || '--'}</td><td class="p-2.5 text-right pr-4 font-black text-slate-900">₹${p.cost}</td>`;
-                    pdfBillBody.appendChild(row);
+                    const r = document.createElement('tr'); r.className = 'border-b';
+                    r.innerHTML = `<td class="p-2.5 pl-4 font-bold text-slate-800">• ${p.desc}</td><td class="p-2.5 text-slate-500 font-semibold">${p.tooth || '--'}</td><td class="p-2.5 text-right pr-4 font-black text-slate-900">₹${p.cost}</td>`;
+                    pdfBillBody.appendChild(r);
                 });
-                
                 document.getElementById('pdf_bill_con_fee').innerText = `₹${payload.billing.consultationFee}`;
                 document.getElementById('pdf_bill_proc_total').innerText = `₹${fData.totalProc}`;
                 document.getElementById('pdf_bill_discount').innerText = `-₹${payload.billing.discount}`;
@@ -1674,7 +1502,7 @@
                 document.getElementById('pdf_bill_net_due').innerText = `₹${fData.netDue}`;
             } else {
                 document.getElementById('pdf_billing_container').classList.add('hidden');
-                pdfBillBody.innerHTML = '<tr><td colspan="3" class="p-4 text-center text-slate-400 italic">No itemized commercial procedure ledger items captured for this file print.</td></tr>';
+                pdfBillBody.innerHTML = '<tr><td colspan="3" class="p-4 text-center text-slate-400 italic">No itemized procedures logged.</td></tr>';
             }
 
             document.getElementById('pdf_val_pay_mode').innerText = payload.billing.payMode;
@@ -1683,32 +1511,22 @@
             document.getElementById('pdf_val_reg_no').innerText = payload.regNo || 'KDC-XXXXX';
             document.getElementById('pdf_val_patient_name_stamp').innerText = payload.name;
 
-            // Map Multi Image Matrix Attachments
-            await mapLocalImageInputToRenderPipelineTarget('cam_front_before', 'pdf_view_front_before');
-            await mapLocalImageInputToRenderPipelineTarget('cam_front_after', 'pdf_view_front_after');
-            await mapLocalImageInputToRenderPipelineTarget('cam_upper_before', 'pdf_view_upper_before');
-            await mapLocalImageInputToRenderPipelineTarget('cam_upper_after', 'pdf_view_upper_after');
-            await mapLocalImageInputToRenderPipelineTarget('cam_lower_before', 'pdf_view_lower_before');
-            await mapLocalImageInputToRenderPipelineTarget('cam_lower_after', 'pdf_view_lower_after');
-            await mapLocalImageInputToRenderPipelineTarget('cam_extra_1', 'pdf_img_extra_1');
-            await mapLocalImageInputToRenderPipelineTarget('cam_extra_2', 'pdf_img_extra_2');
-            await mapLocalImageInputToRenderPipelineTarget('cam_extra_3', 'pdf_img_extra_3');
-            await mapLocalImageInputToRenderPipelineTarget('cam_xray_iopa', 'pdf_img_iopa');
-            await mapLocalImageInputToRenderPipelineTarget('cam_xray_cbct', 'pdf_img_cbct');
-
-            // Render vector data signatures into clean targets
-            document.getElementById('pdf_sig_doctor_img').src = document.getElementById('canvas-sig-doctor').toDataURL();
-            document.getElementById('pdf_sig_doctor_img').classList.remove('hidden');
-            
-            document.getElementById('pdf_sig_patient_img').src = document.getElementById('canvas-sig-patient').toDataURL();
-            document.getElementById('pdf_sig_patient_img').classList.remove('hidden');
+            await extractFileImage('cam_front_before', 'pdf_img_front_before');
+            await extractFileImage('cam_front_after', 'pdf_img_front_after');
+            await extractFileImage('cam_upper_before', 'pdf_img_upper_before');
+            await extractFileImage('cam_upper_after', 'pdf_img_upper_after');
+            await extractFileImage('cam_lower_before', 'pdf_img_lower_before');
+            await extractFileImage('cam_lower_after', 'pdf_img_lower_after');
+            await extractFileImage('cam_extra_1', 'pdf_img_extra_1');
+            await extractFileImage('cam_extra_2', 'pdf_img_extra_2');
+            await extractFileImage('cam_extra_3', 'pdf_img_extra_3');
+            await extractFileImage('cam_xray_iopa', 'pdf_img_iopa');
+            await extractFileImage('cam_xray_cbct', 'pdf_img_cbct');
 
             compilePersonalizedEducationAdviceBlocks(payload);
 
-            // Execute the PDF build sequence using optimized rendering rules
             const targetElementNode = document.getElementById('passport-document-canvas');
             const sanitizedPatientFilename = payload.name.replace(/\s+/g, '_');
-            
             const standardExportOptions = {
                 margin: 0,
                 filename: `Sri_Aura_Dental_Care_${payload.fileNo}_${sanitizedPatientFilename}_Visit${payload.visitNo}.pdf`,
@@ -1716,12 +1534,10 @@
                 html2canvas: { scale: 2, useCORS: true, logging: false },
                 jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
             };
-
             html2pdf().from(targetElementNode).set(standardExportOptions).save();
 
-            // Configure WhatsApp automated forward tracking strings
             const waButton = document.getElementById('whatsappShareBtn');
-            const encodedTemplateMessage = encodeURIComponent(`Hello ${payload.name}, your premium digital Dental Health Passport file ledger from Sri Aura Dental Care has been securely compiled. File reference number: ${payload.fileNo}. Contact us if any adjustments are needed.`);
+            const encodedTemplateMessage = encodeURIComponent(`Hello ${payload.name}, your premium digital Dental Health Passport file ledger from Sri Aura Dental Care has been successfully compiled.`);
             waButton.href = `https://wa.me/918838135459?text=${encodedTemplateMessage}`;
             waButton.classList.remove('hidden');
         }
