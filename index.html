@@ -8,17 +8,9 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@300;400;500;600;700;800;900&display=swap');
-        body { font-family: 'Hanken Grotesk', sans-serif; transition: background-color 0.3s, color 0.3s; }
-        
-        .dark-mode { background-color: #0f172a; color: #f8fafc; }
-        .dark-mode .bg-white { background-color: #1e293b !important; color: #f8fafc; }
-        .dark-mode .border-slate-200 { border-color: #334155 !important; }
-        .dark-mode input, .dark-mode select, .dark-mode textarea { background-color: #334155 !important; color: #f8fafc !important; border-color: #475569 !important; }
-        .dark-mode label { color: #cbd5e1 !important; }
-
+        body { font-family: 'Hanken Grotesk', sans-serif; }
         .wizard-step { display: none; }
         .wizard-step.active { display: block; }
-
         .pdf-page-layout {
             width: 210mm;
             min-height: 297mm;
@@ -31,6 +23,11 @@
             position: relative;
         }
         .pdf-page-layout:last-child { page-break-after: avoid; }
+        
+        .tooth-grid { display: grid; grid-template-columns: repeat(16, 1fr); gap: 2px; text-align: center; }
+        .tooth-box { border: 1px solid #cbd5e1; border-radius: 4px; padding: 4px 2px; font-size: 9px; font-weight: bold; cursor: pointer; background: #f8fafc; transition: all 0.2s; }
+        .tooth-box.selected-caries { background: #fee2e2; border-color: #ef4444; color: #b91c1c; }
+        .tooth-box.selected-calculus { background: #fef3c7; border-color: #f59e0b; color: #b45309; }
 
         .cond-caries { background-color: #ef4444 !important; color: #ffffff !important; }
         .cond-missing { background-color: #64748b !important; color: #ffffff !important; }
@@ -50,27 +47,21 @@
             font-size: 72px; font-weight: 900; color: rgba(15, 118, 110, 0.04);
             pointer-events: none; white-space: nowrap; user-select: none; z-index: 0;
         }
-        .tooth-grid { display: grid; grid-template-columns: repeat(16, 1fr); gap: 2px; text-align: center; }
-        .tooth-box { border: 1px solid #cbd5e1; border-radius: 4px; padding: 4px 2px; font-size: 9px; font-weight: bold; cursor: pointer; background: #f8fafc; transition: all 0.2s; }
-        .tooth-box.selected-caries { background: #fee2e2; border-color: #ef4444; color: #b91c1c; }
-        .tooth-box.selected-calculus { background: #fef3c7; border-color: #f59e0b; color: #b45309; }
     </style>
 </head>
 <body class="bg-slate-50 text-slate-800 min-h-screen antialiased">
 
-    <!-- NAVIGATION CORE COMPONENT BAR -->
     <nav class="bg-teal-800 text-white shadow-lg sticky top-0 z-40 px-6 py-3 flex justify-between items-center print:hidden">
         <div class="flex items-center gap-3">
             <span class="text-xl font-black tracking-wider uppercase">SRI AURA DENTAL CARE</span>
             <span class="bg-teal-600 text-[10px] font-bold px-2 py-0.5 rounded-full uppercase tracking-tight">Health Passport Terminal</span>
         </div>
         <div class="flex items-center gap-4">
-            <button onclick="toggleColorThemeMode()" class="p-2 bg-teal-700 hover:bg-teal-600 rounded-lg text-sm transition font-bold shadow-inner">¼ Theme Toggle</button>
+            <button onclick="toggleColorThemeMode()" class="p-2 bg-teal-700 hover:bg-teal-600 rounded-lg text-sm transition font-bold shadow-inner">🌓 Theme Toggle</button>
             <button onclick="openPatientDatabaseViewer()" class="p-2 bg-sky-700 hover:bg-sky-600 rounded-lg text-sm transition font-bold shadow-inner">📁 Patient Database Ledger</button>
         </div>
     </nav>
 
-    <!-- DATABASE ARCHIVAL DRAWER OVERLAY -->
     <div id="db-drawer-overlay" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 hidden flex justify-end transition-opacity">
         <div class="w-full max-w-2xl bg-white h-full shadow-2xl p-6 overflow-y-auto flex flex-col">
             <div class="flex justify-between items-center border-b pb-4 mb-4">
@@ -84,25 +75,23 @@
         </div>
     </div>
 
-    <!-- MAIN SYSTEM CONTROLLER GRID PLATFORM -->
     <main class="max-w-6xl mx-auto px-4 py-8 grid grid-cols-1 lg:grid-cols-12 gap-8 print:hidden">
         <div class="lg:col-span-3 space-y-3 bg-white p-4 rounded-xl border border-slate-200 h-fit shadow-sm">
             <span class="text-xs font-black uppercase text-slate-400 tracking-wider block mb-2">Passport Roadmap Tracker</span>
             <div class="space-y-1.5 text-xs font-bold" id="flow-indicator-nodes">
-                <div class="p-2.5 rounded-lg border bg-teal-50 border-teal-200 text-teal-800 flex items-center gap-2" id="node-step-1"><span>01</span> Demographics &amp; Session Info</div>
-                <div class="p-2.5 rounded-lg border bg-slate-50 border-slate-200 text-slate-500 flex items-center gap-2" id="node-step-2"><span>02</span> Medical Evaluation sheets</div>
-                <div class="p-2.5 rounded-lg border bg-slate-50 border-slate-200 text-slate-500 flex items-center gap-2" id="node-step-3"><span>03</span> Dental Mapping Odontogram</div>
-                <div class="p-2.5 rounded-lg border bg-slate-50 border-slate-200 text-slate-500 flex items-center gap-2" id="node-step-4"><span>04</span> Image Capture Portfolio</div>
-                <div class="p-2.5 rounded-lg border bg-slate-50 border-slate-200 text-slate-500 flex items-center gap-2" id="node-step-5"><span>05</span> Invoicing &amp; Informed Consents</div>
+                <div class="p-2.5 rounded-lg border bg-teal-50 border-teal-200 text-teal-800 flex items-center gap-2" id="node-step-1"><span>01</span> Demographics & Info</div>
+                <div class="p-2.5 rounded-lg border bg-slate-50 border-slate-200 text-slate-500 flex items-center gap-2" id="node-step-2"><span>02</span> Medical Screening</div>
+                <div class="p-2.5 rounded-lg border bg-slate-50 border-slate-200 text-slate-500 flex items-center gap-2" id="node-step-3"><span>03</span> Dental Mapping</div>
+                <div class="p-2.5 rounded-lg border bg-slate-50 border-slate-200 text-slate-500 flex items-center gap-2" id="node-step-4"><span>04</span> Image Portfolio</div>
+                <div class="p-2.5 rounded-lg border bg-slate-50 border-slate-200 text-slate-500 flex items-center gap-2" id="node-step-5"><span>05</span> Invoicing & Consents</div>
             </div>
         </div>
 
         <div class="lg:col-span-9 bg-white border border-slate-200 rounded-xl p-8 shadow-sm">
             <form id="healthPassportForm" onsubmit="event.preventDefault();">
                 
-                <!-- STEP 1: DEMOGRAPHICS PANEL -->
                 <div class="wizard-step active" data-step="1">
-                    <h3 class="text-lg font-bold text-slate-800 border-b pb-3 mb-6 flex items-center gap-2 text-teal-700">📋 Step 1: Patient Demographics &amp; Context</h3>
+                    <h3 class="text-lg font-bold text-slate-800 border-b pb-3 mb-6 flex items-center gap-2 text-teal-700">📋 Step 1: Patient Demographics & Context</h3>
                     <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
                         <div>
                             <label class="block text-xs font-bold text-slate-500 uppercase">Patient File No.</label>
@@ -183,7 +172,6 @@
                     </div>
                 </div>
 
-                <!-- STEP 2: HEALTH SCREENING & VITALS CASE SHEET -->
                 <div class="wizard-step" data-step="2">
                     <h3 class="text-lg font-bold text-slate-800 border-b pb-3 mb-6 flex items-center gap-2 text-teal-700">🩺 Step 2: Systemic Pre-Surgical Triage & Medical Records</h3>
                     <div class="grid grid-cols-1 md:grid-cols-5 gap-3 mb-6 bg-slate-50 p-4 rounded-xl border">
@@ -287,7 +275,6 @@
                     </div>
                 </div>
 
-                <!-- STEP 3: INTERACTIVE ODONTOGRAM & CLINICAL DIAGNOSTICS -->
                 <div class="wizard-step" data-step="3">
                     <h3 class="text-lg font-bold text-slate-800 border-b pb-3 mb-6 flex items-center gap-2 text-teal-700">🦷 Step 3: Interactive Dental Charting & Clinical Diagnostics</h3>
                     
@@ -391,11 +378,8 @@
                     </div>
                 </div>
 
-                <!-- STEP 4: PORTFOLIO CAMERA CAPTURE -->
                 <div class="wizard-step" data-step="4">
                     <h3 class="text-lg font-bold text-slate-800 border-b pb-3 mb-6 flex items-center gap-2 text-teal-700">📷 Step 4: High-Resolution Clinical Photo Portfolio &amp; Radiography</h3>
-                    <p class="text-xs text-slate-400 mb-4 italic">Note: File upload selectors prompt for either Gallery Folders or Live Camera Capture based on local device hardware profiles.</p>
-                    
                     <div class="space-y-4">
                         <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 bg-slate-50 p-4 border rounded-xl">
                             <div>
@@ -466,7 +450,6 @@
                     </div>
                 </div>
 
-                <!-- STEP 5: OPERATIONS BILLING & INFORMED CONSENT VALIDATION -->
                 <div class="wizard-step" data-step="5">
                     <h3 class="text-lg font-bold text-slate-800 border-b pb-3 mb-6 flex items-center gap-2 text-teal-700">💰 Step 5: Unlimited Plan Mapping &amp; Informed Disclosures</h3>
                     
@@ -526,9 +509,8 @@
                     </div>
                 </div>
 
-                <!-- RUNTIME INTERFACE WIZARD NAVIGATION BAR CONTROLS -->
                 <div class="flex justify-between items-center mt-10 pt-4 border-t border-slate-200">
-                    <button type="button" id="wizard_back_btn" onclick="executeWizardNavigation(-1)" class="px-5 py-2.5 bg-slate-200 text-slate-600 rounded-lg font-bold hover:bg-slate-300 disabled:opacity-50 transition" disabled>Back</button>
+                    <button type="button" id="wizard_back_btn" onclick="executeWizardNavigation(-1)" class="px-5 py-2.5 bg-slate-200 text-slate-600 rounded-lg font-bold hover:bg-slate-300">Back</button>
                     <button type="button" id="wizard_next_btn" onclick="executeWizardNavigation(1)" class="px-5 py-2.5 bg-teal-700 text-white rounded-lg font-bold hover:bg-teal-800 transition">Next Step</button>
                     <div id="wizard_submit_cluster" class="hidden flex gap-2">
                         <button type="button" onclick="commitFormDataToBrowserDatabase()" class="px-5 py-2.5 bg-sky-700 text-white font-bold rounded-lg hover:bg-sky-800 shadow">Save Local Changes</button>
@@ -539,13 +521,9 @@
         </div>
     </main>
 
-    <!-- ========================================== -->
-    <!-- HIDDEN VECTOR GRAPHICS COMPILING CANVAS     -->
-    <!-- ========================================== -->
     <div class="hidden">
         <div id="passport-document-canvas" class="bg-white text-slate-900 leading-relaxed text-sm">
             
-            <!-- PAGE 1: REBRANDED EXECUTIVE OVERVIEW -->
             <div class="pdf-page-layout">
                 <div class="watermark-text">SRI AURA DENTAL CARE</div>
                 
@@ -676,7 +654,6 @@
                 </div>
             </div>
 
-            <!-- PAGE 2: CLINICAL ODONTOGRAM MAPS -->
             <div class="pdf-page-layout">
                 <div class="watermark-text">SRI AURA DENTAL CARE</div>
                 
@@ -766,7 +743,6 @@
                 </div>
             </div>
 
-            <!-- PAGE 3: HIGH-RESOLUTION VISUAL PHOTO CASE SHEET -->
             <div class="pdf-page-layout">
                 <div class="watermark-text">SRI AURA DENTAL CARE</div>
                 
@@ -873,7 +849,6 @@
                 </div>
             </div>
 
-            <!-- PAGE 4: DETAILED PROCEDURAL INVOICING -->
             <div class="pdf-page-layout">
                 <div class="watermark-text">SRI AURA DENTAL CARE</div>
                 
@@ -934,7 +909,6 @@
                 </div>
             </div>
 
-            <!-- PAGE 5: PASSPORT RECALLS & ILLUSTRATED CLINICAL ADVICE -->
             <div class="pdf-page-layout">
                 <div class="watermark-text">SRI AURA DENTAL CARE</div>
                 
@@ -1019,9 +993,6 @@
         </div>
     </div>
 
-    <!-- ========================================== -->
-    <!-- PIPELINE ARCHITECTURE JAVA LOGIC           -->
-    <!-- ========================================== -->
     <script>
         let currentFormWizardStep = 1;
         const totalConfiguredFormSteps = 5;
@@ -1160,42 +1131,19 @@
             return { score: baselineScore, risk: riskBadge.innerText };
         }
 
-        function calculateTotalBill() {
-            const c1 = parseFloat(document.getElementById('bill_item1_cost').value) || 0;
-            const c2 = parseFloat(document.getElementById('bill_item2_cost').value) || 0;
-            const disc = parseFloat(document.getElementById('bill_discount').value) || 0;
-            const adv = parseFloat(document.getElementById('bill_advance').value) || 0;
-            
-            netDueBill = (c1 + c2) - (disc + adv);
+        function executeFinancialBalancingCalculations() {
+            let proceduresAggregatedTotal = 0;
+            document.querySelectorAll('.proc-cost-input').forEach(f => proceduresAggregatedTotal += parseFloat(f.value) || 0);
+
+            const conFee = parseFloat(document.getElementById('bill_con_fee').value) || 0;
+            const discount = parseFloat(document.getElementById('bill_discount').value) || 0;
+            const advance = parseFloat(document.getElementById('bill_advance').value) || 0;
+
+            netDueBill = (proceduresAggregatedTotal + conFee) - (discount + advance);
             if(netDueBill < 0) netDueBill = 0;
-            
-            document.getElementById('bill_total_badge').innerText = `₹${netDueBill}`;
-        }
 
-        function getSeverityLabel(value) {
-            if (value === "0") return `<span class="text-emerald-600">NORMAL</span>`;
-            if (value === "1") return `<span class="text-amber-500">MILD</span>`;
-            if (value === "2") return `<span class="text-orange-500">MODERATE</span>`;
-            return `<span class="text-red-600">SEVERE</span>`;
-        }
-
-        function extractFileImage(inputId, pdfTargetId) {
-            return new Promise((resolve) => {
-                const fileField = document.getElementById(inputId);
-                const targetImg = document.getElementById(pdfTargetId);
-                if (fileField.files && fileField.files[0]) {
-                    const reader = new FileReader();
-                    reader.onload = function(e) {
-                        targetImg.src = e.target.result;
-                        targetImg.classList.remove('hidden');
-                        if (targetImg.parentElement && targetImg.parentElement.querySelector('.default-placeholder')) {
-                            targetImg.parentElement.querySelector('.default-placeholder').classList.add('hidden');
-                        }
-                        resolve(true);
-                    };
-                    reader.readAsDataURL(fileField.files[0]);
-                } else { resolve(false); }
-            });
+            document.getElementById('bill_net_due_badge').innerText = `₹${netDueBill}`;
+            return { totalProc: proceduresAggregatedTotal, netDue: netDueBill };
         }
 
         function commitFormDataToBrowserDatabase() {
@@ -1400,7 +1348,7 @@
             document.getElementById('pdf_val_name').innerText = payload.name;
             document.getElementById('pdf_val_age').innerText = payload.age || '--';
             document.getElementById('pdf_val_gender').innerText = payload.gender;
-            document.getElementById('pdf_view_visit_type').innerText = payload.visitType;
+            document.getElementById('pdf_val_visit_type').innerText = payload.visitType;
             document.getElementById('pdf_val_date').innerText = payload.dateString;
             document.getElementById('pdf_val_time').innerText = payload.timeString;
             document.getElementById('pdf_val_mobile').innerText = payload.mobile || '--';
