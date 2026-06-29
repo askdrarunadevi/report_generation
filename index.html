@@ -102,7 +102,8 @@
                 <!-- STEP 1: DEMOGRAPHICS PANEL -->
                 <div class="wizard-step active" data-step="1">
                     <h3 class="text-lg font-bold text-slate-800 border-b pb-3 mb-6 flex items-center gap-2 text-teal-700">📋 Step 1: Patient Demographics &amp; Context</h3>
-                    <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-4 gap-4 mb-4">
                         <div>
                             <label class="block text-xs font-bold text-slate-500 uppercase">Patient File No.</label>
                             <input type="text" id="form_file_no" class="mt-1 w-full p-2 border border-slate-300 rounded-md uppercase" placeholder="e.g. SADC001">
@@ -112,16 +113,15 @@
                             <input type="text" id="form_visit_no" class="mt-1 w-full p-2 border border-slate-300 rounded-md" placeholder="e.g. 01" value="01">
                         </div>
                         <div>
-                            <label class="block text-xs font-bold text-slate-500 uppercase">Patient Visit Type</label>
-                            <select id="form_visit_type" class="mt-1 w-full p-2 border border-slate-300 rounded-md font-bold text-teal-800">
-                                <option value="Home Visit">🏠 Doorstep Home Visit</option>
-                                <option value="Clinic Visit">🏥 In-Clinic Session</option>
-                                <option value="Camp">🎪 Public Dental Camp</option>
-                                <option value="Emergency">🚨 Critical Emergency Triage</option>
-                                <option value="Follow-up">🔄 Routine Review Check</option>
-                            </select>
+                            <label class="block text-xs font-bold text-slate-500 uppercase">Visit Date</label>
+                            <input type="date" id="form_visit_date" class="mt-1 w-full p-2 border border-slate-300 rounded-md">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-bold text-slate-500 uppercase">Visit Time</label>
+                            <input type="time" id="form_visit_time" class="mt-1 w-full p-2 border border-slate-300 rounded-md">
                         </div>
                     </div>
+
                     <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
                         <div>
                             <label class="block text-xs font-bold text-slate-500 uppercase">Patient Full Name</label>
@@ -144,24 +144,37 @@
                             </div>
                         </div>
                     </div>
-                    <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
+
+                    <div class="grid grid-cols-1 md:grid-cols-4 gap-4 mb-4">
+                        <div>
+                            <label class="block text-xs font-bold text-slate-500 uppercase">Patient Visit Type</label>
+                            <select id="form_visit_type" class="mt-1 w-full p-2 border border-slate-300 rounded-md font-bold text-teal-800">
+                                <option value="Home Visit">🏠 Doorstep Home Visit</option>
+                                <option value="Clinic Visit">🏥 In-Clinic Session</option>
+                                <option value="Camp">🎪 Public Dental Camp</option>
+                                <option value="Emergency">🚨 Critical Emergency Triage</option>
+                                <option value="Follow-up">🔄 Routine Review Check</option>
+                            </select>
+                        </div>
                         <div>
                             <label class="block text-xs font-bold text-slate-500 uppercase">Mobile Number</label>
-                            <input type="tel" id="form_mobile" class="mt-1 w-full p-2 border border-slate-300 rounded-md" placeholder="Primary phone number">
+                            <input type="tel" id="form_mobile" class="mt-1 w-full p-2 border border-slate-300 rounded-md" placeholder="Primary phone">
                         </div>
                         <div>
                             <label class="block text-xs font-bold text-slate-500 uppercase">WhatsApp Number</label>
-                            <input type="tel" id="form_whatsapp" class="mt-1 w-full p-2 border border-slate-300 rounded-md" placeholder="WhatsApp tracking number">
+                            <input type="tel" id="form_whatsapp" class="mt-1 w-full p-2 border border-slate-300 rounded-md" placeholder="WhatsApp">
                         </div>
                         <div>
                             <label class="block text-xs font-bold text-slate-500 uppercase">Email Address</label>
-                            <input type="email" id="form_email" class="mt-1 w-full p-2 border border-slate-300 rounded-md" placeholder="askdrarunadevi@gmail.com">
+                            <input type="email" id="form_email" class="mt-1 w-full p-2 border border-slate-300 rounded-md" placeholder="email@address.com">
                         </div>
                     </div>
+                    
                     <div class="mb-4">
                         <label class="block text-xs font-bold text-slate-500 uppercase">Address Location Matrix</label>
                         <input type="text" id="form_address" class="mt-1 w-full p-2 border border-slate-300 rounded-md" placeholder="House/Flat door numbers, Street layout, etc.">
                     </div>
+                    
                     <div class="grid grid-cols-1 md:grid-cols-4 gap-4 mb-4">
                         <div>
                             <label class="block text-xs font-bold text-slate-500 uppercase">City</label>
@@ -177,17 +190,18 @@
                         </div>
                         <div>
                             <label class="block text-xs font-bold text-slate-500 uppercase">Referred By</label>
-                            <input type="text" id="form_referred" class="mt-1 w-full p-2 border border-slate-300 rounded-md" placeholder="Doctor name or Patient channel">
+                            <input type="text" id="form_referred" class="mt-1 w-full p-2 border border-slate-300 rounded-md" placeholder="Doctor or Source">
                         </div>
                     </div>
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 border-t pt-4">
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 border-t border-slate-200 pt-4">
                         <div>
                             <label class="block text-xs font-bold text-slate-500 uppercase">Assessing Surgeon</label>
-                            <input type="text" id="input_doctor" class="mt-1 w-full p-2 border border-slate-300 rounded-md" value="Dr. Aruna Devi">
+                            <input type="text" id="input_doctor" class="mt-1 w-full p-2 border border-slate-300 rounded-md bg-slate-50" value="Dr. Aruna Devi">
                         </div>
                         <div>
                             <label class="block text-xs font-bold text-slate-500 uppercase">Registration Number</label>
-                            <input type="text" id="input_reg_no" class="mt-1 w-full p-2 border border-slate-300 rounded-md" value="KDC-56832-A">
+                            <input type="text" id="input_reg_no" class="mt-1 w-full p-2 border border-slate-300 rounded-md bg-slate-50" value="KDC-56832-A">
                         </div>
                     </div>
                 </div>
@@ -195,6 +209,7 @@
                 <!-- STEP 2: HEALTH SCREENING & VITALS CASE SHEET -->
                 <div class="wizard-step" data-step="2">
                     <h3 class="text-lg font-bold text-slate-800 border-b pb-3 mb-6 flex items-center gap-2 text-teal-700">🩺 Step 2: Systemic Pre-Surgical Triage &amp; Medical Records</h3>
+                    
                     <div class="grid grid-cols-1 md:grid-cols-5 gap-3 mb-6 bg-slate-50 p-4 rounded-xl border">
                         <div>
                             <label class="block text-[10px] font-black uppercase text-slate-500">BP (mmHg)</label>
@@ -246,7 +261,7 @@
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
                         <div>
                             <label class="block text-xs font-bold text-slate-500 uppercase">Reason for Visit (Chief Complaint)</label>
-                            <input type="text" id="dental_complaint" class="mt-1 w-full p-2 border border-slate-300 rounded-md" placeholder="Describe symptoms or reasons for appointment session">
+                            <input type="text" id="dental_complaint" class="mt-1 w-full p-2 border border-slate-300 rounded-md" placeholder="Describe symptoms or reasons for session">
                         </div>
                         <div>
                             <label class="block text-xs font-bold text-slate-500 uppercase">Pain Intensity Scale (0 to 10)</label>
@@ -300,6 +315,13 @@
                 <div class="wizard-step" data-step="3">
                     <h3 class="text-lg font-bold text-slate-800 border-b pb-3 mb-6 flex items-center gap-2 text-teal-700">🦷 Step 3: Interactive Dental Charting &amp; Clinical Diagnostics</h3>
                     
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4 border-b pb-4">
+                        <div>
+                            <label class="block text-xs font-bold text-slate-500 uppercase">Dentition Type</label>
+                            <input type="text" id="input_dentition" class="mt-1 w-full p-2 border border-slate-300 rounded-md" value="Permanent">
+                        </div>
+                    </div>
+
                     <div class="bg-slate-50 p-4 rounded-xl border border-slate-200 mb-6 text-xs font-bold text-center">
                         <span class="block uppercase tracking-wider text-slate-500 mb-3 font-black">Pathology Mapping Tool (Select condition then tap target tooth)</span>
                         <div class="flex flex-wrap justify-center gap-2" id="odontogram-tool-palette">
@@ -332,7 +354,7 @@
                         </div>
                     </div>
 
-                    <div class="grid grid-cols-3 gap-4 mb-4">
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
                         <div>
                             <label class="block text-xs font-bold text-slate-500 uppercase">Plaque Index Severity</label>
                             <select id="idx_plaque" onchange="triggerDynamicEvaluationCalculations()" class="mt-1 w-full p-2 border border-slate-300 rounded-md font-bold">
@@ -362,7 +384,7 @@
                         </div>
                     </div>
 
-                    <div class="grid grid-cols-3 gap-4 mb-4">
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
                         <div>
                             <label class="block text-xs font-bold text-slate-500 uppercase">Gingival Support Tissue Status</label>
                             <select id="idx_gingival" onchange="triggerDynamicEvaluationCalculations()" class="mt-1 w-full p-2 border border-slate-300 rounded-md font-bold">
@@ -384,26 +406,26 @@
 
                     <div class="grid grid-cols-3 gap-4 pt-1">
                         <div>
-                            <label class="block text-sm font-medium text-slate-600">Treatment Needed</label>
+                            <label class="block text-xs font-bold text-slate-500 uppercase">Treatment Needed</label>
                             <select id="input_treat_needed" class="mt-1 w-full p-2 border border-slate-300 rounded-md">
                                 <option value="YES">Yes</option><option value="NO">No</option>
                             </select>
                         </div>
                         <div>
-                            <label class="block text-sm font-medium text-slate-600">Clinical Exam Needed</label>
+                            <label class="block text-xs font-bold text-slate-500 uppercase">Clinical Exam Needed</label>
                             <select id="input_exam_needed" class="mt-1 w-full p-2 border border-slate-300 rounded-md">
                                 <option value="YES">Yes</option><option value="NO">No</option>
                             </select>
                         </div>
                         <div>
-                            <label class="block text-sm font-medium text-slate-600">Full Mouth OPG Scan</label>
+                            <label class="block text-xs font-bold text-slate-500 uppercase">Full Mouth OPG Scan</label>
                             <select id="input_scan_needed" class="mt-1 w-full p-2 border border-slate-300 rounded-md">
                                 <option value="YES">Yes</option><option value="NO">No</option>
                             </select>
                         </div>
                     </div>
 
-                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-2 border-t mt-4">
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-4 border-t mt-4">
                         <div class="p-4 rounded-xl border border-slate-200 bg-slate-50/50 flex justify-between items-center">
                             <div>
                                 <span class="text-[10px] font-black uppercase text-slate-400 block tracking-wider">Dynamic Passport Score</span>
@@ -424,41 +446,43 @@
                 <!-- STEP 4: PORTFOLIO CAMERA CAPTURE -->
                 <div class="wizard-step" data-step="4">
                     <h3 class="text-lg font-bold text-slate-800 border-b pb-3 mb-6 flex items-center gap-2 text-teal-700">📷 Step 4: High-Resolution Clinical Photo Portfolio &amp; Radiography</h3>
+                    <p class="text-xs text-slate-400 mb-4 italic">All image uploads are strictly optional. Empty fields will simply reflect as "Not Captured" on the final PDF.</p>
+                    
                     <div class="space-y-4">
                         <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 bg-slate-50 p-4 border rounded-xl">
                             <div>
-                                <label class="block text-xs font-bold text-slate-600">Front Aspect Profile View (Before Treatment)</label>
+                                <label class="block text-xs font-bold text-slate-600">Front Aspect Profile View (Before)</label>
                                 <input type="file" id="cam_front_before" accept="image/*" class="mt-1 w-full p-1 bg-white border text-xs rounded">
                             </div>
                             <div>
-                                <label class="block text-xs font-bold text-slate-600">Front Aspect Profile View (After Treatment)</label>
+                                <label class="block text-xs font-bold text-slate-600">Front Aspect Profile View (After)</label>
                                 <input type="file" id="cam_front_after" accept="image/*" class="mt-1 w-full p-1 bg-white border text-xs rounded">
                             </div>
                         </div>
 
                         <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 bg-slate-50 p-4 border rounded-xl">
                             <div>
-                                <label class="block text-xs font-bold text-slate-600">Maxillary Upper Occlusal View (Before Treatment)</label>
+                                <label class="block text-xs font-bold text-slate-600">Maxillary Upper Occlusal View (Before)</label>
                                 <input type="file" id="cam_upper_before" accept="image/*" class="mt-1 w-full p-1 bg-white border text-xs rounded">
                             </div>
                             <div>
-                                <label class="block text-xs font-bold text-slate-600">Maxillary Upper Occlusal View (After Treatment)</label>
+                                <label class="block text-xs font-bold text-slate-600">Maxillary Upper Occlusal View (After)</label>
                                 <input type="file" id="cam_upper_after" accept="image/*" class="mt-1 w-full p-1 bg-white border text-xs rounded">
                             </div>
                         </div>
 
                         <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 bg-slate-50 p-4 border rounded-xl">
                             <div>
-                                <label class="block text-xs font-bold text-slate-600">Mandibular Lower Occlusal View (Before Treatment)</label>
+                                <label class="block text-xs font-bold text-slate-600">Mandibular Lower Occlusal View (Before)</label>
                                 <input type="file" id="cam_lower_before" accept="image/*" class="mt-1 w-full p-1 bg-white border text-xs rounded">
                             </div>
                             <div>
-                                <label class="block text-xs font-bold text-slate-600">Mandibular Lower Occlusal View (After Treatment)</label>
+                                <label class="block text-xs font-bold text-slate-600">Mandibular Lower Occlusal View (After)</label>
                                 <input type="file" id="cam_lower_after" accept="image/*" class="mt-1 w-full p-1 bg-white border text-xs rounded">
                             </div>
                         </div>
 
-                        <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 border p-4 bg-slate-50 rounded-xl">
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 border p-4 bg-slate-50 rounded-xl">
                             <div>
                                 <label class="block text-xs font-bold text-slate-600">Extra Photo Slot 01</label>
                                 <input type="file" id="cam_extra_1" accept="image/*" class="mt-1 w-full p-1 bg-white border text-xs rounded">
@@ -466,10 +490,6 @@
                             <div>
                                 <label class="block text-xs font-bold text-slate-600">Extra Photo Slot 02</label>
                                 <input type="file" id="cam_extra_2" accept="image/*" class="mt-1 w-full p-1 bg-white border text-xs rounded">
-                            </div>
-                            <div>
-                                <label class="block text-xs font-bold text-slate-600">Extra Photo Slot 03</label>
-                                <input type="file" id="cam_extra_3" accept="image/*" class="mt-1 w-full p-1 bg-white border text-xs rounded">
                             </div>
                         </div>
 
@@ -497,36 +517,70 @@
                 <!-- STEP 5: ADVANCED BILLING & SUGGESTIONS -->
                 <div class="wizard-step" data-step="5">
                     <h3 class="text-lg font-bold text-slate-800 border-b pb-3 mb-6 flex items-center gap-2 text-teal-700">💰 Step 5: Clinical Blueprint Suggestions &amp; Detailed Billing</h3>
+                    
                     <div class="space-y-4">
                         <div>
                             <label class="block text-sm font-medium text-slate-600">Clinical Procedures Advised (One per line)</label>
                             <textarea id="input_recommendations" rows="3" class="mt-1 w-full p-2 border border-slate-300 rounded-md text-sm" placeholder="Type core actions..."></textarea>
                         </div>
                         
+                        <!-- DYNAMIC BILLING ENGINE -->
                         <div class="border-t border-slate-200 pt-4 space-y-3 bg-slate-50 p-4 rounded-xl border">
-                            <span class="block text-sm font-bold text-slate-800">📊 Itemized Treatment Invoice Matrix (Leave blank if zero balance)</span>
-                            <div class="grid grid-cols-3 gap-2">
-                                <input type="text" id="bill_item1_desc" class="p-2 border rounded text-xs bg-white" placeholder="Procedure 1 (e.g. Scaling)">
-                                <input type="text" id="bill_item1_notes" class="p-2 border rounded text-xs bg-white" placeholder="Notes (e.g. Tooth 16, 17)">
-                                <input type="number" id="bill_item1_cost" oninput="executeFinancialBalancingCalculations()" class="p-2 border rounded text-xs bg-white proc-cost-input" placeholder="Cost (₹)">
+                            <div class="flex justify-between items-center mb-2">
+                                <span class="block text-sm font-bold text-slate-800">📊 Itemized Treatment Invoice Matrix</span>
+                                <button type="button" onclick="appendNewDynamicBillingRow()" class="px-3 py-1 bg-teal-700 text-white text-xs font-bold rounded-md shadow-sm hover:bg-teal-800">+ Add Treatment Row</button>
                             </div>
-                            <div class="grid grid-cols-3 gap-2">
-                                <input type="text" id="bill_item2_desc" class="p-2 border rounded text-xs bg-white" placeholder="Procedure 2 (e.g. RCT)">
-                                <input type="text" id="bill_item2_notes" class="p-2 border rounded text-xs bg-white" placeholder="Notes (e.g. Tooth 46)">
-                                <input type="number" id="bill_item2_cost" oninput="executeFinancialBalancingCalculations()" class="p-2 border rounded text-xs bg-white proc-cost-input" placeholder="Cost (₹)">
+                            
+                            <div class="space-y-2" id="billing-dynamic-target-rows">
+                                <!-- Dynamic rows are injected here -->
                             </div>
-                            <div class="grid grid-cols-2 gap-4 pt-2 border-t">
+                            
+                            <div class="grid grid-cols-3 gap-4 pt-4 border-t border-slate-300 mt-4">
+                                <div>
+                                    <label class="block text-xs font-semibold text-slate-500">Consultation Base Fee (₹)</label>
+                                    <input type="number" id="bill_con_fee" oninput="executeFinancialBalancingCalculations()" class="w-full p-2 border rounded text-xs bg-white mt-1" value="500">
+                                </div>
                                 <div>
                                     <label class="block text-xs font-semibold text-slate-500">Discount / Package Waiver (₹)</label>
-                                    <input type="number" id="bill_discount" oninput="executeFinancialBalancingCalculations()" class="w-full p-2 border rounded text-xs bg-white" value="0">
+                                    <input type="number" id="bill_discount" oninput="executeFinancialBalancingCalculations()" class="w-full p-2 border rounded text-xs bg-white mt-1" value="0">
                                 </div>
                                 <div>
                                     <label class="block text-xs font-semibold text-slate-500">Advance Paid Token (₹)</label>
-                                    <input type="number" id="bill_advance" oninput="executeFinancialBalancingCalculations()" class="w-full p-2 border rounded text-xs bg-white" value="0">
+                                    <input type="number" id="bill_advance" oninput="executeFinancialBalancingCalculations()" class="w-full p-2 border rounded text-xs bg-white mt-1" value="0">
                                 </div>
                             </div>
-                            <div class="text-right font-black text-slate-800 text-sm pt-2">
-                                Calculated Net Payable Due: <span id="bill_net_due_badge" class="text-teal-700">₹0</span>
+
+                            <div class="bg-teal-900 text-white p-3 rounded-lg flex justify-between items-center shadow-inner mt-2">
+                                <span class="text-xs uppercase tracking-wider font-bold">Calculated Net Payable Due:</span>
+                                <span id="bill_net_due_badge" class="text-xl font-black tracking-tight">₹500</span>
+                            </div>
+                        </div>
+
+                        <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 text-xs font-bold mt-4">
+                            <div>
+                                <label class="text-slate-500 block mb-1">Treatment Urgency Index</label>
+                                <select id="form_treatment_priority" class="w-full p-2 border rounded-md">
+                                    <option value="Immediate Triage Action Advised">Immediate Emergency Intervention Required</option>
+                                    <option value="Within One Month Schedule Plan">Within One Month Schedule</option>
+                                    <option value="Routine General Maintenance Path">Routine Maintenance Plan</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label class="text-slate-500 block mb-1">Payment Method</label>
+                                <select id="bill_pay_mode" class="w-full p-2 border rounded-md">
+                                    <option value="UPI Transaction Route">UPI Transfer / QR Scan</option>
+                                    <option value="Cash Tender Options">Cash Payment</option>
+                                    <option value="Card Credit/Debit Routing">Credit / Debit Card Token</option>
+                                    <option value="Direct Bank Wire Settlement">Direct Bank Settlement</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label class="text-slate-500 block mb-1">Payment Accounting Status</label>
+                                <select id="bill_pay_status" class="w-full p-2 border rounded-md bg-emerald-50 text-emerald-900 font-black">
+                                    <option value="Paid In Full Settlement">Paid In Full</option>
+                                    <option value="Pending Processing Settlement">Pending Settlement</option>
+                                    <option value="Partial Token Settlement Accounted">Partial Token Settlement</option>
+                                </select>
                             </div>
                         </div>
                     </div>
@@ -534,10 +588,10 @@
 
                 <!-- WIZARD CONTROLS -->
                 <div class="flex justify-between items-center mt-8 pt-4 border-t border-slate-200">
-                    <button type="button" id="wizard_back_btn" onclick="executeWizardNavigation(-1)" class="px-4 py-2 bg-slate-200 text-slate-600 rounded-md font-medium hover:bg-slate-300">Back</button>
+                    <button type="button" id="wizard_back_btn" onclick="executeWizardNavigation(-1)" class="px-4 py-2 bg-slate-200 text-slate-600 rounded-md font-medium hover:bg-slate-300 transition">Back</button>
                     <button type="button" id="wizard_next_btn" onclick="executeWizardNavigation(1)" class="px-4 py-2 bg-teal-600 text-white rounded-md font-medium hover:bg-teal-700 transition">Next Step</button>
                     <div id="wizard_submit_cluster" class="hidden flex gap-2">
-                        <button type="button" onclick="commitFormDataToBrowserDatabase()" class="px-5 py-2 bg-sky-700 text-white font-bold rounded-lg hover:bg-sky-800 shadow">Save Local Changes</button>
+                        <button type="button" onclick="commitFormDataToBrowserDatabase()" class="px-5 py-2 bg-sky-700 text-white font-bold rounded-lg hover:bg-sky-800 shadow transition">Save Local Changes</button>
                         <button type="button" onclick="orchestrateClinicalHealthPassportPDF()" class="px-6 py-2.5 bg-emerald-600 text-white font-black rounded-lg hover:bg-emerald-700 shadow-md transform hover:scale-[1.02] transition">Compile PDF Document</button>
                     </div>
                 </div>
@@ -566,7 +620,6 @@
                     </div>
                 </div>
 
-                <!-- Strategic Mouth Gateway Education Box -->
                 <div class="bg-teal-50 border border-teal-100 rounded-lg p-3 text-center mb-4 text-teal-900">
                     <p class="text-xs font-black uppercase tracking-wide">💡 Clinical Blueprint: The Gateway to the Entire Body</p>
                     <p class="text-[11px] opacity-95 mt-0.5 leading-relaxed text-justify px-2">
@@ -589,20 +642,19 @@
                     </div>
                 </div>
 
-                <!-- Main Context History Summary Sheets Table Grid -->
                 <div class="mb-4">
                     <table class="w-full text-xs border border-slate-200 rounded-lg overflow-hidden">
                         <tbody>
-                            <tr class="bg-slate-50/50 border-b border-slate-200"><td class="p-2 font-bold w-1/3 text-slate-600">Chief Complaint (C/O)</td><td id="pdf_val_complaint" class="p-2 font-medium text-red-700">--</td></tr>
-                            <tr class="border-b border-slate-200"><td class="p-2 font-bold text-slate-600">Surgical Vital Metrics</td><td class="p-2 font-medium">BP: <span id="pdf_val_bp" class="font-bold text-slate-900">--</span> | Sugar (RBS): <span id="pdf_val_rbs" class="font-bold text-slate-900">--</span></td></tr>
-                            <tr class="bg-slate-50/50 border-b border-slate-200"><td class="p-2 font-bold text-slate-600">Allergy Screen Factors</td><td id="pdf_val_allergies" class="p-2 font-bold text-red-600">--</td></tr>
-                            <tr class="border-b border-slate-200"><td class="p-2 font-bold text-slate-600">Active Medications</td><td id="pdf_val_medications" class="p-2">--</td></tr>
-                            <tr class="bg-slate-50/50 border-b border-slate-200"><td class="p-2 font-bold text-slate-600">Medical System History</td><td id="pdf_val_med_history" class="p-2">--</td></tr>
-                            <tr class="border-b border-slate-200"><td class="p-2 font-bold text-slate-600">Dental Suggestions Sheet</td><td id="pdf_val_dental_history" class="p-2 text-teal-800 font-black">--</td></tr>
-                            <tr class="bg-slate-50/50 border-b border-slate-200"><td class="p-2 font-bold text-slate-600">Provisional Diagnosis</td><td id="pdf_val_diagnosis" class="p-2 font-bold tracking-tight">--</td></tr>
-                            <tr class="border-b"><td class="p-2 font-bold text-slate-600">Dentition Classification</td><td id="pdf_val_dentition" class="p-2">--</td></tr>
+                            <tr class="bg-slate-50/50 border-b border-slate-200"><td class="p-2 font-bold w-1/3 text-slate-600">Date &amp; Time of Visit</td><td class="p-2 font-bold text-slate-900"><span id="pdf_val_date">--</span> | <span id="pdf_val_time">--</span></td></tr>
+                            <tr class="border-b border-slate-200"><td class="p-2 font-bold w-1/3 text-slate-600">Chief Complaint (C/O)</td><td id="pdf_val_complaint" class="p-2 font-medium text-red-700">--</td></tr>
+                            <tr class="bg-slate-50/50 border-b border-slate-200"><td class="p-2 font-bold text-slate-600">Surgical Vital Metrics</td><td class="p-2 font-medium">BP: <span id="pdf_val_bp" class="font-bold text-slate-900">--</span> | Sugar (RBS): <span id="pdf_val_rbs" class="font-bold text-slate-900">--</span></td></tr>
+                            <tr class="border-b border-slate-200"><td class="p-2 font-bold text-slate-600">Allergy Screen Factors</td><td id="pdf_val_allergies" class="p-2 font-bold text-red-600">--</td></tr>
+                            <tr class="bg-slate-50/50 border-b border-slate-200"><td class="p-2 font-bold text-slate-600">Active Medications</td><td id="pdf_val_medications" class="p-2">--</td></tr>
+                            <tr class="border-b border-slate-200"><td class="p-2 font-bold text-slate-600">Medical System History</td><td id="pdf_val_med_history" class="p-2">--</td></tr>
+                            <tr class="bg-slate-50/50 border-b border-slate-200"><td class="p-2 font-bold text-slate-600">Dental Suggestions Sheet</td><td id="pdf_val_dental_history" class="p-2 text-teal-800 font-black">--</td></tr>
+                            <tr class="border-b border-slate-200"><td class="p-2 font-bold text-slate-600">Provisional Diagnosis</td><td id="pdf_val_diagnosis" class="p-2 font-bold tracking-tight">--</td></tr>
+                            <tr class="bg-slate-50/50 border-b border-slate-200"><td class="p-2 font-bold text-slate-600">Dentition Classification</td><td id="pdf_val_dentition" class="p-2">--</td></tr>
                             
-                            <!-- Embedded Graphical Diagnostic Map Logs -->
                             <tr>
                                 <td class="p-2 font-bold text-slate-600 vertical-align-top">Dental Map Log</td>
                                 <td class="p-2">
@@ -617,7 +669,6 @@
                     </table>
                 </div>
 
-                <!-- Triage Action Outputs -->
                 <div class="grid grid-cols-3 gap-3 mb-4">
                     <div class="border border-slate-200 p-2 rounded-lg text-center bg-slate-50/50">
                         <span class="text-[9px] font-bold text-slate-400 uppercase tracking-wider block">Procedure Needed</span>
@@ -633,7 +684,6 @@
                     </div>
                 </div>
 
-                <!-- Hygiene Degradation Tables -->
                 <div class="mb-4">
                     <table class="w-full text-xs border border-slate-200 rounded-lg overflow-hidden text-center">
                         <thead class="bg-slate-100 text-slate-600 font-bold">
@@ -647,7 +697,6 @@
                     </table>
                 </div>
 
-                <!-- Split Frame: Directives + Advanced Invoice Calc -->
                 <div class="grid grid-cols-2 gap-4 mb-4">
                     <div>
                         <h3 class="text-[9px] font-black uppercase tracking-wider text-slate-400 mb-1.5">Prescribed Action Blueprint</h3>
@@ -659,17 +708,16 @@
                             <h3 class="text-[9px] font-black uppercase tracking-wider text-slate-400 mb-2">Itemized Financial Statement Receipt</h3>
                             <div class="space-y-1" id="pdf_billing_rows"></div>
                         </div>
-                        <div class="space-y-1 border-t pt-1.5 text-[11px] mt-1 text-slate-600">
+                        <div class="space-y-1 border-t border-slate-300 pt-1.5 text-[11px] mt-1 text-slate-600">
                             <div class="flex justify-between" id="pdf_bill_discount_row"><span>Package Deductions / Waivers:</span><span id="pdf_view_bill_discount">-₹0</span></div>
                             <div class="flex justify-between" id="pdf_bill_advance_row"><span>Token Advance Deposit Received:</span><span id="pdf_view_bill_advance">-₹0</span></div>
-                            <div class="flex justify-between font-black text-slate-800 text-xs border-t pt-1 mt-1">
+                            <div class="flex justify-between font-black text-slate-800 text-xs border-t border-slate-300 pt-1 mt-1">
                                 <span>Net Outstanding Due:</span><span id="pdf_view_bill_total">₹0</span>
                             </div>
                         </div>
                     </div>
                 </div>
 
-                <!-- Recall & Periodic Care Notification -->
                 <div class="bg-amber-50 border border-amber-100 text-amber-900 rounded-lg p-2.5 text-center text-xs font-bold tracking-wide">
                     🗓️ Recurrent Care Directive: Secure a deep professional scaling and complete dental checkup sequence every 6 months to shield hard tissue health boundaries.
                 </div>
@@ -699,18 +747,18 @@
                 <div class="border border-slate-200 bg-white p-3 rounded-xl mb-6 text-[9px] font-black text-center shadow-sm">
                     <span class="block uppercase text-slate-400 tracking-wider mb-2 font-black text-[10px]">Pathology &amp; Treatment Coding Index Map</span>
                     <div class="grid grid-cols-4 gap-2">
-                        <div class="p-1 rounded cond-caries">🔴 Caries (Decay)</div>
-                        <div class="p-1 rounded cond-missing">🔘 Missing Tooth</div>
-                        <div class="p-1 rounded cond-mobility">🟡 Mobility Risk</div>
-                        <div class="p-1 rounded cond-rootstump">🟤 Retained Root Stump</div>
-                        <div class="p-1 rounded cond-fracture">💔 Structural Fracture</div>
-                        <div class="p-1 rounded cond-filling">🔵 Active Filling</div>
-                        <div class="p-1 rounded cond-crown">🟣 Prosthetic Crown</div>
-                        <div class="p-1 rounded cond-bridge">💗 Multi-unit Bridge</div>
-                        <div class="p-1 rounded cond-implant">🟢 Titanium Implant</div>
-                        <div class="p-1 rounded cond-rct">🔷 Complete RCT Log</div>
-                        <div class="p-1 rounded cond-extract">🔶 Planned Extraction</div>
-                        <div class="p-1 rounded cond-complete">💚 Completed Service</div>
+                        <div class="p-1 rounded cond-caries border border-red-500">🔴 Caries</div>
+                        <div class="p-1 rounded cond-missing border border-slate-600">🔘 Missing Tooth</div>
+                        <div class="p-1 rounded cond-mobility border border-amber-500">🟡 Mobility Risk</div>
+                        <div class="p-1 rounded cond-rootstump border border-orange-900">🟤 Root Stump</div>
+                        <div class="p-1 rounded cond-fracture border border-red-800">💔 Fracture</div>
+                        <div class="p-1 rounded cond-filling border border-blue-500">🔵 Active Filling</div>
+                        <div class="p-1 rounded cond-crown border border-purple-500">🟣 Prosthetic Crown</div>
+                        <div class="p-1 rounded cond-bridge border border-pink-500">💗 Multi-unit Bridge</div>
+                        <div class="p-1 rounded cond-implant border border-emerald-500">🟢 Titanium Implant</div>
+                        <div class="p-1 rounded cond-rct border border-cyan-500">🔷 Complete RCT</div>
+                        <div class="p-1 rounded cond-extract border border-amber-900">🔶 Planned Extraction</div>
+                        <div class="p-1 rounded cond-complete border border-green-600">💚 Completed Service</div>
                     </div>
                 </div>
 
@@ -784,14 +832,14 @@
                         <span class="text-[9px] font-black uppercase text-slate-500 tracking-wider block mb-1.5">1A. Front Aspect Alignment (Before Treatment)</span>
                         <div class="h-36 bg-slate-100 rounded-lg flex items-center justify-center overflow-hidden border border-slate-200">
                             <img id="pdf_img_front_before" class="object-cover w-full h-full hidden">
-                            <span class="text-slate-400 text-xs font-semibold default-pdf-placeholder">Pre-Op Image Empty</span>
+                            <span class="text-slate-400 text-xs font-semibold default-pdf-placeholder">Image Not Captured</span>
                         </div>
                     </div>
                     <div class="border rounded-xl p-2.5 bg-slate-50/50">
                         <span class="text-[9px] font-black uppercase text-slate-500 tracking-wider block mb-1.5">1B. Front Aspect Alignment (After Treatment)</span>
                         <div class="h-36 bg-slate-100 rounded-lg flex items-center justify-center overflow-hidden border border-slate-200">
                             <img id="pdf_img_front_after" class="object-cover w-full h-full hidden">
-                            <span class="text-slate-400 text-xs font-semibold default-pdf-placeholder">Post-Op Image Empty</span>
+                            <span class="text-slate-400 text-xs font-semibold default-pdf-placeholder">Image Not Captured</span>
                         </div>
                     </div>
                 </div>
@@ -801,14 +849,14 @@
                         <span class="text-[9px] font-black uppercase text-slate-500 tracking-wider block mb-1.5">2A. Maxillary Upper Occlusal View (Before Treatment)</span>
                         <div class="h-36 bg-slate-100 rounded-lg flex items-center justify-center overflow-hidden border border-slate-200">
                             <img id="pdf_img_upper_before" class="object-cover w-full h-full hidden">
-                            <span class="text-slate-400 text-xs font-semibold default-pdf-placeholder">Pre-Op Image Empty</span>
+                            <span class="text-slate-400 text-xs font-semibold default-pdf-placeholder">Image Not Captured</span>
                         </div>
                     </div>
                     <div class="border rounded-xl p-2.5 bg-slate-50/50">
                         <span class="text-[9px] font-black uppercase text-slate-500 tracking-wider block mb-1.5">2B. Maxillary Upper Occlusal View (After Treatment)</span>
                         <div class="h-36 bg-slate-100 rounded-lg flex items-center justify-center overflow-hidden border border-slate-200">
                             <img id="pdf_img_upper_after" class="object-cover w-full h-full hidden">
-                            <span class="text-slate-400 text-xs font-semibold default-pdf-placeholder">Post-Op Image Empty</span>
+                            <span class="text-slate-400 text-xs font-semibold default-pdf-placeholder">Image Not Captured</span>
                         </div>
                     </div>
                 </div>
@@ -818,38 +866,31 @@
                         <span class="text-[9px] font-black uppercase text-slate-500 tracking-wider block mb-1.5">3A. Mandibular Lower Occlusal View (Before Treatment)</span>
                         <div class="h-36 bg-slate-100 rounded-lg flex items-center justify-center overflow-hidden border border-slate-200">
                             <img id="pdf_img_lower_before" class="object-cover w-full h-full hidden">
-                            <span class="text-slate-400 text-xs font-semibold default-pdf-placeholder">Pre-Op Image Empty</span>
+                            <span class="text-slate-400 text-xs font-semibold default-pdf-placeholder">Image Not Captured</span>
                         </div>
                     </div>
                     <div class="border rounded-xl p-2.5 bg-slate-50/50">
                         <span class="text-[9px] font-black uppercase text-slate-500 tracking-wider block mb-1.5">3B. Mandibular Lower Occlusal View (After Treatment)</span>
                         <div class="h-36 bg-slate-100 rounded-lg flex items-center justify-center overflow-hidden border border-slate-200">
                             <img id="pdf_img_lower_after" class="object-cover w-full h-full hidden">
-                            <span class="text-slate-400 text-xs font-semibold default-pdf-placeholder">Post-Op Image Empty</span>
+                            <span class="text-slate-400 text-xs font-semibold default-pdf-placeholder">Image Not Captured</span>
                         </div>
                     </div>
                 </div>
 
-                <div class="grid grid-cols-3 gap-3 text-center mb-4">
+                <div class="grid grid-cols-2 gap-4 text-center mb-4">
                     <div class="border rounded-xl p-2 bg-slate-50/30">
                         <span class="text-[8px] font-bold text-slate-400 uppercase tracking-wider block mb-1">Extra Profile File 01</span>
-                        <div class="h-24 bg-slate-100 rounded border flex items-center justify-center overflow-hidden">
+                        <div class="h-28 bg-slate-100 rounded border flex items-center justify-center overflow-hidden">
                             <img id="pdf_img_extra_1" class="object-cover w-full h-full hidden">
-                            <span class="text-slate-300 text-[10px] default-pdf-placeholder">Empty</span>
+                            <span class="text-slate-400 text-xs default-pdf-placeholder">Image Not Captured</span>
                         </div>
                     </div>
                     <div class="border rounded-xl p-2 bg-slate-50/30">
                         <span class="text-[8px] font-bold text-slate-400 uppercase tracking-wider block mb-1">Extra Profile File 02</span>
-                        <div class="h-24 bg-slate-100 rounded border flex items-center justify-center overflow-hidden">
+                        <div class="h-28 bg-slate-100 rounded border flex items-center justify-center overflow-hidden">
                             <img id="pdf_img_extra_2" class="object-cover w-full h-full hidden">
-                            <span class="text-slate-300 text-[10px] default-pdf-placeholder">Empty</span>
-                        </div>
-                    </div>
-                    <div class="border rounded-xl p-2 bg-slate-50/30">
-                        <span class="text-[8px] font-bold text-slate-400 uppercase tracking-wider block mb-1">Extra Profile File 03</span>
-                        <div class="h-24 bg-slate-100 rounded border flex items-center justify-center overflow-hidden">
-                            <img id="pdf_img_extra_3" class="object-cover w-full h-full hidden">
-                            <span class="text-slate-300 text-[10px] default-pdf-placeholder">Empty</span>
+                            <span class="text-slate-400 text-xs default-pdf-placeholder">Image Not Captured</span>
                         </div>
                     </div>
                 </div>
@@ -877,7 +918,7 @@
                 </div>
             </div>
 
-            <!-- PAGE 4: DETAILED PROCEDURAL INVOICING & CONSENT -->
+            <!-- PAGE 4: DETAILED PROCEDURAL INVOICING & CONSENTS -->
             <div class="pdf-page-layout">
                 <div class="watermark-text">SRI AURA DENTAL CARE</div>
                 
@@ -902,9 +943,9 @@
                 <div class="border border-slate-200 bg-slate-50/50 p-4 rounded-xl mb-6 text-xs font-bold space-y-2 max-w-sm ml-auto">
                     <div class="flex justify-between text-slate-500"><span>Consultation Fee Base:</span><span class="text-slate-900" id="pdf_bill_con_fee">₹0</span></div>
                     <div class="flex justify-between text-slate-500"><span>Accumulated Procedure Actions:</span><span class="text-slate-900" id="pdf_bill_proc_total">₹0</span></div>
-                    <div class="flex justify-between text-slate-500 border-b pb-2"><span>Package Deductions / Waivers:</span><span class="text-red-600" id="pdf_bill_discount">-₹0</span></div>
-                    <div class="flex justify-between text-slate-500"><span>Token Advance Deposit Received:</span><span class="text-slate-900" id="pdf_bill_advance">₹0</span></div>
-                    <div class="flex justify-between font-black text-sm text-slate-900 border-t pt-2 mt-1">
+                    <div class="flex justify-between text-slate-500 border-b border-slate-300 pb-2"><span>Package Deductions / Waivers:</span><span class="text-red-600" id="pdf_bill_discount">-₹0</span></div>
+                    <div class="flex justify-between text-slate-500 pt-1"><span>Token Advance Deposit Received:</span><span class="text-slate-900" id="pdf_bill_advance">-₹0</span></div>
+                    <div class="flex justify-between font-black text-sm text-slate-900 border-t border-slate-300 pt-2 mt-1">
                         <span>Net Payable Outstanding:</span><span class="text-teal-800 text-base" id="pdf_bill_net_due">₹0</span>
                     </div>
                 </div>
@@ -923,7 +964,7 @@
 
                 <div class="grid grid-cols-2 gap-8 border border-slate-200 rounded-xl p-4 bg-slate-50/40 text-xs mt-10">
                     <div class="flex flex-col justify-end h-16">
-                        <p class="font-black text-slate-800" id="pdf_val_doctor_name">Dr. Aruna Devi</p>
+                        <p class="font-black text-slate-800" id="pdf_val_doctor_name">--</p>
                         <p class="text-[10px] font-bold text-slate-400 uppercase tracking-tight">Assessing Surgeon | Reg No: <span id="pdf_val_reg_no">--</span></p>
                     </div>
                     <div class="flex flex-col justify-end h-16 text-right">
@@ -1036,6 +1077,18 @@
 
         window.addEventListener('DOMContentLoaded', () => {
             initializeInteractiveOdontogramLayoutGrids();
+            
+            // Set default date and time
+            const now = new Date();
+            const year = now.getFullYear();
+            const month = String(now.getMonth() + 1).padStart(2, '0');
+            const day = String(now.getDate()).padStart(2, '0');
+            document.getElementById('form_visit_date').value = `${year}-${month}-${day}`;
+            
+            const hours = String(now.getHours()).padStart(2, '0');
+            const minutes = String(now.getMinutes()).padStart(2, '0');
+            document.getElementById('form_visit_time').value = `${hours}:${minutes}`;
+
             appendNewDynamicBillingRow();
             executeDatabaseRegistrySearch();
         });
@@ -1109,12 +1162,12 @@
 
             const row = document.createElement('div');
             row.id = uniqueRowId;
-            row.className = 'grid grid-cols-1 md:grid-cols-4 gap-2 items-center bg-slate-50/50 p-2 border rounded-lg text-xs';
+            row.className = 'grid grid-cols-1 md:grid-cols-4 gap-2 items-center bg-white p-2 border border-slate-300 rounded-lg text-xs shadow-sm';
             row.innerHTML = `
-                <input type="text" class="p-2 border rounded bg-white font-bold proc-desc-input" placeholder="Procedure Name (e.g. Scaling / RCT)">
-                <input type="text" class="p-2 border rounded bg-white font-semibold proc-tooth-input" placeholder="Tooth Number / Area">
-                <input type="number" oninput="executeFinancialBalancingCalculations()" class="p-2 border rounded bg-white font-black proc-cost-input" placeholder="Cost (₹)">
-                <button type="button" onclick="deleteTargetBillingRow('${uniqueRowId}')" class="text-red-500 font-bold hover:underline text-left pl-2">✕ Remove Row</button>
+                <input type="text" class="p-2 border rounded bg-slate-50 font-bold proc-desc-input" placeholder="Procedure Name (e.g. Scaling / RCT)">
+                <input type="text" class="p-2 border rounded bg-slate-50 font-semibold proc-tooth-input" placeholder="Tooth Number / Area">
+                <input type="number" oninput="executeFinancialBalancingCalculations()" class="p-2 border rounded bg-slate-50 font-black proc-cost-input" placeholder="Cost (₹)">
+                <button type="button" onclick="deleteTargetBillingRow('${uniqueRowId}')" class="text-red-500 font-bold hover:bg-red-50 p-2 rounded transition">✕ Remove</button>
             `;
             container.appendChild(row);
         }
@@ -1166,7 +1219,9 @@
 
         function executeFinancialBalancingCalculations() {
             let proceduresAggregatedTotal = 0;
-            document.querySelectorAll('.proc-cost-input').forEach(f => proceduresAggregatedTotal += parseFloat(f.value) || 0);
+            document.querySelectorAll('.proc-cost-input').forEach(f => {
+                proceduresAggregatedTotal += parseFloat(f.value) || 0;
+            });
 
             const conFee = parseFloat(document.getElementById('bill_con_fee').value) || 0;
             const discount = parseFloat(document.getElementById('bill_discount').value) || 0;
@@ -1188,21 +1243,100 @@
 
         function mapLocalImageInputToRenderPipelineTarget(inputId, pdfTargetId) {
             return new Promise((resolve) => {
-                const fileField = document.getElementById(inputId);
-                const targetImg = document.getElementById(pdfTargetId);
-                if (fileField && fileField.files && fileField.files[0]) {
-                    const reader = new FileReader();
-                    reader.onload = function(e) {
-                        targetImg.src = e.target.result;
-                        targetImg.classList.remove('hidden');
-                        if (targetImg.parentElement && targetImg.parentElement.querySelector('.default-pdf-placeholder')) {
-                            targetImg.parentElement.querySelector('.default-pdf-placeholder').classList.add('hidden');
-                        }
-                        resolve(true);
-                    };
-                    reader.readAsDataURL(fileField.files[0]);
-                } else { resolve(false); }
+                try {
+                    const fileField = document.getElementById(inputId);
+                    const targetImg = document.getElementById(pdfTargetId);
+                    if (fileField && fileField.files && fileField.files[0]) {
+                        const reader = new FileReader();
+                        reader.onload = function(e) {
+                            targetImg.src = e.target.result;
+                            targetImg.classList.remove('hidden');
+                            if (targetImg.parentElement && targetImg.parentElement.querySelector('.default-pdf-placeholder')) {
+                                targetImg.parentElement.querySelector('.default-pdf-placeholder').classList.add('hidden');
+                            }
+                            resolve(true);
+                        };
+                        reader.readAsDataURL(fileField.files[0]);
+                    } else { resolve(false); }
+                } catch(e) { resolve(false); }
             });
+        }
+
+        function compileFullUnifiedPatientPayload() {
+            const checkedMedicalConditions = [];
+            document.querySelectorAll('.med-cond-cb:checked').forEach(cb => checkedMedicalConditions.push(cb.value));
+
+            const checkedHabits = [];
+            document.querySelectorAll('.habit-cb:checked').forEach(cb => checkedHabits.push(cb.value));
+
+            const compiledProceduresArray = [];
+            document.querySelectorAll('#billing-dynamic-target-rows > div').forEach(row => {
+                const desc = row.querySelector('.proc-desc-input').value;
+                const tooth = row.querySelector('.proc-tooth-input').value;
+                const cost = parseFloat(row.querySelector('.proc-cost-input').value) || 0;
+                if(desc.trim() !== '' || cost > 0) compiledProceduresArray.push({ desc, tooth, cost });
+            });
+
+            return {
+                fileNo: document.getElementById('form_file_no').value.trim().toUpperCase() || 'TEMP_ID',
+                visitNo: document.getElementById('form_visit_no').value.trim() || '01',
+                visitType: document.getElementById('form_visit_type').value,
+                name: document.getElementById('form_name').value.trim() || 'Unassigned Patient',
+                dob: document.getElementById('form_dob').value,
+                age: document.getElementById('form_age').value,
+                gender: document.getElementById('form_gender').value,
+                mobile: document.getElementById('form_mobile').value.trim(),
+                whatsapp: document.getElementById('form_whatsapp').value.trim(),
+                email: document.getElementById('form_email').value.trim(),
+                address: document.getElementById('form_address').value.trim(),
+                city: document.getElementById('form_city').value.trim(),
+                state: document.getElementById('form_state').value.trim(),
+                pin: document.getElementById('form_pin').value.trim(),
+                referredBy: document.getElementById('form_referred').value.trim(),
+                
+                visitDate: document.getElementById('form_visit_date').value,
+                visitTime: document.getElementById('form_visit_time').value,
+
+                vitals: {
+                    bp: document.getElementById('vitals_bp').value, pulse: document.getElementById('vitals_pulse').value,
+                    temp: document.getElementById('vitals_temp').value, spo2: document.getElementById('vitals_spo2').value,
+                    rbs: document.getElementById('vitals_rbs').value
+                },
+                medicalConditions: checkedMedicalConditions,
+                allergies: document.getElementById('med_allergies').value,
+                medications: document.getElementById('med_current').value,
+                complaint: document.getElementById('dental_complaint').value,
+                painScale: document.getElementById('dental_pain_scale').value,
+                habits: checkedHabits,
+                pastTreatment: document.getElementById('dental_past').value,
+                mouthOpening: document.getElementById('exam_mouth_opening').value,
+                extraOral: document.getElementById('exam_extra_oral').value,
+                intraOral: document.getElementById('exam_intra_oral').value,
+                odontogram: Object.assign({}, structuralToothPathologyCache),
+                indices: {
+                    plaque: document.getElementById('idx_plaque').value, calculus: document.getElementById('idx_calculus').value,
+                    stains: document.getElementById('idx_stains').value, gingival: document.getElementById('idx_gingival').value
+                },
+                provisionalDiagnosis: document.getElementById('diag_provisional').value,
+                finalDiagnosis: document.getElementById('diag_final').value,
+                opgRecommendation: document.getElementById('form_opg_recommendation').value,
+                priority: document.getElementById('form_treatment_priority').value,
+                
+                treatNeeded: document.getElementById('input_treat_needed').value,
+                examNeeded: document.getElementById('input_exam_needed').value,
+                scanNeeded: document.getElementById('input_scan_needed').value,
+                dentition: document.getElementById('input_dentition').value,
+
+                procedures: compiledProceduresArray,
+                billing: {
+                    consultationFee: parseFloat(document.getElementById('bill_con_fee').value) || 0,
+                    discount: parseFloat(document.getElementById('bill_discount').value) || 0,
+                    advance: parseFloat(document.getElementById('bill_advance').value) || 0,
+                    payMode: document.getElementById('bill_pay_mode').value, payStatus: document.getElementById('bill_pay_status').value
+                },
+                doctor: document.getElementById('input_doctor').value || 'Dr. Aruna Devi', 
+                regNo: document.getElementById('input_reg_no').value || 'KDC-56832-A'
+            };
         }
 
         function commitFormDataToBrowserDatabase() {
@@ -1236,7 +1370,7 @@
                             card.innerHTML = `
                                 <div>
                                     <p class="font-black text-slate-800">${data.name} <span class="text-teal-700 font-bold ml-1">[${data.fileNo}]</span></p>
-                                    <p class="text-slate-500 font-semibold mt-0.5">Visit: ${data.visitNo} | Date: ${data.dateString} | Mode: ${data.visitType}</p>
+                                    <p class="text-slate-500 font-semibold mt-0.5">Visit: ${data.visitNo} | Date: ${data.visitDate} | Mode: ${data.visitType}</p>
                                 </div>
                                 <div class="flex gap-2">
                                     <button type="button" onclick="loadArchivedPatientState('${key}')" class="px-2.5 py-1 bg-teal-700 text-white font-bold rounded hover:bg-teal-800">Load</button>
@@ -1254,85 +1388,99 @@
         function loadArchivedPatientState(key) {
             try {
                 const data = JSON.parse(localStorage.getItem(key));
-                document.getElementById('form_file_no').value = data.fileNo;
-                document.getElementById('form_visit_no').value = data.visitNo;
-                document.getElementById('form_visit_type').value = data.visitType;
-                document.getElementById('form_name').value = data.name;
-                document.getElementById('form_dob').value = data.dob;
-                document.getElementById('form_age').value = data.age;
-                document.getElementById('form_gender').value = data.gender;
-                document.getElementById('form_mobile').value = data.mobile;
-                document.getElementById('form_whatsapp').value = data.whatsapp;
-                document.getElementById('form_email').value = data.email;
-                document.getElementById('form_address').value = data.address;
-                document.getElementById('form_city').value = data.city;
-                document.getElementById('form_state').value = data.state;
-                document.getElementById('form_pin').value = data.pin;
-                document.getElementById('form_referred').value = data.referredBy;
+                document.getElementById('form_file_no').value = data.fileNo || '';
+                document.getElementById('form_visit_no').value = data.visitNo || '';
+                document.getElementById('form_visit_type').value = data.visitType || 'Home Visit';
+                document.getElementById('form_name').value = data.name || '';
+                document.getElementById('form_dob').value = data.dob || '';
+                document.getElementById('form_age').value = data.age || '';
+                document.getElementById('form_gender').value = data.gender || 'MALE';
+                document.getElementById('form_mobile').value = data.mobile || '';
+                document.getElementById('form_whatsapp').value = data.whatsapp || '';
+                document.getElementById('form_email').value = data.email || '';
+                document.getElementById('form_address').value = data.address || '';
+                document.getElementById('form_city').value = data.city || '';
+                document.getElementById('form_state').value = data.state || '';
+                document.getElementById('form_pin').value = data.pin || '';
+                document.getElementById('form_referred').value = data.referredBy || '';
 
-                document.getElementById('vitals_bp').value = data.vitals.bp;
-                document.getElementById('vitals_pulse').value = data.vitals.pulse;
-                document.getElementById('vitals_temp').value = data.vitals.temp;
-                document.getElementById('vitals_spo2').value = data.vitals.spo2;
-                document.getElementById('vitals_rbs').value = data.vitals.rbs;
+                if(data.visitDate) document.getElementById('form_visit_date').value = data.visitDate;
+                if(data.visitTime) document.getElementById('form_visit_time').value = data.visitTime;
+
+                document.getElementById('vitals_bp').value = data.vitals?.bp || '120/80';
+                document.getElementById('vitals_pulse').value = data.vitals?.pulse || '72';
+                document.getElementById('vitals_temp').value = data.vitals?.temp || '98.6';
+                document.getElementById('vitals_spo2').value = data.vitals?.spo2 || '98';
+                document.getElementById('vitals_rbs').value = data.vitals?.rbs || '100';
 
                 document.querySelectorAll('.med-cond-cb').forEach(cb => {
-                    cb.checked = data.medicalConditions.includes(cb.value);
+                    cb.checked = (data.medicalConditions || []).includes(cb.value);
                 });
                 document.querySelectorAll('.habit-cb').forEach(cb => {
-                    cb.checked = data.habits.includes(cb.value);
+                    cb.checked = (data.habits || []).includes(cb.value);
                 });
 
-                document.getElementById('med_allergies').value = data.allergies;
-                document.getElementById('med_current').value = data.medications;
-                document.getElementById('dental_complaint').value = data.complaint;
-                document.getElementById('dental_pain_scale').value = data.painScale;
-                document.getElementById('pain_val').innerText = data.painScale;
-                document.getElementById('dental_past').value = data.pastTreatment;
-                document.getElementById('exam_mouth_opening').value = data.mouthOpening;
-                document.getElementById('exam_extra_oral').value = data.extraOral;
-                document.getElementById('exam_intra_oral').value = data.intraOral;
+                document.getElementById('med_allergies').value = data.allergies || '';
+                document.getElementById('med_current').value = data.medications || '';
+                document.getElementById('dental_complaint').value = data.complaint || '';
+                document.getElementById('dental_pain_scale').value = data.painScale || '0';
+                document.getElementById('pain_val').innerText = data.painScale || '0';
+                document.getElementById('dental_past').value = data.pastTreatment || '';
+                document.getElementById('exam_mouth_opening').value = data.mouthOpening || 'Adequate (Normal Range)';
+                document.getElementById('exam_extra_oral').value = data.extraOral || '';
+                document.getElementById('exam_intra_oral').value = data.intraOral || '';
 
-                document.getElementById('idx_plaque').value = data.indices.plaque;
-                document.getElementById('idx_calculus').value = data.indices.calculus;
-                document.getElementById('idx_stains').value = data.indices.stains;
-                document.getElementById('idx_gingival').value = data.indices.gingival;
+                document.getElementById('idx_plaque').value = data.indices?.plaque || '0';
+                document.getElementById('idx_calculus').value = data.indices?.calculus || '0';
+                document.getElementById('idx_stains').value = data.indices?.stains || '0';
+                document.getElementById('idx_gingival').value = data.indices?.gingival || 'Healthy';
 
-                document.getElementById('diag_provisional').value = data.provisionalDiagnosis;
-                document.getElementById('diag_final').value = data.finalDiagnosis;
-                document.getElementById('form_opg_recommendation').value = data.opgRecommendation;
-                document.getElementById('form_treatment_priority').value = data.priority;
+                document.getElementById('diag_provisional').value = data.provisionalDiagnosis || '';
+                document.getElementById('diag_final').value = data.finalDiagnosis || '';
+                document.getElementById('form_opg_recommendation').value = data.opgRecommendation || 'Not Required Baseline';
+                document.getElementById('form_treatment_priority').value = data.priority || 'Routine General Maintenance Path';
 
-                document.getElementById('bill_con_fee').value = data.billing.consultationFee;
-                document.getElementById('bill_discount').value = data.billing.discount;
-                document.getElementById('bill_advance').value = data.billing.advance;
-                document.getElementById('bill_pay_mode').value = data.billing.payMode;
-                document.getElementById('bill_pay_status').value = data.billing.payStatus;
+                document.getElementById('input_treat_needed').value = data.treatNeeded || 'YES';
+                document.getElementById('input_exam_needed').value = data.examNeeded || 'YES';
+                document.getElementById('input_scan_needed').value = data.scanNeeded || 'NO';
+                document.getElementById('input_dentition').value = data.dentition || 'Permanent';
+
+                document.getElementById('bill_con_fee').value = data.billing?.consultationFee || 0;
+                document.getElementById('bill_discount').value = data.billing?.discount || 0;
+                document.getElementById('bill_advance').value = data.billing?.advance || 0;
+                document.getElementById('bill_pay_mode').value = data.billing?.payMode || 'UPI Transaction Route';
+                document.getElementById('bill_pay_status').value = data.billing?.payStatus || 'Paid In Full Settlement';
                 
-                document.getElementById('input_doctor').value = data.doctor;
-                document.getElementById('input_reg_no').value = data.regNo;
+                document.getElementById('input_doctor').value = data.doctor || 'Dr. Aruna Devi';
+                document.getElementById('input_reg_no').value = data.regNo || 'KDC-56832-A';
 
-                Object.keys(data.odontogram).forEach(k => {
-                    structuralToothPathologyCache[k] = data.odontogram[k];
-                    const el = document.getElementById(`input-tooth-${k}`);
-                    if(el) { el.className = 'tooth-box'; if(data.odontogram[k] !== 'normal') el.classList.add(`cond-${data.odontogram[k]}`); }
-                });
+                if(data.odontogram) {
+                    Object.keys(data.odontogram).forEach(k => {
+                        structuralToothPathologyCache[k] = data.odontogram[k];
+                        const el = document.getElementById(`input-tooth-${k}`);
+                        if(el) { el.className = 'tooth-box'; if(data.odontogram[k] !== 'normal') el.classList.add(`cond-${data.odontogram[k]}`); }
+                    });
+                }
 
                 const container = document.getElementById('billing-dynamic-target-rows');
                 container.innerHTML = '';
-                data.procedures.forEach(p => {
-                    const uniqueRowId = `row-${Date.now()}-${Math.floor(Math.random()*1000)}`;
-                    const row = document.createElement('div');
-                    row.id = uniqueRowId;
-                    row.className = 'grid grid-cols-1 md:grid-cols-4 gap-2 items-center bg-slate-50/50 p-2 border rounded-lg text-xs';
-                    row.innerHTML = `
-                        <input type="text" class="p-2 border rounded bg-white font-bold proc-desc-input" value="${p.desc}">
-                        <input type="text" class="p-2 border rounded bg-white font-semibold proc-tooth-input" value="${p.tooth}">
-                        <input type="number" oninput="executeFinancialBalancingCalculations()" class="p-2 border rounded bg-white font-black proc-cost-input" value="${p.cost}">
-                        <button type="button" onclick="deleteTargetBillingRow('${uniqueRowId}')" class="text-red-500 font-bold hover:underline text-left pl-2">✕ Remove Row</button>
-                    `;
-                    container.appendChild(row);
-                });
+                if(data.procedures && data.procedures.length > 0) {
+                    data.procedures.forEach(p => {
+                        const uniqueRowId = `row-${Date.now()}-${Math.floor(Math.random()*1000)}`;
+                        const row = document.createElement('div');
+                        row.id = uniqueRowId;
+                        row.className = 'grid grid-cols-1 md:grid-cols-4 gap-2 items-center bg-white p-2 border border-slate-300 rounded-lg text-xs shadow-sm';
+                        row.innerHTML = `
+                            <input type="text" class="p-2 border rounded bg-slate-50 font-bold proc-desc-input" value="${p.desc}">
+                            <input type="text" class="p-2 border rounded bg-slate-50 font-semibold proc-tooth-input" value="${p.tooth}">
+                            <input type="number" oninput="executeFinancialBalancingCalculations()" class="p-2 border rounded bg-slate-50 font-black proc-cost-input" value="${p.cost}">
+                            <button type="button" onclick="deleteTargetBillingRow('${uniqueRowId}')" class="text-red-500 font-bold hover:bg-red-50 p-2 rounded transition">✕ Remove</button>
+                        `;
+                        container.appendChild(row);
+                    });
+                } else {
+                    appendNewDynamicBillingRow();
+                }
 
                 triggerDynamicEvaluationCalculations();
                 executeFinancialBalancingCalculations();
@@ -1369,96 +1517,26 @@
             target.innerHTML = advices.join('');
         }
 
-        function compileFullUnifiedPatientPayload() {
-            const checkedMedicalConditions = [];
-            document.querySelectorAll('.med-cond-cb:checked').forEach(cb => checkedMedicalConditions.push(cb.value));
-
-            const checkedHabits = [];
-            document.querySelectorAll('.habit-cb:checked').forEach(cb => checkedHabits.push(cb.value));
-
-            const compiledProceduresArray = [];
-            document.querySelectorAll('#billing-dynamic-target-rows > div').forEach(row => {
-                const desc = row.querySelector('.proc-desc-input').value;
-                const tooth = row.querySelector('.proc-tooth-input').value;
-                const cost = parseFloat(row.querySelector('.proc-cost-input').value) || 0;
-                if(desc || cost > 0) compiledProceduresArray.push({ desc, tooth, cost });
-            });
-
-            const currentTimestamp = new Date();
-            
-            // Safety fallback for time strings
-            let dString = currentTimestamp.toLocaleDateString();
-            let tString = currentTimestamp.toLocaleTimeString();
-
-            return {
-                fileNo: document.getElementById('form_file_no').value.trim().toUpperCase() || 'TEMP_ID',
-                visitNo: document.getElementById('form_visit_no').value.trim() || '01',
-                visitType: document.getElementById('form_visit_type').value,
-                name: document.getElementById('form_name').value.trim() || 'Unassigned Patient',
-                dob: document.getElementById('form_dob').value,
-                age: document.getElementById('form_age').value,
-                gender: document.getElementById('form_gender').value,
-                mobile: document.getElementById('form_mobile').value.trim(),
-                whatsapp: document.getElementById('form_whatsapp').value.trim(),
-                email: document.getElementById('form_email').value.trim(),
-                address: document.getElementById('form_address').value.trim(),
-                city: document.getElementById('form_city').value.trim(),
-                state: document.getElementById('form_state').value.trim(),
-                pin: document.getElementById('form_pin').value.trim(),
-                referredBy: document.getElementById('form_referred').value.trim(),
-                vitals: {
-                    bp: document.getElementById('vitals_bp').value, pulse: document.getElementById('vitals_pulse').value,
-                    temp: document.getElementById('vitals_temp').value, spo2: document.getElementById('vitals_spo2').value,
-                    rbs: document.getElementById('vitals_rbs').value
-                },
-                medicalConditions: checkedMedicalConditions,
-                allergies: document.getElementById('med_allergies').value,
-                medications: document.getElementById('med_current').value,
-                complaint: document.getElementById('dental_complaint').value,
-                painScale: document.getElementById('dental_pain_scale').value,
-                habits: checkedHabits,
-                pastTreatment: document.getElementById('dental_past').value,
-                mouthOpening: document.getElementById('exam_mouth_opening').value,
-                extraOral: document.getElementById('exam_extra_oral').value,
-                intraOral: document.getElementById('exam_intra_oral').value,
-                odontogram: Object.assign({}, structuralToothPathologyCache),
-                indices: {
-                    plaque: document.getElementById('idx_plaque').value, calculus: document.getElementById('idx_calculus').value,
-                    stains: document.getElementById('idx_stains').value, gingival: document.getElementById('idx_gingival').value
-                },
-                provisionalDiagnosis: document.getElementById('diag_provisional').value,
-                finalDiagnosis: document.getElementById('diag_final').value,
-                opgRecommendation: document.getElementById('form_opg_recommendation').value,
-                priority: document.getElementById('form_treatment_priority').value,
-                procedures: compiledProceduresArray,
-                billing: {
-                    consultationFee: parseFloat(document.getElementById('bill_con_fee').value) || 0,
-                    discount: parseFloat(document.getElementById('bill_discount').value) || 0,
-                    advance: parseFloat(document.getElementById('bill_advance').value) || 0,
-                    payMode: document.getElementById('bill_pay_mode').value, payStatus: document.getElementById('bill_pay_status').value
-                },
-                doctor: document.getElementById('input_doctor').value || 'Dr. Aruna Devi', 
-                regNo: document.getElementById('input_reg_no').value || 'KDC-56832-A',
-                dateString: dString, timeString: tString
-            };
-        }
-
         async function orchestrateClinicalHealthPassportPDF() {
             try {
                 const dData = triggerDynamicEvaluationCalculations();
                 const fData = executeFinancialBalancingCalculations();
                 const payload = compileFullUnifiedPatientPayload();
 
+                // Mapping IDs directly safely
                 document.getElementById('pdf_lbl_file_no').innerText = payload.fileNo;
                 document.getElementById('pdf_lbl_visit_no').innerText = payload.visitNo;
                 document.getElementById('pdf_val_name').innerText = payload.name;
                 document.getElementById('pdf_val_age').innerText = payload.age || '--';
                 document.getElementById('pdf_val_gender').innerText = payload.gender;
                 document.getElementById('pdf_val_visit_type').innerText = payload.visitType;
-                document.getElementById('pdf_val_date').innerText = payload.dateString;
-                document.getElementById('pdf_val_time').innerText = payload.timeString;
+                
+                // Formatted Date and Time Display
+                document.getElementById('pdf_val_date').innerText = payload.visitDate;
+                document.getElementById('pdf_val_time').innerText = payload.visitTime;
+                
                 document.getElementById('pdf_val_mobile').innerText = payload.mobile || '--';
-                document.getElementById('pdf_val_city').innerText = payload.address || '--';
+                document.getElementById('pdf_val_city').innerText = payload.city || payload.address || '--';
 
                 document.getElementById('pdf_score_large').innerText = `${dData.score} / 10`;
                 document.getElementById('pdf_view_score').innerText = `${dData.score} / 10`;
@@ -1468,14 +1546,15 @@
                 document.getElementById('pdf_risk_large').className = `text-xl font-black my-3 uppercase tracking-tight ${dData.risk.includes('High') ? 'text-red-600' : dData.risk.includes('Moderate') ? 'text-amber-600' : 'text-emerald-700'}`;
                 document.getElementById('pdf_priority_large').innerText = payload.priority;
 
-                let narrative = `Patient ${payload.name} (${payload.age || '--'} Yrs/${payload.gender}) received a thorough examination on ${payload.dateString}. The diagnostic evaluation shows an oral score of ${dData.score}/10, indicating a ${dData.risk.toLowerCase()} profile. `;
+                let narrative = `Patient ${payload.name} (${payload.age || '--'} Yrs/${payload.gender}) received a thorough examination on ${payload.visitDate}. The diagnostic evaluation shows an oral score of ${dData.score}/10, indicating a ${dData.risk.toLowerCase()} profile. `;
                 if(payload.complaint) narrative += `The primary reported symptom is: ${payload.complaint}. `;
                 narrative += `The findings align with a provisional diagnosis of ${payload.provisionalDiagnosis.toLowerCase()}. Appropriate treatment steps are highly advised to stabilize the dental conditions.`;
                 document.getElementById('pdf_ai_summary').innerText = narrative;
 
-                document.getElementById('pdf_val_treat_needed').innerText = document.getElementById('input_treat_needed').value;
-                document.getElementById('pdf_val_exam_needed').innerText = document.getElementById('input_exam_needed').value;
-                document.getElementById('pdf_val_scan_needed').innerText = document.getElementById('input_scan_needed').value;
+                document.getElementById('pdf_val_treat_needed').innerText = payload.treatNeeded;
+                document.getElementById('pdf_val_exam_needed').innerText = payload.examNeeded;
+                document.getElementById('pdf_val_scan_needed').innerText = payload.scanNeeded;
+                document.getElementById('pdf_val_dentition').innerText = payload.dentition;
 
                 document.getElementById('pdf_val_bp').innerText = payload.vitals.bp;
                 document.getElementById('pdf_val_pulse').innerText = payload.vitals.pulse;
@@ -1484,17 +1563,16 @@
                 document.getElementById('pdf_val_rbs').innerText = payload.vitals.rbs;
 
                 document.getElementById('pdf_val_comorbidities').innerText = payload.medicalConditions.length > 0 ? payload.medicalConditions.join(', ') : 'None Disclosed';
-                document.getElementById('pdf_val_allergies').innerText = payload.allergies;
+                document.getElementById('pdf_val_allergies').innerText = payload.allergies || 'None Disclosed';
                 document.getElementById('pdf_val_medications').innerText = payload.medications || 'None';
                 document.getElementById('pdf_val_complaint').innerText = payload.complaint || 'General Checkup';
                 document.getElementById('pdf_val_pain').innerText = payload.painScale;
                 document.getElementById('pdf_val_habits').innerText = payload.habits.length > 0 ? payload.habits.join(', ') : 'None';
                 document.getElementById('pdf_val_mouth_opening').innerText = payload.mouthOpening;
-                document.getElementById('pdf_val_extra_oral').innerText = payload.extraOral;
-                document.getElementById('pdf_val_intra_oral').innerText = payload.intraOral;
+                document.getElementById('pdf_val_extra_oral').innerText = payload.extraOral || 'Symmetric';
+                document.getElementById('pdf_val_intra_oral').innerText = payload.intraOral || 'Healthy';
                 document.getElementById('pdf_val_diagnosis').innerText = payload.provisionalDiagnosis;
                 document.getElementById('pdf_val_dental_history').innerText = payload.pastTreatment || 'None logged';
-                document.getElementById('pdf_val_dentition').innerText = document.getElementById('input_dentition').value;
 
                 document.getElementById('pdf_stains_status').innerHTML = getSeverityLabel(payload.indices.stains);
                 document.getElementById('pdf_plaque_status').innerHTML = getSeverityLabel(payload.indices.plaque);
@@ -1535,7 +1613,7 @@
                 document.getElementById('pdf_chart_fractures').innerText = scFractures.length > 0 ? `Enamel shear fracture tracked wrt: ${scFractures.sort().join(', ')}` : 'No physical fracture traces logged.';
                 document.getElementById('pdf_chart_restorations').innerText = scRestorations.length > 0 ? `Active structural restorations tracked wrt: ${scRestorations.sort().join(', ')}` : 'No artificial restorations found.';
 
-                if(scCaries.length > 0 || scStumps.length > 0 || scCalculusCount > 0) { // Just generic logic toggle
+                if(scCaries.length > 0 || scStumps.length > 0) { 
                     document.getElementById('pdf_view_map_clear').classList.add('hidden');
                     if(scCaries.length > 0) {
                         document.getElementById('pdf_view_map_cavities').classList.remove('hidden');
@@ -1551,7 +1629,7 @@
                     payload.recommendations.split('\n').forEach(line => {
                         if(line.trim()) { const li = document.createElement('li'); li.innerText = line; ul.appendChild(li); }
                     });
-                } else { ul.innerHTML = '<li class="list-none text-slate-400 italic">No treatment recommendations logged.</li>'; }
+                } else { ul.innerHTML = '<li class="list-none text-slate-400 italic">No specific procedural recommendations logged.</li>'; }
 
                 const pdfBillBody = document.getElementById('pdf_billing_table_body_target'); pdfBillBody.innerHTML = '';
                 if(payload.procedures.length > 0) {
@@ -1568,7 +1646,7 @@
                     document.getElementById('pdf_bill_net_due').innerText = `₹${fData.netDue}`;
                 } else {
                     document.getElementById('pdf_billing_container').classList.add('hidden');
-                    pdfBillBody.innerHTML = '<tr><td colspan="3" class="p-4 text-center text-slate-400 italic">No itemized procedures logged.</td></tr>';
+                    pdfBillBody.innerHTML = '<tr><td colspan="3" class="p-4 text-center text-slate-400 italic">No itemized commercial procedures logged.</td></tr>';
                 }
 
                 document.getElementById('pdf_val_pay_mode').innerText = payload.billing.payMode;
@@ -1585,7 +1663,6 @@
                 await mapLocalImageInputToRenderPipelineTarget('cam_lower_after', 'pdf_img_lower_after');
                 await mapLocalImageInputToRenderPipelineTarget('cam_extra_1', 'pdf_img_extra_1');
                 await mapLocalImageInputToRenderPipelineTarget('cam_extra_2', 'pdf_img_extra_2');
-                await mapLocalImageInputToRenderPipelineTarget('cam_extra_3', 'pdf_img_extra_3');
                 await mapLocalImageInputToRenderPipelineTarget('cam_xray_iopa', 'pdf_img_iopa');
                 await mapLocalImageInputToRenderPipelineTarget('cam_xray_cbct', 'pdf_img_cbct');
 
@@ -1593,8 +1670,10 @@
 
                 const targetElementNode = document.getElementById('passport-document-canvas');
                 
-                // Show temporarily for html2pdf to read it, then let it generate offscreen
-                const wrapper = document.getElementById('pdf-render-wrapper');
+                // Expose wrapper correctly to allow safe offline rendering
+                document.getElementById('pdf-render-wrapper').style.left = '0';
+                document.getElementById('pdf-render-wrapper').style.top = '0';
+                document.getElementById('pdf-render-wrapper').style.zIndex = '-999';
                 
                 const sanitizedPatientFilename = payload.name.replace(/\s+/g, '_') || 'Patient';
                 const standardExportOptions = {
@@ -1605,7 +1684,9 @@
                     jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
                 };
 
-                html2pdf().from(targetElementNode).set(standardExportOptions).save();
+                html2pdf().from(targetElementNode).set(standardExportOptions).save().then(() => {
+                    document.getElementById('pdf-render-wrapper').style.left = '-9999px';
+                });
 
                 const waButton = document.getElementById('whatsappShareBtn');
                 const encodedTemplateMessage = encodeURIComponent(`Hello ${payload.name}, your premium digital Dental Health Passport file ledger from Sri Aura Dental Care has been successfully compiled.`);
@@ -1614,7 +1695,7 @@
 
             } catch (err) {
                 console.error(err);
-                alert("An error stopped the PDF from compiling. Check console for details. Error: " + err.message);
+                alert("An error stopped the PDF from compiling: " + err.message);
             }
         }
     </script>
